@@ -1,7 +1,6 @@
 \documentclass[10pt,a4paper]{article}
 
 \usepackage[utf8]{inputenc}
-\usepackage[francais]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{eso-pic}
@@ -32,9 +31,11 @@ Les données suivantes sont triavialement calculable\\
 $first_{j,i}, last_{j,i}, slow_{j,i}, slow_i$\\
 $hp_i, sp_i, lp_i$\\
 
-En ce qui concerne les données suivantes, nous ne sommes pas sûr de comment les obtenir\\
-$S_{max_i}^h = L_{max} \times (|[first_i ... h]| - 1) + \sum \limits_{h'=first_i}^{h'=h}C_i^{h'}$ ?\\
-$S_{min_i}^h = L_{min} \times (|[first_i ... h]| - 1) + \sum \limits_{h'=first_i}^{h'=h}C_i^{h'}$ ?\\
+Les calculs de $S_{min}$ et $S_{max}\\
+$S_{max_i}^h = L_{max} \times (|[first_i ... h]| - 1) + \sum 
+\limits_{h'=next(first_i)}^{h'=pre(h)}C_i^{h'}$ \\
+$S_{min_i}^h = L_{min} \times (|[first_i ... h]| - 1) + \sum 
+\limits_{h'=next(first_i)}^{h'=pre(h)}C_i^{h'}$ \\
 $B_{i}^{slow}$ dépend de lui-même.\\
 
 Les données suivantes peuvent-être calculées de manière paresseuse et ensuite rangées en mémoire pour ne pas avoir à les recalculer\\
