@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.2.3)  11 FEB 2014 11:55
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.2.3)  11 FEB 2014 12:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -481,14 +481,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 30--33
 
  []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.35 $S_
-        {max_i}^h = L_{max} \times (|[first_i ... h]| - 1) + \sum
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
 
 Underfull \hbox (badness 10000) in paragraph at lines 34--40
 
@@ -500,12 +492,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 41--46
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 47--48
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 49--50
+Underfull \hbox (badness 10000) in paragraph at lines 47--50
 
  []
 
@@ -534,24 +521,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 73--82
 
 [2]
 
-LaTeX Warning: Command \' invalid in math mode on input line 115.
+LaTeX Warning: Command \' invalid in math mode on input line 114.
 
 <images/global.png, id=23, 803.0pt x 585.18625pt>
 File: images/global.png Graphic file (type png)
  <use images/global.png>
-Package pdftex.def Info: images/global.png used on input line 118.
+Package pdftex.def Info: images/global.png used on input line 117.
 (pdftex.def)             Requested size: 345.0pt x 251.4198pt.
 
 <images/tache5.png, id=24, 803.0pt x 602.25pt>
 File: images/tache5.png Graphic file (type png)
  <use images/tache5.png>
-Package pdftex.def Info: images/tache5.png used on input line 129.
+Package pdftex.def Info: images/tache5.png used on input line 128.
 (pdftex.def)             Requested size: 345.0pt x 258.75108pt.
 
 <images/tache4.png, id=25, 803.0pt x 508.90125pt>
 File: images/tache4.png Graphic file (type png)
  <use images/tache4.png>
-Package pdftex.def Info: images/tache4.png used on input line 140.
+Package pdftex.def Info: images/tache4.png used on input line 139.
 (pdftex.def)             Requested size: 345.0pt x 218.64467pt.
 
 [3] [4 <./images/global.png (PNG copy)> <./images/tache5.png (PNG copy)>]
@@ -580,7 +567,7 @@ ts/type1/public/lm/lmmi5.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi7.pfb>
 are/texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/l
 m/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy5.pfb></usr/share/texm
 f/fonts/type1/public/lm/lmsy7.pfb>
-Output written on rendu1.pdf (5 pages, 207523 bytes).
+Output written on rendu1.pdf (5 pages, 207924 bytes).
 PDF statistics:
  82 PDF objects out of 1000 (max. 8388607)
  58 compressed objects within 1 object stream

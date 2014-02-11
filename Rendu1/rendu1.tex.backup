@@ -83,8 +83,7 @@ Fin tant que\\
 $B_i^{slow} = \sum \limits _{j \in hp_i \cup sp_i \cup \{i\}} 
 \lceil B_i^{slow}/T_ j\rceil$
 On commence par calculer le PPCM de tous le $T_j$.\\
-Pour chaque valeur de $T_j$, on divise le PPCM par $T_j$.
-
+$B_i^{slow} = 
 
 
 \subsubsection{Calcul de $\delta_i$}
