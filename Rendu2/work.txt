@@ -1,0 +1,5 @@
+Raphael, Clement, Lucas : XML, Smax Smin Mi Aij ...
+Darren, Naima           : beta_slow, R
+Marc-Henri              : delta
+Damien                  : W
+Lucas                   : Merge de la compréhension de l'algorithme
