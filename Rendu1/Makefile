@@ -1,18 +1,10 @@
-LC=pdflatex
-LFLAGS=-halt-on-error 
-LSRC=rendu1.tex
-PDF=rendu1.pdf
+TEX=$(wildcard *.tex)
+PDF=$(TEX:%.tex=%.pdf)
 
-all: rapport
-
-
-rapport: 
-	$(LC) $(LFLAGS) $(LSRC)
-	@touch $(PDF) # To refresh the PDF viewer
-
-see: rapport
-	evince $(PDF)
+all:$(TEX)
+	pdflatex $(TEX)
 
 clean:
-	rm -f *.aux *.eps *.log *.pdf *.toc *~ *.out
-
+	rm -f ./*.out ./*.aux ./*.nav ./*.log ./*.snm ./*.toc ./*~ ./*.eps
+cleanall: clean
+	rm -f $(PDF)
