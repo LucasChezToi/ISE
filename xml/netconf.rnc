@@ -4,6 +4,8 @@
 # Projet 1 - Analyse de pire temps de réponse sur des réseaux avioniques
 # ******************************************************************
 
+# NB : Ce format n'as pas encore été testé
+
 start = netconf
 
 netconf = element netconf{
