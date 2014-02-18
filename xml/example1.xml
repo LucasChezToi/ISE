@@ -8,37 +8,39 @@
   <nodes>
     <!-- Note : les attributs ne peuvent pas commencer par des chiffre -->
     <node id="n1">
-      <computeTime forFlow="all">4</computeTime>
+      <!-- Si -->
+      <computeTime forFlow="f1">4</computeTime>
+      <computeTime>4</computeTime>
     </node>
     <node id="n2">
-      <computeTime forFlow="all">4</computeTime>
+      <computeTime>4</computeTime>
     </node>
     <node id="n3">
-      <computeTime forFlow="all">4</computeTime>
+      <computeTime>4</computeTime>
     </node>
     <node id="n4">
-      <computeTime forFlow="all">4</computeTime>
+      <computeTime>4</computeTime>
     </node>
     <node id="n5">
-      <computeTime forFlow="all">4</computeTime>
+      <computeTime>4</computeTime>
     </node>
     <node id="n6">
-      <computeTime forFlow="all">4</computeTime>
+      <computeTime>4</computeTime>
     </node>
     <node id="n7">
-      <computeTime forFlow="all">4</computeTime>
+      <computeTime>4</computeTime>
     </node>
     <node id="n8">
-      <computeTime forFlow="all">4</computeTime>
+      <computeTime>4</computeTime>
     </node>
     <node id="n9">
-      <computeTime forFlow="all">4</computeTime>
+      <computeTime>4</computeTime>
     </node>
     <node id="n10">
-      <computeTime forFlow="all">4</computeTime>
+      <computeTime>4</computeTime>
     </node>
     <node id="n11">
-      <computeTime forFlow="all">4</computeTime>
+      <computeTime>4</computeTime>
     </node>
   </nodes>
   <flows>
