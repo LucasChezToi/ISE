@@ -4,6 +4,7 @@ class Network{
     Node <> node
     int lmax 
     int lmin
+    void init()
 }
 
 class Flow{
@@ -12,9 +13,9 @@ class Flow{
     int deadline
     int period
     int jitter
-    Flow<> higherPriorityFlow()
-    Flow<> samePriorityFlow()
-    Flow<> lowerPriorityFlow()
+    Flow<> higherPriorityFlow
+    Flow<> samePriorityFlow
+    Flow<> lowerPriorityFlow
 }
 
 class Path{

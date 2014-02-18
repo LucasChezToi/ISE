@@ -1,1 +1,0 @@
-INDEX VERSION 1.126+/home/raphael/M2_SAR/ISE/ISE/workspace/WortCaseEndToEndResponse/.metadata/.plugins/org.eclipse.jdt.core
