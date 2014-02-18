@@ -1,0 +1,25 @@
+<!ELEMENT netconf (nodes,link,flows)>
+<!ELEMENT nodes (node+)>
+<!ELEMENT link (maxTime, minTime?)>
+<!ELEMENT flows (flow+)>
+
+<!ELEMENT node (computeTime)>
+<!ATTLIST node id ID #REQUIRED>
+
+<!ELEMENT computeTime (#PCDATA)>
+<!-- Si forFlow pas mis => Valeur par défault -->
+<!ATTLIST computTime forFlow (IDREF|all) #REQUIRED> 
+
+<!ELEMENT flow (#PCDATA)>
+<!ATTLIST flow id ID #REQUIRED>
+
+<!ELEMENT priority (#PCDATA)>
+<!ELEMENT deadline (#PCDATA)>
+<!ELEMENT path (nodeId+)>
+<!ELEMENT nodeId (#PCDATA)>
+<!ELEMENT maxTime (#PCDATA)>
+<!ELEMENT minTime (#PCDATA)>
+
+
+
+
