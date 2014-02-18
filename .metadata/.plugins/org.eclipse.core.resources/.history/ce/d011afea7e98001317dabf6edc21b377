@@ -1,0 +1,12 @@
+package ise;
+
+import java.util.List;
+
+public class Network {
+	List<Flow> flows;
+	List<Node> nodes;
+	int lmax;
+	int lmin;
+	
+	
+}
