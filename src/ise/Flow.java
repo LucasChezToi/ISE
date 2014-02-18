@@ -7,28 +7,23 @@ public class Flow {
 	private Path path;
 	private int priority;
 	private int deadline;
-	private int periode;
+	private int period;
 	private int jitter;
+	private List<Flow> higherPriorityFlows;
+	private List<Flow> samePriorityFlows;
+	private List<Flow> LowerPriorityFlows;
+	
+	public Flow() {
+		super();
+	}
 	
 	public Flow(Path path, int priority, int deadline, int periode, int jitter) {
 		super();
 		this.path = path;
 		this.priority = priority;
 		this.deadline = deadline;
-		this.periode = periode;
+		this.period = periode;
 		this.jitter = jitter;
-	}
-	
-	List<Flow> higherPriorityFlows() {
-		return null;
-	}
-	
-	List<Flow> samePriorityFlows() {
-		return null;
-	}
-	
-	List<Flow> LowerPriorityFlows() {
-		return null;
 	}
 	
 	public Path getPath() {
@@ -49,16 +44,38 @@ public class Flow {
 	public void setDeadline(int deadline) {
 		this.deadline = deadline;
 	}
-	public int getPeriode() {
-		return periode;
+	public int getPeriod() {
+		return period;
 	}
-	public void setPeriode(int periode) {
-		this.periode = periode;
+	public void setPeriod(int periode) {
+		this.period = periode;
 	}
 	public int getJitter() {
 		return jitter;
 	}
 	public void setJitter(int jitter) {
 		this.jitter = jitter;
+	}
+	public List<Flow> getHigherPriorityFlows() {
+		return higherPriorityFlows;
+	}
+
+	public void setHigherPriorityFlows(List<Flow> higherPriorityFlows) {
+		this.higherPriorityFlows = higherPriorityFlows;
+	}
+
+	public List<Flow> getSamePriorityFlows() {
+		return samePriorityFlows;
+	}
+
+	public void setSamePriorityFlows(List<Flow> samePriorityFlows) {
+		this.samePriorityFlows = samePriorityFlows;
+	}
+
+	public List<Flow> getLowerPriorityFlows() {
+		return LowerPriorityFlows;
+	}
+	public void setLowerPriorityFlows(List<Flow> lowerPriorityFlows) {
+		LowerPriorityFlows = lowerPriorityFlows;
 	}
 }

@@ -8,6 +8,12 @@ public class Network {
 	int lmax;
 	int lmin;
 	
+	public Network() {
+		super();
+	}
+	public void addFlow(Flow flow) {
+		flows.add(flow);
+	}
 	public Network(List<Flow> flows, List<Node> nodes, int lmax, int lmin) {
 		super();
 		this.flows = flows;
