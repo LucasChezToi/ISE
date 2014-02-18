@@ -31,6 +31,14 @@ class Algorithm{
     Integer<> r
     Node firstNodeVisitedByJonI(Path J, Path I) trows Exception
     Node lastNodeVisitedByJonI(Path J, Path I) trows Exception	  Void ComputeWorstCaseEndToEndResponse() 
+    int minTimeTakerFromSourceToH(Flow f, Node h) throws Exception
+    int maxTimeTakerFromSourceToH(flow f, Node h) throws Exception
+    Node slowestNodeVisitedByJonI(flow j, Flow i) throws Exception
+    int computeM(Flow i, Node h) throws Exception
+    int computeA(Flow i, Flow j) throws Exception
+    int computeBetaSlow(Flow i)
+    int computedelta(Flow i, Node h) throws Exception
+    int computeW(Flow i, int t)
 }
 
 class XMLParser{

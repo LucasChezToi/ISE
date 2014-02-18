@@ -1,0 +1,6 @@
+package ise;
+
+public class Algorithm {
+	Network net;
+	List<Integer> integer;
+}
