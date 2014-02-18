@@ -1,0 +1,90 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{algorithm2e}
+
+\begin{document}
+% \fbox{
+\begin{algorithm}[H]
+%  \SetLine % For v3.9
+%  %\SetAlgoLined % For previous releases [?]
+  \KwData{\\
+    Input
+    \begin{itemize}
+      \item $i$ flow id
+      \item $L_{min}$
+      \item $L_{max}$
+      \item $h_{final}$ 
+      \item $P_i$ le path jusqu'à $h_{final}$
+    \end{itemize}
+    Local
+    \begin{itemize}
+      \item $lp_i$ 
+      \item $first_i$
+      \item ensemble des $C_k^l$ avec $k \in lp_i$ et $l \in P_i$
+    \end{itemize}
+  }  
+  \KwResult{
+    \begin{itemize}
+      \item $\delta_i^{h_{final}}$
+    \end{itemize}
+  }
+  \BlankLine
+  $x = 0;$\\ 
+  \For{$j \in lp_i$}{
+      \If{ $first_i = first_{j,i}$}{
+	  $tabPart1[x] = C_j^{first_i};$\\
+	  $x++;$
+      }
+  }
+  \If{$max(tabPart1)-1 < 0)$}{
+      $result = 0;$
+  }
+  \Else{
+      $result = max(tabPart1) - 1;$
+  }
+  
+  \For{$h \in P_i$}{
+      $resultPart2 = 0;$\\
+      $tabPart2 = 0;$\\
+      \If {$h \neq first_i$}{
+	  \If {$h = first_{j,i}$}{
+	      $m =0;$\\
+	      \For{$j \in lp_i$}{
+		  $tabPart2[m] = C_j^h;$\\
+	      }
+	      $resultPart2 += max(tabPart2) - 1;$
+	  }
+	  \uElseIf {$h \in (first_{j,i} ; last_{j,i}] $ and $first_{j,i} \neq 
+first_{i,j} $}{
+	      $m =0;$\\
+	      \For{$j \in lp_i$}{
+		  $tabPart2[m] = C_j^h;$\\
+	      }
+	      $resultPart2 += max(tabPart2) - 1;$
+	  }
+	  \uElseIf {$lp_i \neq \emptyset$}{
+	      $m =0;$\\
+	      \For{$j \in lp_i$}{
+		  $tabPart2[m] = C_j^h;$\\
+	      }
+	      $resultPart2 += max(tabPart2) - C_i^{pre_i(h)} + L_{max} - 
+L_{min};$
+	  }
+	  \Else{
+	      $resultPart2 = 0;$\\
+	  }
+	  \If {$tabPart2 \ge 0$}{
+	      $result += resultPart2;$\\
+	      $resultPart2 = 0;$\\
+	  }
+      }
+  }
+  
+%   \textbf{Return} $W[last_i]$\;
+%   \caption{Pseudo Code pour le calcul de $\delta_i^{h_{final}}$}
+\end{algorithm}
+% }
+\end{document}

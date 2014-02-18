@@ -26,46 +26,38 @@ public class XmlParser {
 		   document = sxb.build(new File(file));
 	  } catch(Exception e){}
 	   network = new Network();
+	   setFlows();
    }
 
   private void setFlows() {
-	  racine = document.getRootElement();
-	  for(Element e : racine.getChildren("flows")) {
+	  racine = document.getRootElement().getChild("flows");
+	  for(Element e : racine.getChildren("flow")) {
 		  Flow flow = new Flow();
-		  try {
-			flow.setDeadline(e.getAttribute("deadline").getIntValue());
-		} catch (DataConversionException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		  System.out.println(e.getChildText("deadline"));
+		  flow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
 		  flow.setJitter(0);
 		  for(int i = 0; i < racine.getChildren("flows").size(); i++) {
 			  Node node = new Node();
 			  //node.setId(racine.getChildren("flows").get(i));
 		  }
 		  // A revoir ici la période = deadline
-		  try {
-			flow.setPeriod(e.getAttribute("deadline").getIntValue());
-		} catch (DataConversionException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		  try {
-			flow.setPriority(e.getAttribute("priority").getIntValue());
-		} catch (DataConversionException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		  flow.setPeriod(Integer.parseInt(e.getChildText("deadline")));
+		
+		  flow.setPriority(Integer.parseInt(e.getChildText("priority")));
 		  network.addFlow(flow);
 	  }
   }
   
-  List firstStep = racine.getChildren("??");
+  //List firstStep = racine.getChildren("??");
   
-  Iterator i = firstStep.iterator();
+  //Iterator i = firstStep.iterator();
   /*while(i.hasNext()) {
      Element courant = (Element)i.next();
      System.out.println(courant.getChild("??").getText());
       }
    }*/
+  
+  public static void main (String [] arg) {
+	  XmlParser parser = new XmlParser("/home/raphael/M2_SAR/ISE/ISE/xml/example1.xml");
+  }
 }
