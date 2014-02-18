@@ -1,2 +1,0 @@
-INDEX VERSION 1.126+/home/raphael/M2_SAR/ISE/ISE/workspace/.metadata/.plugins/org.eclipse.jdt.core
-3919390188.index
