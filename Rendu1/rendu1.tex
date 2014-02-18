@@ -26,18 +26,17 @@ Nous cherchons à calculer le pire temps de réponse de bout en bout dans un ré
 \section{Description des données}
 Le réseau est caractérisé par les données suivantes\\
 $net=(\tau_i, P_i = [first_i,...,last_i], T_i, J_i, C_i^h, D_i, p_i, L_{min}, L_{max})$\\
-%TODO decribe
-avec : 
+Avec : 
 \begin{itemize}
-\item $\tau_i$ un flux sporadique "of the set" $\{\tau_1, ..., \tau_n\}$
+\item $\tau_i$ un flux sporadique de l'ensemble $\{\tau_1, ..., \tau_n\}$
 \item $P_i$ le chemin suivi par le flux $\tau_i$
 \item $T_i$ le temps minimum entre l'arrivée successive de deux paquets du du flux $\tau_i$
-\item $J_i$ 
-\item $C_i^h$
-\item $D_i$
-\item $p_i$
-\item $L_{min}$
-\item $L_{max}$
+\item $J_i$ L'interval de temps maximum qu'un paquet du flux $\tau_i$ peut avoir entre le temps de sa génération et moment où le paquet est pris en compte par l'ordonnanceur
+\item $C_i^h$ Le temps maximum de traitement sur le noeud h
+\item $D_i$ le temps maximum bout à bout acceptable du flux $\tau_i$
+\item $p_i$ la priorité fixe du flux $\tau_i$
+\item $L_{min}$ délai minimum entre deux noeuds
+\item $L_{max}$ délai maximum entre deux noeuds
 
 \end{itemize}
 
