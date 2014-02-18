@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE netconf SYSTEM "netconf.dtd">
 <netconf>
-  <link>
+  <links>
     <maxTime>1</maxTime>
     <minTime>1</minTime>
-  </link>
+  </links>
   <nodes>
     <!-- Note : les attributs ne peuvent pas commencer par des chiffre -->
     <node id="n1">
