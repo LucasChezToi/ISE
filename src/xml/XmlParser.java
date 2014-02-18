@@ -36,13 +36,9 @@ public class XmlParser {
   List firstStep = racine.getChildren("??");
   
   Iterator i = firstStep.iterator();
-  while(i.hasNext()) {
-     //On recrée l'Element courant à chaque tour de boucle afin de
-     //pouvoir utiliser les méthodes propres aux Element comme :
-     //sélectionner un nœud fils, modifier du texte, etc...
+  /*while(i.hasNext()) {
      Element courant = (Element)i.next();
-     //On affiche le nom de l’élément courant
      System.out.println(courant.getChild("??").getText());
       }
-   }
+   }*/
 }
