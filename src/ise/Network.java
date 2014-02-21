@@ -1,5 +1,6 @@
 package ise;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Network {
@@ -10,6 +11,8 @@ public class Network {
 	
 	public Network() {
 		super();
+		flows = new ArrayList<Flow>();
+		nodes = new ArrayList<Node>();
 	}
 	public void addFlow(Flow flow) {
 		flows.add(flow);

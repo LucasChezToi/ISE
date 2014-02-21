@@ -15,6 +15,9 @@ public class Flow {
 	
 	public Flow() {
 		super();
+		higherPriorityFlows = new ArrayList<Flow>();
+		samePriorityFlows = new ArrayList<Flow>();
+		LowerPriorityFlows = new ArrayList<Flow>();
 	}
 	
 	public Flow(Path path, int priority, int deadline, int periode, int jitter) {
