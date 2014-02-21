@@ -66,7 +66,7 @@ public class XmlParser {
 	  	  System.exit(0);
 	  }
 	  
-	  if(arg[0].equals("*.xml")) {
+	  if(!arg[0].contains(".xml")) {
 		  System.err.println("Mauvais format de fichier (nécessite un fichier xml)");
 	  	  System.exit(0);
 	  }
