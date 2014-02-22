@@ -1,0 +1,10 @@
+package ise;
+
+import java.util.List;
+
+public class Algorithm {
+	Network net;
+	List<Integer> integer;
+	
+	
+}

@@ -1,0 +1,7 @@
+package ise;
+
+import java.util.HashMap;
+
+public class Node {
+	HashMap<Flow, Integer> capacity;
+}

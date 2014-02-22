@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE netconf SYSTEM "netconf.dtd">
+<netconf>
+  <links>
+    <maxTime>1</maxTime>
+    <minTime>1</minTime>
+  </links>
+  <nodes>
+    <!-- Note : les attributs ne peuvent pas commencer par des chiffre -->
+    <node id="n1">
+      <!-- Si l'attribut forFlow n'est pas defini, on a un compute time par default-->
+      <computeTime forFlow="f1">4</computeTime>
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n2">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n3">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n4">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n5">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n6">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n7">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n8">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n9">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n10">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n11">
+      <computeTime>4</computeTime>
+    </node>
+  </nodes>
+  <flows>
+    <flow id="f1">
+      <priority>10</priority>
+      <deadline>36</deadline>
+      <path>
+        <nodeId>1</nodeId>
+        <nodeId>3</nodeId>
+        <nodeId>4</nodeId>
+        <nodeId>5</nodeId>
+      </path>
+    </flow>
+    <flow id="f2">
+      <priority>10</priority>
+      <deadline>36</deadline>
+      <path>
+        <nodeId>9</nodeId>
+        <nodeId>10</nodeId>
+        <nodeId>7</nodeId>
+        <nodeId>6</nodeId>
+      </path>
+    </flow>
+    <flow id="f3">
+      <priority>11</priority>
+      <deadline>54</deadline>
+      <path>
+        <nodeId>2</nodeId>
+        <nodeId>3</nodeId>
+        <nodeId>4</nodeId>
+        <nodeId>7</nodeId>
+        <nodeId>10</nodeId>
+        <nodeId>11</nodeId>
+      </path>
+    </flow>
+    <flow id="f4">
+      <priority>11</priority>
+      <deadline>54</deadline>
+      <path>
+        <nodeId>2</nodeId>
+        <nodeId>3</nodeId>
+        <nodeId>4</nodeId>
+        <nodeId>7</nodeId>
+        <nodeId>10</nodeId>
+        <nodeId>11</nodeId>
+      </path>
+    </flow>
+    <flow id="f5">
+      <priority>12</priority>
+      <deadline>45</deadline>
+      <path>
+        <nodeId>2</nodeId>
+        <nodeId>3</nodeId>
+        <nodeId>4</nodeId>
+        <nodeId>7</nodeId>
+        <nodeId>8</nodeId>
+      </path>
+    </flow>
+  </flows>
+</netconf>

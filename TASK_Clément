@@ -1,0 +1,6 @@
+Algorithm.java :
+    - firstNodeVisitedByJonI
+    - lastNodeVisitedByJonI
+    - minTimetakenFromSourceToH
+    - maxTimeTakenFromSourceToH
+    - slowestNodeVisitedByJonI

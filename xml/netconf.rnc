@@ -1,0 +1,58 @@
+# -*- coding: utf-8 -*-
+# ******************************************************************
+# ISE - Ingénierie des Sysèmes Embarqués (2014)
+# Projet 1 - Analyse de pire temps de réponse sur des réseaux avioniques
+# ******************************************************************
+
+# NB : Ce format n'as pas encore été testé
+
+start = netconf
+
+netconf = element netconf{
+  element nodes { nodes },
+  element link { link },
+  element flows { flows } 
+}
+
+# *** link ***
+
+link = element link{
+  element maxTime { xsd:integer },
+  element minTime { xsd:integer } ?
+}
+
+
+# *** nodes ***
+nodes = node+
+
+node = element node{
+  attribute id { text },
+}
+
+computTime = elment computTime {
+  attribute forFlow { text }, #TODO : Dire que c'est une reference (sur un flow)
+  xsd:integer
+}
+
+# *** flows ***
+
+flows = flow+
+
+flow = element flow{
+  attribute id { text },
+  element priority { priority },
+  element deadline { deadline },
+  element path { path }
+}
+
+priority= element priority{
+  xsd:integer
+}
+
+deadline = element deadline{
+  xsd:integer
+}
+
+path = element path{
+  element nodeId { xsd:integer } *
+}

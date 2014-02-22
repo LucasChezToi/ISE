@@ -1,0 +1,38 @@
+import java.io.*;
+
+import org.jdom2.*;
+import org.jdom2.input.*;
+import org.jdom2.filter.*;
+import org.jdom2.input.SAXBuilder;
+
+import java.util.List;
+import java.util.Iterator;
+
+public class XmlParser {
+   private static org.jdom2.Document document;
+   private static Element racine;
+   private SAXBuilder sxb;
+   
+   public XmlParser(String file) {
+	   sxb = new SAXBuilder();
+	   try {
+		   document = sxb.build(new File("file"));
+	  } catch(Exception e){}
+   }
+
+
+  /*racine = document.getRootElement();
+
+  List firstStep = racine.getChildren("??");
+  
+  Iterator i = firstStep.iterator();
+  while(i.hasNext()) {
+     //On recrée l'Element courant à chaque tour de boucle afin de
+     //pouvoir utiliser les méthodes propres aux Element comme :
+     //sélectionner un nœud fils, modifier du texte, etc...
+     Element courant = (Element)i.next();
+     //On affiche le nom de l’élément courant
+     System.out.println(courant.getChild("??").getText());
+      }
+   }*/
+}
