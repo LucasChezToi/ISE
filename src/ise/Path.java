@@ -17,4 +17,8 @@ public class Path {
 	public void setNodes(List<Node> nodes) {
 		this.nodes = nodes;
 	}
+	
+	public Path pathRestrictedToH(Node H) {
+		return null;
+	}
 }
