@@ -54,7 +54,12 @@ public class Algorithm {
 	}
 	
 	int computeA(Flow i, Flow j) {
-		return 0;
+		int jitter = j.getJitter();
+		Node first = firstNodeVisitedByJonI(i, j);
+		int m = computeM(i, first);
+		int smax = maxTimeTakenFromSourceToH(j, first);
+		int result = smax - m + jitter;
+		return result;
 	}
 	
 	int computeBetaSlow(Flow i) {
