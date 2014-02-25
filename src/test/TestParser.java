@@ -148,8 +148,14 @@ public class TestParser {
 	public void testNodes() {
 		for(Node node : network.getNodes()){
 			for(Flow flow : network.getFlows()){
-				assertEquals("Node with id : " + node.getId(), 
-						4, node.getCapacity().containsKey(flow));
+				if(flow.getPath().getNodes().contains(node)){
+					assertEquals("Node with id : " + node.getId(), 
+							4, node.getCapacity().containsKey(flow));
+				}else{
+					// Si un flot ne passe pas par une node, la capacité de la node pour ce flot est de 0
+					assertEquals("Node with id : " + node.getId(), 
+							0, node.getCapacity().containsKey(flow));
+				}
 			}
 		}
 	}
