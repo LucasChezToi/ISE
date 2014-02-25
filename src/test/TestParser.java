@@ -32,6 +32,7 @@ public class TestParser {
 		assertEquals(5, network.getFlows().size());
 	}
 	
+	// Test des valeurs communes à tous les flows
 	@Test
 	public void testFlows() {
 		for (Flow flow : network.getFlows()) {
