@@ -24,7 +24,15 @@ public class XmlParser {
    private SAXBuilder sxb;
    private Network network;
    
-   /**
+   public Network getNetwork() {
+	return network;
+   }
+
+   public void setNetwork(Network network) {
+		this.network = network;
+   }
+
+/**
     * Contructeur de la classe
     * @param file  représente le nom du fichier d'entrée
     */
@@ -41,34 +49,44 @@ public class XmlParser {
     */
    public void parse() {
 	   racine = document.getRootElement().getChild("flows");
+	   int flowNumber = 0;
 		  for(Element e : racine.getChildren("flow")) {
 			  Flow tempFlow = new Flow();
 			  tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
-			  tempFlow.setJitter(0);
+			  if(e.getChild("jitter") == null)
+				  tempFlow.setJitter(0);
+			  else 
+				  tempFlow.setJitter(Integer.parseInt(e.getChildText("jitter")));
 			  for(Element e1 : e.getChild("path").getChildren()) {
 				  Node node = new Node();
 				  node.setId(Integer.parseInt(e1.getText()));
 			  }
 			  // Période = Deadline
-			  tempFlow.setPeriod(Integer.parseInt(e.getChildText("deadline")));
+			  tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
+			  tempFlow.setPeriod(Integer.parseInt(e.getChildText("period")));
 			  tempFlow.setPriority(Integer.parseInt(e.getChildText("priority")));
 			  network.addFlow(tempFlow);
+			  System.out.println("Flow instance : " + flowNumber++);
+			  System.out.println("Deadline : " + tempFlow.getDeadline());
+			  System.out.println("Jitter : " + tempFlow.getJitter());
+			  System.out.println("Period : " + tempFlow.getPeriod());
+			  System.out.println("Priority : " + tempFlow.getPriority() + "\n");
 		  }
    }
-  
+   
   /**
    * Méthode pour la lancement de l'application
    * @param arg représente les entrées du système
    */
   public static void main (String [] arg) {
-	  if(arg.length == 0) {
-		  System.err.println("Aucun fichier xml en entrée référencé");
+	  if(arg.length != 1) {
+		  System.err.println("Aucun fichier en entrée référencé");
 	  	  System.exit(0);
 	  }
 	  
 	  if(!arg[0].contains(".xml")) {
 		  System.err.println("Mauvais format de fichier (nécessite un fichier xml)");
-	  	  System.exit(0);
+	  	  System.exit(1);
 	  }
 	  XmlParser parser = new XmlParser(arg[0]);
 	  parser.parse();
