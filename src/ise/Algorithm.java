@@ -1,5 +1,6 @@
 package ise;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Algorithm {
@@ -75,15 +76,17 @@ public class Algorithm {
 	}
 	
 	int computeW(Flow i, int t) {
+		HashMap<Node, Integer> w = new HashMap<Node, Integer>();
 		int w1 = 0;
 		int w2 = 0;
 		for(Node h : i.getPath().getNodes()) {
 			w1 = subfunction_computeW_initialize_sequence(i, t, h);
-			w2 = subfunction_computeW_nextof_sequence(i, t, h, w1);
+			w2 = subfunction_computeW_nextof_sequence(i, t, h, w1, w);
 			while(w1 != w2) {
 				w1 = w2;
-				w2 = subfunction_computeW_nextof_sequence(i, t, h, w1);
+				w2 = subfunction_computeW_nextof_sequence(i, t, h, w1, w);
 			}
+			w.put(h, w1);
 		}
 		return w1;
 	}
@@ -133,7 +136,7 @@ public class Algorithm {
 		return w0;
 	}
 	
-	int subfunction_computeW_nextof_sequence(Flow i, int t, Node h, int w1){
+	int subfunction_computeW_nextof_sequence(Flow i, int t, Node h, int w1, HashMap<Node, Integer> w){
 		int w2 = 0;
 		for(Flow j : i.getHigherPriorityFlows()) {
 			Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
@@ -143,9 +146,7 @@ public class Algorithm {
 			if (lastijh == h) {
 				val = 1 + (int) Math.floor((double)(w1-minTimeTakenFromSourceToH(j, h)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
 			} else {
-				/* Please note that this implementation considers W_{i,t}^{last_{i,j}^h} = W_{i,t}^{h (p)} */
-				/* This explains the w1 in the following instruction */
-				val = 1 + (int) Math.floor((double)(w1-minTimeTakenFromSourceToH(j, lastijh)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+				val = 1 + (int) Math.floor((double)(w.get(lastijh)-minTimeTakenFromSourceToH(j, lastijh)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
 			}
 			if(val<0){
 				val = 0;
