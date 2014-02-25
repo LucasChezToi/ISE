@@ -47,6 +47,11 @@
     <flow id="f1">
       <priority>10</priority>
       <deadline>36</deadline>
+      <!-- La pérode est optionnelle, si elle n'est pas spécifié
+           elle est égale à la deadline -->
+      <period>36</period>
+      <!-- Si le jitter n'est pas déclaré, il est égal à 0-->
+      <jitter>0</jitter>
       <path>
         <nodeId>1</nodeId>
         <nodeId>3</nodeId>
@@ -57,6 +62,7 @@
     <flow id="f2">
       <priority>10</priority>
       <deadline>36</deadline>
+      <period>36</period>
       <path>
         <nodeId>9</nodeId>
         <nodeId>10</nodeId>
@@ -67,6 +73,7 @@
     <flow id="f3">
       <priority>11</priority>
       <deadline>54</deadline>
+      <period>36</period>
       <path>
         <nodeId>2</nodeId>
         <nodeId>3</nodeId>
@@ -79,6 +86,7 @@
     <flow id="f4">
       <priority>11</priority>
       <deadline>54</deadline>
+      <period>36</period>
       <path>
         <nodeId>2</nodeId>
         <nodeId>3</nodeId>
@@ -91,6 +99,7 @@
     <flow id="f5">
       <priority>12</priority>
       <deadline>45</deadline>
+      <period>36</period>
       <path>
         <nodeId>2</nodeId>
         <nodeId>3</nodeId>

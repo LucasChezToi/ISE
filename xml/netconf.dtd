@@ -1,4 +1,6 @@
 <!ELEMENT netconf (links,nodes,flows)>
+
+<!-- Elements fils de root (netconf) -->
 <!ELEMENT links (maxTime, minTime?)>
 <!ELEMENT nodes (node+)>
 <!ELEMENT flows (flow+)>
@@ -10,16 +12,18 @@
 <!-- Si forFlow pas mis => Valeur par défault -->
 <!ATTLIST computeTime forFlow IDREF #IMPLIED> 
 
-<!ELEMENT flow (priority,deadline,path)>
+<!ELEMENT flow (priority,deadline,period?,jitter?,path)>
 <!ATTLIST flow id ID #REQUIRED>
 
+<!-- Elements d'un flow -->
 <!ELEMENT priority (#PCDATA)>
 <!ELEMENT deadline (#PCDATA)>
 <!ELEMENT path (nodeId+)>
 <!ELEMENT nodeId (#PCDATA)>
 <!ELEMENT maxTime (#PCDATA)>
 <!ELEMENT minTime (#PCDATA)>
-
+<!ELEMENT period (#PCDATA)>
+<!ELEMENT jitter (#PCDATA)>
 
 
 
