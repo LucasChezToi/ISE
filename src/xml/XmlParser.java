@@ -48,30 +48,35 @@ public class XmlParser {
     * Parse les informations concernant le fichier xml d'entrée
     */
    public void parse() {
-	   racine = document.getRootElement().getChild("flows");
+	   racine = document.getRootElement();
+	   Element flows = document.getRootElement().getChild("flows");
+	   Element links = document.getRootElement().getChild("links");
+	   
 	   int flowNumber = 0;
-		  for(Element e : racine.getChildren("flow")) {
-			  Flow tempFlow = new Flow();
-			  tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
-			  if(e.getChild("jitter") == null)
-				  tempFlow.setJitter(0);
-			  else 
-				  tempFlow.setJitter(Integer.parseInt(e.getChildText("jitter")));
-			  for(Element e1 : e.getChild("path").getChildren()) {
-				  Node node = new Node();
-				  node.setId(Integer.parseInt(e1.getText()));
-			  }
-			  // Période = Deadline
-			  tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
-			  tempFlow.setPeriod(Integer.parseInt(e.getChildText("period")));
-			  tempFlow.setPriority(Integer.parseInt(e.getChildText("priority")));
-			  network.addFlow(tempFlow);
-			  System.out.println("Flow instance : " + flowNumber++);
-			  System.out.println("Deadline : " + tempFlow.getDeadline());
-			  System.out.println("Jitter : " + tempFlow.getJitter());
-			  System.out.println("Period : " + tempFlow.getPeriod());
-			  System.out.println("Priority : " + tempFlow.getPriority() + "\n");
-		  }
+	   for(Element e : flows.getChildren("flow")) {
+		   Flow tempFlow = new Flow();
+		   tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
+			if(e.getChild("jitter") == null)
+				tempFlow.setJitter(0);
+			else 
+				tempFlow.setJitter(Integer.parseInt(e.getChildText("jitter")));
+			for(Element e1 : e.getChild("path").getChildren()) {
+				Node node = new Node();
+				node.setId(Integer.parseInt(e1.getText()));
+			}
+			// Période = Deadline
+			tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
+			tempFlow.setPeriod(Integer.parseInt(e.getChildText("period")));
+			tempFlow.setPriority(Integer.parseInt(e.getChildText("priority")));
+			network.addFlow(tempFlow);
+			System.out.println("Flow instance : " + flowNumber++);
+			System.out.println("Deadline : " + tempFlow.getDeadline());
+			System.out.println("Jitter : " + tempFlow.getJitter());
+			System.out.println("Period : " + tempFlow.getPeriod());
+			System.out.println("Priority : " + tempFlow.getPriority() + "\n");
+	   }
+	   network.setLmax(Integer.parseInt(links.getChildText("maxTime")));
+	   network.setLmin(Integer.parseInt(links.getChildText("minTime")));
    }
    
   /**
