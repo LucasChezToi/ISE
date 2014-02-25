@@ -2,6 +2,8 @@ package ise;
 
 import java.util.List;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
+
 public class Algorithm {
 	private Network net;
 	private List<Integer> integer;
@@ -62,6 +64,10 @@ public class Algorithm {
 		return result;
 	}
 	
+	int computeARestrictedToH(Flow i, Flow j, Node H) {
+		return 0;
+	}
+	
 	int computeBetaSlow(Flow i) {
 		return 0;
 	}
@@ -95,7 +101,7 @@ public class Algorithm {
 			w0+=slow.getCapacity().get(j);
 		}
 		Node slow = slowestNodeVisitedByIonHisPathRestrictedToH(i, h);
-		w0+=(1+Math.floor(((double)(t+i.getJitter()))/(double)(i.getPeriod()))) * slow.getCapacity().get(i); 
+		w0+=(1+(int)Math.floor(((double)(t+i.getJitter()))/(double)(i.getPeriod()))) * slow.getCapacity().get(i); 
 		Path p = i.getPath().pathRestrictedToH(h);
 		for(Node k : p.getNodes()) {
 			if (k!=slow) {
@@ -131,6 +137,69 @@ public class Algorithm {
 	
 	int subfunction_computeW_nextof_sequence(Flow i, int t, Node h, int w1){
 		int w2 = 0;
+		for(Flow j : i.getHigherPriorityFlows()) {
+			Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
+			/* Please note that this is lastijh and not last"jih" */
+			Node lastijh = lastNodeVisitedByJonIRestrictedToH(i, j, h);
+			int val = 0;
+			if (lastijh == h) {
+				val = 1 + (int) Math.floor((double)(w1-minTimeTakenFromSourceToH(j, h)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+			} else {
+				/* Please note that this implementation considers W_{i,t}^{last_{i,j}^h} = W_{i,t}^{h (p)} */
+				/* This explains the w1 in the following instruction */
+				val = 1 + (int) Math.floor((double)(w1-minTimeTakenFromSourceToH(j, lastijh)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+			}
+			if(val<0){
+				val = 0;
+			}
+			w2 += val * slow.getCapacity().get(j);
+		}
+		for(Flow j : i.getSamePriorityFlows()) {
+			Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
+			Node firstjih = firstNodeVisitedByJonIRestrictedToH(j, i, h);
+			int val = 1 + (int) Math.floor((double)(t+maxTimeTakenFromSourceToH(i, firstjih)-minTimeTakenFromSourceToH(j, firstjih)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+			if(val<0){
+				val = 0;
+			}
+			w2 += val * slow.getCapacity().get(j);
+		}
+		Node slow = slowestNodeVisitedByIonHisPathRestrictedToH(i, h);
+		Node firsti = i.getPath().getNodes().get(0);
+		int val = 1 + (int) Math.floor((double)(t+maxTimeTakenFromSourceToH(i, firsti)-minTimeTakenFromSourceToH(i, firsti)+computeARestrictedToH(i, i, h))/(double)(i.getJitter()));
+		if(val<0){
+			val = 0;
+		}
+		w2 += val * slow.getCapacity().get(i);
+		Path p = i.getPath().pathRestrictedToH(h);
+		for(Node k : p.getNodes()) {
+			if(k != slow){
+				int max = 0;
+				for(Flow j : i.getHigherPriorityFlows()) {
+					if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
+						int cap = k.getCapacity().get(j);
+						if(cap>max) {
+							max = cap;
+						}
+					}
+				}
+				for(Flow j : i.getSamePriorityFlows()) {
+					if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
+						int cap = k.getCapacity().get(j);
+						if(cap>max) {
+							max = cap;
+						}
+					}
+				}
+				int cap = k.getCapacity().get(i);
+				if(cap>max) {
+					max = cap;
+				}
+				w2+= max;
+			}
+		}
+		w2-=h.getCapacity().get(i);
+		w2+=computeDelta(i, h);
+		w2+=(p.getNodes().size() - 1)*net.getLmax();
 		return w2;
 	}
 }
