@@ -113,7 +113,53 @@ public class Algorithm {
 	int computeBetaSlow(Flow i) {
 		return 0;
 	}
-	
+	public long beta_i_slow(int []ti, int [] ci,long lcm){
+		 long beta=cofficient(ti,ci, lcm);
+		 if (beta<lcm)
+			 return beta;
+		 else
+			 return 0;
+		 
+	 }
+	 public long cofficient(int []ti, int [] ci, long lcm){
+		 long sum =0 ;
+	    
+	    System.out.println(lcm);
+	    for  (int i =1; i< ti.length; i++){
+	    	sum+=lcm*ci[i]/ti[i];
+	    }
+		 
+		 return sum;
+		 
+	 }
+	 
+	 public long lCMf4Ti(int []ti){
+		 long lcm;
+		 lcm = ti[0];
+		 for  (int i =1; i< ti.length; i++){
+			 lcm = lCM(lcm, ti[i]);
+		 }
+		 return lcm;
+		 
+	 }
+	 
+	 public long lCM(long n, long m){
+		 long lcm = (n == m || n == 1) ? m :(m == 1 ? n : 0);
+	      /* this section increases the value of mm until it is greater  
+	      / than or equal to nn, then does it again when the lesser 
+	      / becomes the greater--if they aren't equal. If either value is 1,
+	      / no need to calculate*/
+	      if (lcm == 0) {
+	         long mm = m, nn = n;
+	         while (mm != nn) {
+	             while (mm < nn) { mm += m; }
+	             while (nn < mm) { nn += n; }
+	         } 
+	         
+	         lcm = mm;
+	      }
+	      return lcm;
+	 }
 	int computeDelta(Flow i, Node h) {
 		return 0;
 	}
