@@ -2,8 +2,6 @@ package ise;
 
 import java.util.List;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
-
 public class Algorithm {
 	private Network net;
 	private List<Integer> integer;
