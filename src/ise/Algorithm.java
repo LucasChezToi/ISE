@@ -4,37 +4,80 @@ import java.util.List;
 
 public class Algorithm {
 	private Network net;
-	private List<Integer> integer;
+	private List<Integer> worstCasesResponseTime;
 	
-	public Node firstNodeVisitedByJonI(Path J, Path I) {
+	public Node firstNodeVisitedByJonI(Path j, Path i) {
+		for(int index = 0 ; index< i.getNodes().size() ; index++){
+			if( ! j.getNodes().contains(i.getNodes().get(index)) ){
+				return i.getNodes().get(index);
+			}
+		}
 		return null;
 	}
 	
-	public Node lastNodeVisitedByJonI(Path J, Path I) {
+	public Node lastNodeVisitedByJonI(Path j, Path i) {
+		for(int index = i.getNodes().size()-1 ; index >= 0 ; index--){
+			if( ! j.getNodes().contains(i.getNodes().get(index)) ){
+				return i.getNodes().get(index);
+			}
+		}
 		return null;
 	}
 	
-	public Node firstNodeVisitedByJonI(Flow J, Flow I) {
+	public Node firstNodeVisitedByJonI(Flow j, Flow i) {
+		return this.firstNodeVisitedByJonI(j.getPath(), i.getPath());
+	}
+	
+	public Node lastNodeVisitedByJonI(Flow j, Flow i) {
+		return this.lastNodeVisitedByJonI(j.getPath(), i.getPath());
+	}
+	
+	public Node firstNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) {
+		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
+		List<Node> jNodesList = j.getPath().getNodes();
+				
+		for(int index = 0 ; index< iSubNodesList.size() ; index++){
+			if( ! jNodesList.contains(iSubNodesList.get(index)) ){
+				return iSubNodesList.get(index);
+			}
+		}
 		return null;
 	}
 	
-	public Node lastNodeVisitedByJonI(Flow J, Flow I) {
+	public Node lastNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) {
+		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
+		List<Node> jNodesList = j.getPath().getNodes();
+				
+		for(int index = iSubNodesList.size()-1 ; index >=0 ; index--){
+			if( ! jNodesList.contains(iSubNodesList.get(index)) ){
+				return iSubNodesList.get(index);
+			}
+		}
 		return null;
 	}
 	
-	public Node firstNodeVisitedByJonIRestrictedToH(Flow J, Flow I, Node H) {
-		return null;
-	}
-	
-	public Node lastNodeVisitedByJonIRestrictedToH(Flow J, Flow I, Node H) {
-		return null;
-	}	
 	public int minTimeTakenFromSourceToH(Flow f, Node h) {
-		return 0;
+		int res = 0;
+		
+		res = net.getLmin() * (f.getPath().getNodes().size() - 1);
+		
+		for(int i=1; i < f.getPath().getNodes().size() 
+				&& (f.getPath().getNodes().get(i+1) != h); i++ ){
+			res += f.getPath().getNodes().get(i).getCapacity().get(f);
+		}
+		return res;
 	}
 	
 	public int maxTimeTakenFromSourceToH(Flow f, Node h) {
-		return 0;
+		int res = 0;
+		res = net.getLmax() * (f.getPath().getNodes().size() - 1);
+		Node currNode;
+		for(int i=1; i < f.getPath().getNodes().size() 
+				&& (f.getPath().getNodes().get(i+1) != h); i++ ){
+			currNode = f.getPath().getNodes().get(i);
+			res += currNode.getCapacity().get(f);
+		}
+		return res;
 	}
 	
 	Node slowestNodeVisitedByJonI(Flow i, Flow j) {
