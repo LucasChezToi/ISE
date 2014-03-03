@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE netconf SYSTEM "netconf.dtd">
+
+<!-- Exemple servant à tester quelques fonctions -->
+
+<!--
+	Cas à tester
+		// Cas premiere node de i et j
+		// Cas premiere node de i 
+		// Cas premiere node de j
+		
+		// Cas derniere node de i et j
+		// Cas derniere node de i 
+		// Cas derniere node de j 
+		
+		// Cas general
+-->
+
+<netconf>
+  <links>
+    <maxTime>1</maxTime>
+    <minTime>1</minTime>
+  </links>
+  <nodes>
+    <!-- Note : les attributs ne peuvent pas commencer par des chiffre -->
+    <node id="n1">
+      <!-- Si l'attribut forFlow n'est pas defini, on a un compute time par default-->
+      <computeTime forFlow="f1">4</computeTime>
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n2">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n3">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n4">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n5">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n6">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n7">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n8">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n9">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n10">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n11">
+      <computeTime>4</computeTime>
+    </node>
+    <node id="n12">
+      <computeTime>4</computeTime>
+    </node>
+  </nodes>
+  <flows>
+    <flow id="f1">
+      <priority>11</priority>
+      <deadline>54</deadline>
+      <period>36</period>
+      <jitter>0</jitter>
+      <path>
+      	<nodeId>n1</nodeId>
+      	<nodeId>n3</nodeId>
+      	<nodeId>n2</nodeId>
+      	<nodeId>n11</nodeId>
+      </path>
+    </flow>
+    <flow id="f2">
+      <priority>11</priority>
+      <deadline>54</deadline>
+      <period>36</period>
+      <path>
+      	<nodeId>n9</nodeId>
+      	<nodeId>n10</nodeId>
+      	<nodeId>n7</nodeId>
+      	<nodeId>n4</nodeId>
+      	<nodeId>n5</nodeId>
+      </path>
+    </flow>
+    <flow id="f3">
+      <priority>11</priority>
+      <deadline>54</deadline>
+      <period>36</period>
+      <path>
+        <nodeId>n2</nodeId>
+      	<nodeId>n3</nodeId>
+      	<nodeId>n4</nodeId>
+      	<nodeId>n7</nodeId>
+      	<nodeId>n10</nodeId>
+      </path>
+    </flow>
+    <flow id="f4">
+      <priority>11</priority>
+      <deadline>54</deadline>
+      <period>36</period>
+      <path>
+      	<nodeId>n2</nodeId>
+      	<nodeId>n3</nodeId>
+      	<nodeId>n4</nodeId>
+      	<nodeId>n7</nodeId>
+      	<nodeId>n10</nodeId>
+      </path>
+    </flow>
+    <flow id="f5">
+      <priority>11</priority>
+      <deadline>54</deadline>
+      <period>36</period>
+      <path>
+      	<nodeId>n8</nodeId>
+      	<nodeId>n12</nodeId>
+      	<nodeId>n10</nodeId>
+      </path>
+    </flow>
+    <flow id="f6">
+      <priority>11</priority>
+      <deadline>54</deadline>
+      <period>36</period>
+      <path>
+      	<nodeId>n5</nodeId>
+      	<nodeId>n1</nodeId>
+      	<nodeId>n3</nodeId>
+      	<nodeId>n12</nodeId>
+      </path>
+    </flow>
+    <flow id="f7">
+      <priority>11</priority>
+      <deadline>54</deadline>
+      <period>36</period>
+      <path>
+      	<nodeId>n2</nodeId>
+      	<nodeId>n11</nodeId>
+      </path>
+    </flow>
+  </flows>
+</netconf>
