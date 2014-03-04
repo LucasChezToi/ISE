@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.*;
 import ise.Flow;
 import ise.Network;
+import ise.Node;
 import ise.Path;
 
 import org.junit.Before;
@@ -41,6 +42,14 @@ public class TestParser2 {
 			assertNotNull(flow.getPath());
 			assertEquals(11, flow.getPriority());
 			assertEquals(54, flow.getDeadline());
+		}
+	}
+	
+	@Test
+	public void testFlowsIds() {
+		assertEquals(7, network.getFlows());
+		for(int i=0 ; i<network.getFlows().size() ; i++){
+			assertEquals("f" + (i+1), network.getFlows().get(i));
 		}
 	}
 	
@@ -111,5 +120,16 @@ public class TestParser2 {
 		assertEquals(network.getNodes().get(1), path.getNodes().get(0));
 		assertEquals(network.getNodes().get(10), path.getNodes().get(1));
 		
+	}
+	
+	@Test
+	public void testNodesIds() {
+		Node node;
+		assertEquals(12, network.getNodes().size());
+		for(int i=0 ; i<network.getNodes().size() ; i++){
+			node = network.getNodes().get(i);
+			assertNotNull(node);
+			assertEquals("n" + (i+1), node.getId());
+		}
 	}
 }

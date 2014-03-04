@@ -321,20 +321,25 @@ public class TestFirstLast {
 	/*
 	 *firstNodeVisitedByJonIRestrictedToH
 	 */
-	/*
-	 * cas h premiere node de 
-	 * 	i mais pas j
-	 *  j mais pas i
-	 *  i et j
-	 *  
-	 * cas h derniere node de 
-	 * 	i mais pas j
-	 *  j mais pas i
-	 *  i et j
-	 *  
-	 *  cas pas de nodes en commun
-	 *  cas pas de node en commun avant h (mais en a après)
-	 * */
+	@Test
+	public void testFirstNodeVisitedByJonIRestrictedToH() throws NodeDoesNotExistException {
+		/*
+		 * TODO A tester
+		 * cas h premiere node de 
+		 * 	i mais pas j
+		 *  j mais pas i
+		 *  i et j
+		 *  
+		 * cas h derniere node de 
+		 * 	i mais pas j
+		 *  j mais pas i
+		 *  i et j
+		 *  
+		 *  cas pas de nodes en commun
+		 *  cas pas de node en commun avant h (mais en a après)
+		 * */
+	}
+	
 	
 
 }
