@@ -185,11 +185,18 @@ public class Algorithm {
 	
 	int computeA(Flow i, Flow j) {
 		int jitter = j.getJitter();
-		Node first = firstNodeVisitedByJonI(i, j);
-		int m = computeM(i, first);
-		int smax = maxTimeTakenFromSourceToH(j, first);
-		int result = smax - m + jitter;
-		return result;
+		try {
+			Node first = firstNodeVisitedByJonI(i, j);
+			int m = computeM(i, first);
+			int smax = maxTimeTakenFromSourceToH(j, first);
+			int result = smax - m + jitter;
+			return result;
+		} catch (NodeDoesNotExistException e) {
+			// TODO: handle exception
+			System.err.println("computeA");
+			e.printStackTrace();
+			return 0;
+		}
 	}
 	
 	int computeARestrictedToH(Flow i, Flow j, Node H) {
@@ -204,8 +211,6 @@ public class Algorithm {
 		int count = 0;
 		int beta;
 		
-		
-		
 		allS  = new ArrayList<Flow>();
 		allE  = new ArrayList<Flow>();
 		
@@ -214,13 +219,27 @@ public class Algorithm {
 		
 		for (Flow flow : allS){
 			ti[count] = flow.getPeriod();
-			ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			try {
+				ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				ci[count] = 0;
+				System.err.println("computeBetaSlow");
+				e.printStackTrace();
+			}
 			count ++;
 		}
 
 		for (Flow flow : allE){
 			ti[count] = flow.getPeriod();
-			ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			try {
+				ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				ci[count] = 0;
+				System.err.println("computeBetaSlow");
+				e.printStackTrace();
+			}
 			count ++;
 		}
 			
