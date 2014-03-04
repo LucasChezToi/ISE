@@ -6,32 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.*;
 
+import xml.XmlParser;
+
 public class Algorithm {
 	private Network net;
 	private List<Integer> worstCasesResponseTime;
-	protected static Logger logger = Logger.getLogger("ise.Algorithm");
 	
 	public Algorithm(){
-		Handler fh;
-		try {
-			fh = new FileHandler("WorstCaseEndToEndResponse_Log.log");
-			logger.addHandler(fh);
-		} catch (SecurityException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public Algorithm(Network net){
 		this.net = net;
-		Handler fh;
-		try {
-			fh = new FileHandler("WorstCaseEndToEndResponse_Log.log");
-			logger.addHandler(fh);
-		} catch (SecurityException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public Network getNet() {
@@ -216,7 +201,7 @@ public class Algorithm {
 		} catch (NodeDoesNotExistException e) {
 			// TODO: handle exception
 			System.err.println("computeA");
-			logger.log(Level.WARNING, "Fonction : computeA, "
+			XmlParser.logger.log(Level.WARNING, "Fonction : computeA, "
 					+ "Erreur : " + e.getClass().getName()
 					+ ", Message : " + e.getMessage());
 			e.printStackTrace();
@@ -250,7 +235,7 @@ public class Algorithm {
 				// TODO: handle exception
 				ci[count] = 0;
 				System.err.println("computeBetaSlow");
-				logger.log(Level.WARNING, "Fonction : computeBetaSlow, "
+				XmlParser.logger.log(Level.WARNING, "Fonction : computeBetaSlow, "
 						+ "Erreur : " + e.getClass().getName()
 						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
@@ -266,7 +251,7 @@ public class Algorithm {
 				// TODO: handle exception
 				ci[count] = 0;
 				System.err.println("computeBetaSlow");
-				logger.log(Level.WARNING, "Fonction : computeBetaSlow, "
+				XmlParser.logger.log(Level.WARNING, "Fonction : computeBetaSlow, "
 						+ "Erreur : " + e.getClass().getName()
 						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
@@ -343,7 +328,7 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("computeDelta");
-				logger.log(Level.WARNING, "Fonction : computeDelta, "
+				XmlParser.logger.log(Level.WARNING, "Fonction : computeDelta, "
 						+ "Erreur : " + e.getClass().getName()
 						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
@@ -364,7 +349,7 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("computeDelta");
-						logger.log(Level.WARNING, "Fonction : computeDelta, "
+						XmlParser.logger.log(Level.WARNING, "Fonction : computeDelta, "
 								+ "Erreur : " + e.getClass().getName()
 								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
@@ -385,7 +370,7 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("computeDelta");
-						logger.log(Level.WARNING, "Fonction : computeDelta, "
+						XmlParser.logger.log(Level.WARNING, "Fonction : computeDelta, "
 								+ "Erreur : " + e.getClass().getName()
 								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
@@ -406,7 +391,7 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("computeDelta");
-						logger.log(Level.WARNING, "Fonction : computeDelta, "
+						XmlParser.logger.log(Level.WARNING, "Fonction : computeDelta, "
 								+ "Erreur : " + e.getClass().getName()
 								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
@@ -422,7 +407,7 @@ public class Algorithm {
 					} catch (NodeDoesNotHavePredecessor
 							| NodeDoesNotExistException e) {
 						// TODO Auto-generated catch block
-						logger.log(Level.WARNING, "Fonction : computeDelta, "
+						XmlParser.logger.log(Level.WARNING, "Fonction : computeDelta, "
 								+ "Erreur : " + e.getClass().getName()
 								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
@@ -458,7 +443,7 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("subfunction_computeW_initialize_sequence");
-				logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
+				XmlParser.logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
 						+ "Erreur : " + e.getClass().getName()
 						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
@@ -471,7 +456,7 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("subfunction_computeW_initialize_sequence");
-				logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
+				XmlParser.logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
 						+ "Erreur : " + e.getClass().getName()
 						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
@@ -494,7 +479,7 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("subfunction_computeW_initialize_sequence");
-						logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
+						XmlParser.logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
 								+ "Erreur : " + e.getClass().getName()
 								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
@@ -511,7 +496,7 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("subfunction_computeW_initialize_sequence");
-						logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
+						XmlParser.logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
 								+ "Erreur : " + e.getClass().getName()
 								+ ", Message : " + e.getMessage());
 						e.printStackTrace();					
@@ -550,7 +535,7 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("subfunction_computeW_nextof_sequence");
-				logger.log(Level.WARNING, "Fonction : subfunction_computeW_nextof_sequence, "
+				XmlParser.logger.log(Level.WARNING, "Fonction : subfunction_computeW_nextof_sequence, "
 						+ "Erreur : " + e.getClass().getName()
 						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
@@ -568,7 +553,7 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("subfunction_computeW_nextof_sequence");
-				logger.log(Level.WARNING, "Fonction : subfunction_computeW_nextof_sequence, "
+				XmlParser.logger.log(Level.WARNING, "Fonction : subfunction_computeW_nextof_sequence, "
 						+ "Erreur : " + e.getClass().getName()
 						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
@@ -596,7 +581,7 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("subfunction_computeW_nextof_sequence");
-						logger.log(Level.WARNING, "Fonction : subfunction_computeW_nextof_sequence, "
+						XmlParser.logger.log(Level.WARNING, "Fonction : subfunction_computeW_nextof_sequence, "
 								+ "Erreur : " + e.getClass().getName()
 								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
@@ -613,7 +598,7 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("subfunction_computeW_nextof_sequence");
-						logger.log(Level.WARNING, "Fonction : subfunction_computeW_nextof_sequence, "
+						XmlParser.logger.log(Level.WARNING, "Fonction : subfunction_computeW_nextof_sequence, "
 								+ "Erreur : " + e.getClass().getName()
 								+ ", Message : " + e.getMessage());
 						e.printStackTrace();

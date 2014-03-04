@@ -1,5 +1,6 @@
 package xml;
 
+import ise.Algorithm;
 import ise.Flow;
 import ise.Network;
 import ise.Node;
@@ -14,6 +15,10 @@ import org.jdom2.input.SAXBuilder;
 
 import java.util.List;
 import java.util.Iterator;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Classe représentant le parseur afin de capturer les informations
@@ -24,9 +29,10 @@ public class XmlParser {
    private static Element racine;
    private SAXBuilder sxb;
    private Network network;
+   public static Logger logger = Logger.getLogger("xml.XmlParser");
    
    public Network getNetwork() {
-	return network;
+	   return network;
    }
 
    public void setNetwork(Network network) {
@@ -39,9 +45,21 @@ public class XmlParser {
     */
    public XmlParser(String file) {
 	   sxb = new SAXBuilder();
+		Handler fh;
+		try {
+			fh = new FileHandler("WorstCaseEndToEndResponse_Log.log");
+			logger.addHandler(fh);
+		} catch (SecurityException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	   try {
 		   document = sxb.build(new File(file));
-	  } catch(Exception e){}
+	  } catch(Exception e){
+		  logger.log(Level.WARNING, "Fonction : XmlParser"
+		  		+ ", Erreur : " + e.getClass().getName()
+				+ ", Message : " + e.getMessage());
+	  }
 	   network = new Network();
    }
    
