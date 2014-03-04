@@ -12,7 +12,16 @@ public class Flow {
 	private List<Flow> higherPriorityFlows;
 	private List<Flow> samePriorityFlows;
 	private List<Flow> LowerPriorityFlows;
+	private String id;
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public Flow() {
 		super();
 		higherPriorityFlows = new ArrayList<Flow>();
@@ -20,13 +29,14 @@ public class Flow {
 		LowerPriorityFlows = new ArrayList<Flow>();
 	}
 	
-	public Flow(Path path, int priority, int deadline, int periode, int jitter) {
+	public Flow(Path path, int priority, int deadline, int periode, int jitter, String id) {
 		super();
 		this.path = path;
 		this.priority = priority;
 		this.deadline = deadline;
 		this.period = periode;
 		this.jitter = jitter;
+		this.id = id;
 	}
 	
 	public Path getPath() {

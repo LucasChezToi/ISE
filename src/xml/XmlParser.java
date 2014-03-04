@@ -69,6 +69,7 @@ public class XmlParser {
 				tempPath.setNode(node);
 			}
 			tempFlow.setPath(tempPath);
+			tempFlow.setId(e.getText());
 			tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
 			tempFlow.setPeriod(Integer.parseInt(e.getChildText("period")));
 			tempFlow.setPriority(Integer.parseInt(e.getChildText("priority")));
