@@ -274,9 +274,15 @@ public class Algorithm {
 		int delta = 0;
 		int max = 0;
 		for (Flow j : i.getLowerPriorityFlows()) {
-			if (firstNodeVisitedByJonI(j, i) == firsti) {
-				int cap = firsti.getCapacity().get(j);
-				max = Math.max(max, cap);
+			try {
+				if (firstNodeVisitedByJonI(j, i) == firsti) {
+					int cap = firsti.getCapacity().get(j);
+					max = Math.max(max, cap);
+				}
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				System.err.println("computeDelta");
+				e.printStackTrace();
 			}
 		}
 		if(max - 1 > 0){
@@ -286,34 +292,54 @@ public class Algorithm {
 			if (h != firsti) {
 				max = 0;
 				for (Flow j : i.getLowerPriorityFlows()) {
-					if (firstNodeVisitedByJonI(j, i) == h) {
-						int cap = h.getCapacity().get(j);
-						max = Math.max(max, cap);
-					}
-					if(max - 1 > 0) {
-						delta+=max-1;
-					}
-				}
-				max = 0;
-				for (Flow j : i.getLowerPriorityFlows()) {
-					if (firstNodeVisitedByJonI(j, i)!= h) { 
-						if (firstNodeVisitedByJonI(j, i) != firstNodeVisitedByJonI(i, j)) {
+					try {
+						if (firstNodeVisitedByJonI(j, i) == h) {
 							int cap = h.getCapacity().get(j);
 							max = Math.max(max, cap);
 						}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("computeDelta");
+						e.printStackTrace();
 					}
-					if(max - 1 > 0) {
-						delta+=max-1;
-					}
+				}
+				if(max - 1 > 0) {
+					delta+=max-1;
 				}
 				max = 0;
 				for (Flow j : i.getLowerPriorityFlows()) {
-					if (firstNodeVisitedByJonI(j, i)!= h) { 
-						if (firstNodeVisitedByJonI(j, i) == firstNodeVisitedByJonI(i, j)) {
-							int cap = h.getCapacity().get(j);
-							max = Math.max(max, cap);
+					try {
+						if (firstNodeVisitedByJonI(j, i)!= h) { 
+							if (firstNodeVisitedByJonI(j, i) != firstNodeVisitedByJonI(i, j)) {
+								int cap = h.getCapacity().get(j);
+								max = Math.max(max, cap);
+							}
 						}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("computeDelta");
+						e.printStackTrace();
 					}
+				}
+				if(max - 1 > 0) {
+					delta+=max-1;
+				}
+				max = 0;
+				for (Flow j : i.getLowerPriorityFlows()) {
+					try {
+						if (firstNodeVisitedByJonI(j, i)!= h) { 
+							if (firstNodeVisitedByJonI(j, i) == firstNodeVisitedByJonI(i, j)) {
+								int cap = h.getCapacity().get(j);
+								max = Math.max(max, cap);
+							}
+						}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("computeDelta");
+						e.printStackTrace();
+					}
+				}
+				if (i.getLowerPriorityFlows().size() != 0) {
 					int val = max - nodePreceedingHinFlowI(i, h).getCapacity().get(i) + net.getLmax() - net.getLmin();
 					if( val > 0) {
 						delta+=val;
