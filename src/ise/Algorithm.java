@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.security.auth.login.FailedLoginException;
-
 public class Algorithm {
 	private Network net;
 	private List<Integer> worstCasesResponseTime;
@@ -179,11 +177,18 @@ public class Algorithm {
 	
 	int computeA(Flow i, Flow j) {
 		int jitter = j.getJitter();
-		Node first = firstNodeVisitedByJonI(i, j);
-		int m = computeM(i, first);
-		int smax = maxTimeTakenFromSourceToH(j, first);
-		int result = smax - m + jitter;
-		return result;
+		try {
+			Node first = firstNodeVisitedByJonI(i, j);
+			int m = computeM(i, first);
+			int smax = maxTimeTakenFromSourceToH(j, first);
+			int result = smax - m + jitter;
+			return result;
+		} catch (NodeDoesNotExistException e) {
+			// TODO: handle exception
+			System.err.println("computeA");
+			e.printStackTrace();
+			return 0;
+		}
 	}
 	
 	int computeARestrictedToH(Flow i, Flow j, Node H) {
