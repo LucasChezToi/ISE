@@ -57,7 +57,7 @@ public class XmlParser {
 		   document = sxb.build(new File(file));
 	  } catch(Exception e){
 		  logger.log(Level.WARNING, "Fonction : XmlParser"
-		  		+ ", Erreur : " + e.getClass().getName()
+		  		+ ", Classe : " + e.getClass().getName()
 				+ ", Message : " + e.getMessage());
 	  }
 	   network = new Network();
@@ -109,11 +109,17 @@ public class XmlParser {
   public static void main (String [] arg) {
 	  if(arg.length != 1) {
 		  System.err.println("Aucun fichier en entrée référencé");
+		  logger.log(Level.SEVERE, ", Classe : XmlParser"
+				    + ", Fonction : main"
+					+ ", Message : Aucun fichier en entrée du programme");
 	  	  System.exit(0);
 	  }
 	  
 	  if(!arg[0].contains(".xml")) {
 		  System.err.println("Mauvais format de fichier (nécessite un fichier xml)");
+		  logger.log(Level.SEVERE, "Classe : XmlParser"
+				    + ", Fonction : main"
+					+ ", Message : Fichier en entrée non reconnu (format xml attendu)");
 	  	  System.exit(1);
 	  }
 	  XmlParser parser = new XmlParser(arg[0]);
