@@ -48,6 +48,7 @@ public class Algorithm {
 		return this.lastNodeVisitedByJonI(j.getPath(), i.getPath());
 	}
 	
+	/* On restreint le chemin du flot i */
 	public Node firstNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
 		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
 		List<Node> jNodesList = j.getPath().getNodes();
