@@ -95,16 +95,68 @@ public class Algorithm {
 		return res;
 	}
 	
-	Node slowestNodeVisitedByJonI(Flow i, Flow j) {
-		return null;
+	/*  Dans le papier : slowest node visited by flow i on path j
+	 *  la capacité comparé est celle de j
+	 *  S'il existe plusieurs nodes avec la plus faible capacité
+	 *  on choisi la dernière sur le chemin*/
+	Node slowestNodeVisitedByJonI(Flow i, Flow j) throws NodeDoesNotExistException {
+		Node res = null;
+		List<Node> nodesI = i.getPath().getNodes();
+		List<Node> nodesJ = j.getPath().getNodes();
+		
+		for(int index = 0 ; index< nodesI.size() ; index++){
+			if( nodesJ.contains(nodesI.get(index)) ){
+				if(res == null){
+					res = nodesI.get(index);
+				}else{
+					if(nodesI.get(index).getCapacity().get(j) > res.getCapacity().get(j)){
+						res = nodesI.get(index);
+					}
+				}
+			}
+		}
+		
+		if(res != null){
+			throw new NodeDoesNotExistException();
+		}else{
+			return res;
+		}
 	}
 	
-	Node slowestNodeVisitedByIonHisPathRestrictedToH(Flow I, Node H) {
-		return null;
+	Node slowestNodeVisitedByIonHisPathRestrictedToH(Flow i, Node h) {
+		Node res = i.getPath().getNodes().get(0);
+		for(Node node : i.getPath().getNodes()){
+			if(node.getCapacity().get(i) > res.getCapacity().get(i)){
+				res = node;
+			}
+		}
+		return res;
 	}
 	
-	Node slowestNodeVisitedByJonIRestrictedToH(Flow J, Flow I, Node H) {
-		return null;
+	/**/
+	Node slowestNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
+		Node res = null;
+		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
+		//List<Node> nodesI = i.getPath().getNodes();
+		List<Node> nodesJ = j.getPath().getNodes();
+		
+		for(int index = 0 ; index< iSubNodesList.size() ; index++){
+			if( nodesJ.contains(iSubNodesList.get(index)) ){
+				if(res == null){
+					res = iSubNodesList.get(index);
+				}else{
+					if(iSubNodesList.get(index).getCapacity().get(j) > res.getCapacity().get(j)){
+						res = iSubNodesList.get(index);
+					}
+				}
+			}
+		}
+		
+		if(res != null){
+			throw new NodeDoesNotExistException();
+		}else{
+			return res;
+		}
 	}
 	
 	int computeM(Flow i, Node h) {
