@@ -142,11 +142,13 @@ public class Algorithm {
 		
 		for (Flow flow : allS){
 			ti[count] = flow.getPeriod();
+			ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
 			count ++;
 		}
 
 		for (Flow flow : allE){
 			ti[count] = flow.getPeriod();
+			ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
 			count ++;
 		}
 			
