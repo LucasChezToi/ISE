@@ -7,6 +7,20 @@ public class Algorithm {
 	private Network net;
 	private List<Integer> worstCasesResponseTime;
 	
+	public Algorithm(){}
+	
+	public Algorithm(Network net){
+		this.net = net;
+	}
+	
+	public Network getNet() {
+		return net;
+	}
+
+	public void setNet(Network net) {
+		this.net = net;
+	}
+
 	public Node firstNodeVisitedByJonI(Path j, Path i) {
 		for(int index = 0 ; index< i.getNodes().size() ; index++){
 			if( ! j.getNodes().contains(i.getNodes().get(index)) ){
