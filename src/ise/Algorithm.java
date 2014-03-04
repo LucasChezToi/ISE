@@ -101,7 +101,7 @@ public class Algorithm {
 	/*  Dans le papier : slowest node visited by flow i on path j
 	 *  la capacité comparé est celle de j
 	 *  S'il existe plusieurs nodes avec la plus faible capacité
-	 *  on choisi la dernière sur le chemin*/
+	 *  on choisit la dernière sur le chemin */
 	Node slowestNodeVisitedByJonI(Flow i, Flow j) throws NodeDoesNotExistException {
 		Node res = null;
 		List<Node> nodesI = i.getPath().getNodes();
