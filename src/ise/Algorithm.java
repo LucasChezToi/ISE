@@ -21,33 +21,33 @@ public class Algorithm {
 		this.net = net;
 	}
 
-	public Node firstNodeVisitedByJonI(Path j, Path i) {
+	public Node firstNodeVisitedByJonI(Path j, Path i) throws NodeDoesNotExistException {
 		for(int index = 0 ; index< i.getNodes().size() ; index++){
 			if( ! j.getNodes().contains(i.getNodes().get(index)) ){
 				return i.getNodes().get(index);
 			}
 		}
-		return null;
+		throw new NodeDoesNotExistException();
 	}
 	
-	public Node lastNodeVisitedByJonI(Path j, Path i) {
+	public Node lastNodeVisitedByJonI(Path j, Path i) throws NodeDoesNotExistException {
 		for(int index = i.getNodes().size()-1 ; index >= 0 ; index--){
 			if( ! j.getNodes().contains(i.getNodes().get(index)) ){
 				return i.getNodes().get(index);
 			}
 		}
-		return null;
+		throw new NodeDoesNotExistException();
 	}
 	
-	public Node firstNodeVisitedByJonI(Flow j, Flow i) {
+	public Node firstNodeVisitedByJonI(Flow j, Flow i) throws NodeDoesNotExistException {
 		return this.firstNodeVisitedByJonI(j.getPath(), i.getPath());
 	}
 	
-	public Node lastNodeVisitedByJonI(Flow j, Flow i) {
+	public Node lastNodeVisitedByJonI(Flow j, Flow i) throws NodeDoesNotExistException {
 		return this.lastNodeVisitedByJonI(j.getPath(), i.getPath());
 	}
 	
-	public Node firstNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) {
+	public Node firstNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
 		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
 		List<Node> jNodesList = j.getPath().getNodes();
 				
@@ -56,10 +56,10 @@ public class Algorithm {
 				return iSubNodesList.get(index);
 			}
 		}
-		return null;
+		throw new NodeDoesNotExistException();
 	}
 	
-	public Node lastNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) {
+	public Node lastNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
 		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
 		List<Node> jNodesList = j.getPath().getNodes();
 				
@@ -68,7 +68,7 @@ public class Algorithm {
 				return iSubNodesList.get(index);
 			}
 		}
-		return null;
+		throw new NodeDoesNotExistException();
 	}
 	
 	public int minTimeTakenFromSourceToH(Flow f, Node h) {
