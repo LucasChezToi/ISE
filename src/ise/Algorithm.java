@@ -164,7 +164,7 @@ public class Algorithm {
 		return 0;
 	}
 	
-	Node nodePreceedingHinFlowI(Flow i, Node h) throws NodeDoesNotHavePredecessor {
+	Node nodePreceedingHinFlowI(Flow i, Node h) throws NodeDoesNotHavePredecessor, NodeIsNotIncludedInThePath {
 		for(int n = 0 ; n < i.getPath().getNodes().size(); n++) {
 			if(h == i.getPath().getNodes().get(n)) {
 				if(n == 0)
@@ -172,7 +172,7 @@ public class Algorithm {
 				return i.getPath().getNodes().get(n - 1);
 			}
 		}
-		return null;
+		throw new NodeIsNotIncludedInThePath();
 	}
 	
 	int computeA(Flow i, Flow j) {
