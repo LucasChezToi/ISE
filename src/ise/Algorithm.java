@@ -28,7 +28,8 @@ public class Algorithm {
 				return i.getNodes().get(index);
 			}
 		}
-		throw new NodeDoesNotExistException();
+		throw new NodeDoesNotExistException("Fonction firstNodeVisitedByJonI : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
 	}
 	
 	public Node lastNodeVisitedByJonI(Path j, Path i) throws NodeDoesNotExistException {
@@ -37,7 +38,8 @@ public class Algorithm {
 				return i.getNodes().get(index);
 			}
 		}
-		throw new NodeDoesNotExistException();
+		throw new NodeDoesNotExistException("Fonction lastNodeVisitedByJonI : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
 	}
 	
 	public Node firstNodeVisitedByJonI(Flow j, Flow i) throws NodeDoesNotExistException {
@@ -58,7 +60,8 @@ public class Algorithm {
 				return iSubNodesList.get(index);
 			}
 		}
-		throw new NodeDoesNotExistException();
+		throw new NodeDoesNotExistException("Fonction firstNodeVisitedByJonIRestrictedToH : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
 	}
 	
 	public Node lastNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
@@ -70,7 +73,8 @@ public class Algorithm {
 				return iSubNodesList.get(index);
 			}
 		}
-		throw new NodeDoesNotExistException();
+		throw new NodeDoesNotExistException("Fonction lastNodeVisitedByJonIRestrictedToH : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
 	}
 	
 	public int minTimeTakenFromSourceToH(Flow f, Node h) {
@@ -119,7 +123,8 @@ public class Algorithm {
 		}
 		
 		if(res != null){
-			throw new NodeDoesNotExistException();
+			throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonI : "
+					+ "la node référencée n'est pas contenue dans le path correspondant");
 		}else{
 			return res;
 		}
@@ -155,7 +160,8 @@ public class Algorithm {
 		}
 		
 		if(res != null){
-			throw new NodeDoesNotExistException();
+			throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonIRestrictedToH : "
+					+ "la node référencée n'est pas contenue dans le path correspondant");
 		}else{
 			return res;
 		}
@@ -165,24 +171,33 @@ public class Algorithm {
 		return 0;
 	}
 	
-	Node nodePreceedingHinFlowI(Flow i, Node h) throws NodeDoesNotHavePredecessor, NodeIsNotIncludedInThePath {
+	Node nodePreceedingHinFlowI(Flow i, Node h) throws NodeDoesNotHavePredecessor, NodeDoesNotExistException {
 		for(int n = 0 ; n < i.getPath().getNodes().size(); n++) {
 			if(h == i.getPath().getNodes().get(n)) {
 				if(n == 0)
-					throw new NodeDoesNotHavePredecessor();
+					throw new NodeDoesNotHavePredecessor("Fonction nodePreceedingHinFlowI : "
+									+ "première node visitée dans le path, elle ne possède donc pas de prédécesseurs directs");
 				return i.getPath().getNodes().get(n - 1);
 			}
 		}
-		throw new NodeIsNotIncludedInThePath();
+		throw new NodeDoesNotExistException("Fonction nodePreceedingHinFlowI : "
+								+ "Le noeud courant n'appartient pas au path renseigné");
 	}
 	
 	int computeA(Flow i, Flow j) {
 		int jitter = j.getJitter();
-		Node first = firstNodeVisitedByJonI(i, j);
-		int m = computeM(i, first);
-		int smax = maxTimeTakenFromSourceToH(j, first);
-		int result = smax - m + jitter;
-		return result;
+		try {
+			Node first = firstNodeVisitedByJonI(i, j);
+			int m = computeM(i, first);
+			int smax = maxTimeTakenFromSourceToH(j, first);
+			int result = smax - m + jitter;
+			return result;
+		} catch (NodeDoesNotExistException e) {
+			// TODO: handle exception
+			System.err.println("computeA");
+			e.printStackTrace();
+			return 0;
+		}
 	}
 	
 	int computeARestrictedToH(Flow i, Flow j, Node H) {
@@ -197,8 +212,6 @@ public class Algorithm {
 		int count = 0;
 		int beta;
 		
-		
-		
 		allS  = new ArrayList<Flow>();
 		allE  = new ArrayList<Flow>();
 		
@@ -207,13 +220,27 @@ public class Algorithm {
 		
 		for (Flow flow : allS){
 			ti[count] = flow.getPeriod();
-			ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			try {
+				ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				ci[count] = 0;
+				System.err.println("computeBetaSlow");
+				e.printStackTrace();
+			}
 			count ++;
 		}
 
 		for (Flow flow : allE){
 			ti[count] = flow.getPeriod();
-			ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			try {
+				ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				ci[count] = 0;
+				System.err.println("computeBetaSlow");
+				e.printStackTrace();
+			}
 			count ++;
 		}
 			
