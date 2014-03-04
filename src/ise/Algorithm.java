@@ -164,10 +164,13 @@ public class Algorithm {
 		return 0;
 	}
 	
-	Node nodePreceedingHinFlowI(Flow i, Node h) {
+	Node nodePreceedingHinFlowI(Flow i, Node h) throws NodeDoesNotHavePredecessor {
 		for(int n = 0 ; n < i.getPath().getNodes().size(); n++) {
-			if(h.equals(i.getPath().getNodes().get(n)))
+			if(h == i.getPath().getNodes().get(n)) {
+				if(n == 0)
+					throw new NodeDoesNotHavePredecessor();
 				return i.getPath().getNodes().get(n - 1);
+			}
 		}
 		return null;
 	}
