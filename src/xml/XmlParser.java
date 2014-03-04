@@ -62,7 +62,7 @@ public class XmlParser {
 				tempFlow.setJitter(Integer.parseInt(e.getChildText("jitter")));
 			for(Element e1 : e.getChild("path").getChildren()) {
 				Node node = new Node();
-				node.setId(Integer.parseInt(e1.getText()));
+				node.setId(e1.getText());
 			}
 			// Période = Deadline
 			tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
