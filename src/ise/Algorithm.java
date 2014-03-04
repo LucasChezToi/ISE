@@ -112,6 +112,16 @@ public class Algorithm {
 		return 0;
 	}
 	
+	Node nodePreceedingHinFlowI(Flow i, Node h) {
+		Node node = null;
+		for(int i = 0; i < net.getNodes().size(); i++) {
+			if(h.equals(net.getNodes().get(i))) {
+				node = net.getNodes().get(i - 1);
+			}
+		}
+		return node;
+	}
+	
 	int computeA(Flow i, Flow j) {
 		int jitter = j.getJitter();
 		Node first = firstNodeVisitedByJonI(i, j);
@@ -177,9 +187,7 @@ public class Algorithm {
 	    for  (int i =1; i< ti.length; i++){
 	    	sum+=lcm*ci[i]/ti[i];
 	    }
-		 
-		 return sum;
-		 
+		return sum;
 	 }
 	 
 	public long lCMf4Ti(int []ti){
