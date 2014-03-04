@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.security.auth.login.FailedLoginException;
+
 public class Algorithm {
 	private Network net;
 	private List<Integer> worstCasesResponseTime;
@@ -196,8 +198,6 @@ public class Algorithm {
 		int count = 0;
 		int beta;
 		
-		
-		
 		allS  = new ArrayList<Flow>();
 		allE  = new ArrayList<Flow>();
 		
@@ -206,13 +206,27 @@ public class Algorithm {
 		
 		for (Flow flow : allS){
 			ti[count] = flow.getPeriod();
-			ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			try {
+				ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				ci[count] = 0;
+				System.err.println("computeBetaSlow");
+				e.printStackTrace();
+			}
 			count ++;
 		}
 
 		for (Flow flow : allE){
 			ti[count] = flow.getPeriod();
-			ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			try {
+				ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				ci[count] = 0;
+				System.err.println("computeBetaSlow");
+				e.printStackTrace();
+			}
 			count ++;
 		}
 			
