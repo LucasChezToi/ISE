@@ -165,13 +165,11 @@ public class Algorithm {
 	}
 	
 	Node nodePreceedingHinFlowI(Flow i, Node h) {
-		Node node = null;
-		for(int i = 0; i < net.getNodes().size(); i++) {
-			if(h.equals(net.getNodes().get(i))) {
-				node = net.getNodes().get(i - 1);
-			}
+		for(int n = 0 ; n < i.getPath().getNodes().size(); n++) {
+			if(h.equals(i.getPath().getNodes().get(n)))
+				return i.getPath().getNodes().get(n - 1);
 		}
-		return node;
+		return null;
 	}
 	
 	int computeA(Flow i, Flow j) {
