@@ -1,5 +1,6 @@
 package ise;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -163,8 +164,8 @@ public class Algorithm {
 		return 0;
 	}
 	
-	Node preI(Node h) {
-		Node node = new Node();
+	Node nodePreceedingHinFlowI(Flow i, Node h) {
+		Node node = null;
 		for(int i = 0; i < net.getNodes().size(); i++) {
 			if(h.equals(net.getNodes().get(i))) {
 				node = net.getNodes().get(i - 1);
@@ -186,8 +187,8 @@ public class Algorithm {
 		return 0;
 	}
 	
-	int computeBetaSlow(Flow i) {
-				List<Flow> allS;
+	int computeBetaSlow(Flow my_flow) {
+		List<Flow> allS;
 		List<Flow> allE;
 		int ti[] = new int[10];
 		int ci[] = new int[10];
@@ -221,6 +222,7 @@ public class Algorithm {
 		
 		return beta;
 	}
+
 	public long beta_i_slow(int []ti, int [] ci,long lcm){
 		 long beta=cofficient(ti,ci, lcm);
 		 if (beta<lcm)
@@ -229,8 +231,9 @@ public class Algorithm {
 			 return 0;
 		 
 	 }
-	 public long cofficient(int []ti, int [] ci, long lcm){
-		long sum =0 ;
+
+	public long cofficient(int []ti, int [] ci, long lcm){
+		 long sum =0 ;
 	    
 	    System.out.println(lcm);
 	    for  (int i =1; i< ti.length; i++){
@@ -239,7 +242,7 @@ public class Algorithm {
 		return sum;
 	 }
 	 
-	 public long lCMf4Ti(int []ti){
+	public long lCMf4Ti(int []ti){
 		 long lcm;
 		 lcm = ti[0];
 		 for  (int i =1; i< ti.length; i++){
@@ -249,7 +252,7 @@ public class Algorithm {
 		 
 	 }
 	 
-	 public long lCM(long n, long m){
+	public long lCM(long n, long m){
 		 long lcm = (n == m || n == 1) ? m :(m == 1 ? n : 0);
 	      /* this section increases the value of mm until it is greater  
 	      / than or equal to nn, then does it again when the lesser 
@@ -266,8 +269,62 @@ public class Algorithm {
 	      }
 	      return lcm;
 	 }
-	int computeDelta(Flow i, Node h) {
-		return 0;
+
+	int computeDelta(Flow i, Node hrestriction) {
+		Node firsti = i.getPath().getNodes().get(0);
+		Path p = i.getPath().pathRestrictedToH(hrestriction);
+		int delta = 0;
+		int max = 0;
+		for (Flow j : i.getLowerPriorityFlows()) {
+			if (firstNodeVisitedByJonI(j, i) == firsti) {
+				int cap = firsti.getCapacity().get(j);
+				max = Math.max(max, cap);
+			}
+		}
+		if(max - 1 > 0){
+			delta+=max-1;
+		}
+		for(Node h : p.getNodes()) {
+			if (h != firsti) {
+				max = 0;
+				for (Flow j : i.getLowerPriorityFlows()) {
+					if (firstNodeVisitedByJonI(j, i) == h) {
+						int cap = h.getCapacity().get(j);
+						max = Math.max(max, cap);
+					}
+					if(max - 1 > 0) {
+						delta+=max-1;
+					}
+				}
+				max = 0;
+				for (Flow j : i.getLowerPriorityFlows()) {
+					if (firstNodeVisitedByJonI(j, i)!= h) { 
+						if (firstNodeVisitedByJonI(j, i) != firstNodeVisitedByJonI(i, j)) {
+							int cap = h.getCapacity().get(j);
+							max = Math.max(max, cap);
+						}
+					}
+					if(max - 1 > 0) {
+						delta+=max-1;
+					}
+				}
+				max = 0;
+				for (Flow j : i.getLowerPriorityFlows()) {
+					if (firstNodeVisitedByJonI(j, i)!= h) { 
+						if (firstNodeVisitedByJonI(j, i) == firstNodeVisitedByJonI(i, j)) {
+							int cap = h.getCapacity().get(j);
+							max = Math.max(max, cap);
+						}
+					}
+					
+					int val = max - CPREI(H) + net.getLmax() - net.getLmin();
+					if( val > 0) {
+						delta+=val;
+					}
+				}
+			}
+		}
+		return delta;
 	}
 	
 	int computeW(Flow i, int t) {
