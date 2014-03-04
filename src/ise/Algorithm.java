@@ -314,8 +314,7 @@ public class Algorithm {
 							max = Math.max(max, cap);
 						}
 					}
-					
-					int val = max - CPREI(H) + net.getLmax() - net.getLmin();
+					int val = max - nodePreceedingHinFlowI(i, h).getCapacity().get(i) + net.getLmax() - net.getLmin();
 					if( val > 0) {
 						delta+=val;
 					}
