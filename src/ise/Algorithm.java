@@ -160,8 +160,61 @@ public class Algorithm {
 	      }
 	      return lcm;
 	 }
-	int computeDelta(Flow i, Node h) {
-		return 0;
+	int computeDelta(Flow i, Node hrestriction) {
+		Node firsti = i.getPath().getNodes().get(0);
+		Path p = i.getPath().pathRestrictedToH(hrestriction);
+		int delta = 0;
+		int max = 0;
+		for (Flow j : i.getLowerPriorityFlows()) {
+			if (firstNodeVisitedByJonI(j, i) == firsti) {
+				int cap = firsti.getCapacity().get(j);
+				max = Math.max(max, cap);
+			}
+		}
+		if(max - 1 > 0){
+			delta+=max-1;
+		}
+		for(Node h : p.getNodes()) {
+			if (h != firsti) {
+				max = 0;
+				for (Flow j : i.getLowerPriorityFlows()) {
+					if (firstNodeVisitedByJonI(j, i) == h) {
+						int cap = h.getCapacity().get(j);
+						max = Math.max(max, cap);
+					}
+					if(max - 1 > 0) {
+						delta+=max-1;
+					}
+				}
+				max = 0;
+				for (Flow j : i.getLowerPriorityFlows()) {
+					if (firstNodeVisitedByJonI(j, i)!= h) { 
+						if (firstNodeVisitedByJonI(j, i) != firstNodeVisitedByJonI(i, j)) {
+							int cap = h.getCapacity().get(j);
+							max = Math.max(max, cap);
+						}
+					}
+					if(max - 1 > 0) {
+						delta+=max-1;
+					}
+				}
+				max = 0;
+				for (Flow j : i.getLowerPriorityFlows()) {
+					if (firstNodeVisitedByJonI(j, i)!= h) { 
+						if (firstNodeVisitedByJonI(j, i) == firstNodeVisitedByJonI(i, j)) {
+							int cap = h.getCapacity().get(j);
+							max = Math.max(max, cap);
+						}
+					}
+					
+					int val = max - CPREI(H) + net.getLmax() - net.getLmin();
+					if( val > 0) {
+						delta+=val;
+					}
+				}
+			}
+		}
+		return delta;
 	}
 	
 	int computeW(Flow i, int t) {
