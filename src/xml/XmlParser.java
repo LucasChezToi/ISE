@@ -3,6 +3,7 @@ package xml;
 import ise.Flow;
 import ise.Network;
 import ise.Node;
+import ise.Path;
 
 import java.io.*;
 
@@ -32,7 +33,7 @@ public class XmlParser {
 		this.network = network;
    }
 
-/**
+   /**
     * Contructeur de la classe
     * @param file  représente le nom du fichier d'entrée
     */
@@ -60,20 +61,23 @@ public class XmlParser {
 				tempFlow.setJitter(0);
 			else 
 				tempFlow.setJitter(Integer.parseInt(e.getChildText("jitter")));
+			
+			Path tempPath = new Path();
 			for(Element e1 : e.getChild("path").getChildren()) {
 				Node node = new Node();
 				node.setId(e1.getText());
+				tempPath.setNode(node);
 			}
-			// Période = Deadline
+			tempFlow.setPath(tempPath);
 			tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
 			tempFlow.setPeriod(Integer.parseInt(e.getChildText("period")));
 			tempFlow.setPriority(Integer.parseInt(e.getChildText("priority")));
 			network.addFlow(tempFlow);
-			System.out.println("Flow instance : " + flowNumber++);
+			/*System.out.println("Flow instance : " + flowNumber++);
 			System.out.println("Deadline : " + tempFlow.getDeadline());
 			System.out.println("Jitter : " + tempFlow.getJitter());
 			System.out.println("Period : " + tempFlow.getPeriod());
-			System.out.println("Priority : " + tempFlow.getPriority() + "\n");
+			System.out.println("Priority : " + tempFlow.getPriority() + "\n");*/
 	   }
 	   network.setLmax(Integer.parseInt(links.getChildText("maxTime")));
 	   network.setLmin(Integer.parseInt(links.getChildText("minTime")));
