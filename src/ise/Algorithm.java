@@ -344,12 +344,24 @@ public class Algorithm {
 	int subfunction_computeW_initialize_sequence(Flow i, int t, Node h){
 		int w0 = 0;
 		for(Flow j : i.getHigherPriorityFlows()) {
-			Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
-			w0+=slow.getCapacity().get(j);
+			try {
+			 Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
+			 w0+=slow.getCapacity().get(j);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				System.err.println("subfunction_computeW_initialize_sequence");
+				e.printStackTrace();
+			}
 		}
 		for(Flow j : i.getSamePriorityFlows()) {
-			Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
-			w0+=slow.getCapacity().get(j);
+			try {
+				Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
+				w0+=slow.getCapacity().get(j);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				System.err.println("subfunction_computeW_initialize_sequence");
+				e.printStackTrace();
+			}
 		}
 		Node slow = slowestNodeVisitedByIonHisPathRestrictedToH(i, h);
 		w0+=(1+(int)Math.floor(((double)(t+i.getJitter()))/(double)(i.getPeriod()))) * slow.getCapacity().get(i); 
@@ -358,20 +370,32 @@ public class Algorithm {
 			if (k!=slow) {
 				int max = 0;
 				for(Flow j : i.getHigherPriorityFlows()) {
-					if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
-						int cap = k.getCapacity().get(j);
-						if(cap>max) {
-							max = cap;
+					try {
+						if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
+							int cap = k.getCapacity().get(j);
+							if(cap>max) {
+								max = cap;
+							}
 						}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("subfunction_computeW_initialize_sequence");
+						e.printStackTrace();
 					}
 				}
 				for(Flow j : i.getSamePriorityFlows()) {
-					if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
-						int cap = k.getCapacity().get(j);
-						if(cap>max) {
-							max = cap;
+					try {
+						if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
+							int cap = k.getCapacity().get(j);
+							if(cap>max) {
+								max = cap;
+							}
 						}
-					}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("subfunction_computeW_initialize_sequence");
+						e.printStackTrace();					
+						}
 				}
 				int cap = k.getCapacity().get(i);
 				if(cap>max) {
@@ -389,28 +413,40 @@ public class Algorithm {
 	int subfunction_computeW_nextof_sequence(Flow i, int t, Node h, int w1, HashMap<Node, Integer> w){
 		int w2 = 0;
 		for(Flow j : i.getHigherPriorityFlows()) {
-			Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
-			/* Please note that this is lastijh and not last"jih" */
-			Node lastijh = lastNodeVisitedByJonIRestrictedToH(i, j, h);
-			int val = 0;
-			if (lastijh == h) {
-				val = 1 + (int) Math.floor((double)(w1-minTimeTakenFromSourceToH(j, h)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
-			} else {
-				val = 1 + (int) Math.floor((double)(w.get(lastijh)-minTimeTakenFromSourceToH(j, lastijh)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+			try {
+				Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
+				/* Please note that this is lastijh and not last"jih" */
+				Node lastijh = lastNodeVisitedByJonIRestrictedToH(i, j, h);
+				int val = 0;
+				if (lastijh == h) {
+					val = 1 + (int) Math.floor((double)(w1-minTimeTakenFromSourceToH(j, h)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+				} else {
+					val = 1 + (int) Math.floor((double)(w.get(lastijh)-minTimeTakenFromSourceToH(j, lastijh)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+				}
+				if(val<0){
+					val = 0;
+				}
+				w2 += val * slow.getCapacity().get(j);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				System.err.println("subfunction_computeW_nextof_sequence");
+				e.printStackTrace();
 			}
-			if(val<0){
-				val = 0;
-			}
-			w2 += val * slow.getCapacity().get(j);
 		}
 		for(Flow j : i.getSamePriorityFlows()) {
-			Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
-			Node firstjih = firstNodeVisitedByJonIRestrictedToH(j, i, h);
-			int val = 1 + (int) Math.floor((double)(t+maxTimeTakenFromSourceToH(i, firstjih)-minTimeTakenFromSourceToH(j, firstjih)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
-			if(val<0){
-				val = 0;
+			try {
+				Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
+				Node firstjih = firstNodeVisitedByJonIRestrictedToH(j, i, h);
+				int val = 1 + (int) Math.floor((double)(t+maxTimeTakenFromSourceToH(i, firstjih)-minTimeTakenFromSourceToH(j, firstjih)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+				if(val<0){
+					val = 0;
+				}
+				w2 += val * slow.getCapacity().get(j);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				System.err.println("subfunction_computeW_nextof_sequence");
+				e.printStackTrace();
 			}
-			w2 += val * slow.getCapacity().get(j);
 		}
 		Node slow = slowestNodeVisitedByIonHisPathRestrictedToH(i, h);
 		Node firsti = i.getPath().getNodes().get(0);
@@ -424,19 +460,31 @@ public class Algorithm {
 			if(k != slow){
 				int max = 0;
 				for(Flow j : i.getHigherPriorityFlows()) {
-					if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
-						int cap = k.getCapacity().get(j);
-						if(cap>max) {
-							max = cap;
+					try {
+						if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
+							int cap = k.getCapacity().get(j);
+							if(cap>max) {
+								max = cap;
+							}
 						}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("subfunction_computeW_nextof_sequence");
+						e.printStackTrace();
 					}
 				}
 				for(Flow j : i.getSamePriorityFlows()) {
-					if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
-						int cap = k.getCapacity().get(j);
-						if(cap>max) {
-							max = cap;
+					try {
+						if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
+							int cap = k.getCapacity().get(j);
+							if(cap>max) {
+								max = cap;
+							}
 						}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("subfunction_computeW_nextof_sequence");
+						e.printStackTrace();
 					}
 				}
 				int cap = k.getCapacity().get(i);
