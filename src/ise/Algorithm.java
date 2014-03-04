@@ -1,17 +1,37 @@
 package ise;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.*;
 
 public class Algorithm {
 	private Network net;
 	private List<Integer> worstCasesResponseTime;
+	protected static Logger logger = Logger.getLogger("ise.Algorithm");
 	
-	public Algorithm(){}
+	public Algorithm(){
+		Handler fh;
+		try {
+			fh = new FileHandler("WorstCaseEndToEndResponse_Log.log");
+			logger.addHandler(fh);
+		} catch (SecurityException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public Algorithm(Network net){
 		this.net = net;
+		Handler fh;
+		try {
+			fh = new FileHandler("WorstCaseEndToEndResponse_Log.log");
+			logger.addHandler(fh);
+		} catch (SecurityException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public Network getNet() {
@@ -173,9 +193,10 @@ public class Algorithm {
 	Node nodePreceedingHinFlowI(Flow i, Node h) throws NodeDoesNotHavePredecessor, NodeDoesNotExistException {
 		for(int n = 0 ; n < i.getPath().getNodes().size(); n++) {
 			if(h == i.getPath().getNodes().get(n)) {
-				if(n == 0)
+				if(n == 0) {
 					throw new NodeDoesNotHavePredecessor("Fonction nodePreceedingHinFlowI : "
 									+ "première node visitée dans le path, elle ne possède donc pas de prédécesseurs directs");
+				}
 				return i.getPath().getNodes().get(n - 1);
 			}
 		}
@@ -194,6 +215,9 @@ public class Algorithm {
 		} catch (NodeDoesNotExistException e) {
 			// TODO: handle exception
 			System.err.println("computeA");
+			logger.log(Level.WARNING, "Fonction : computeA, "
+					+ "Erreur : " + e.getClass().getName()
+					+ ", Message : " + e.getMessage());
 			e.printStackTrace();
 			return 0;
 		}
@@ -225,6 +249,9 @@ public class Algorithm {
 				// TODO: handle exception
 				ci[count] = 0;
 				System.err.println("computeBetaSlow");
+				logger.log(Level.WARNING, "Fonction : computeBetaSlow, "
+						+ "Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 			count ++;
@@ -238,6 +265,9 @@ public class Algorithm {
 				// TODO: handle exception
 				ci[count] = 0;
 				System.err.println("computeBetaSlow");
+				logger.log(Level.WARNING, "Fonction : computeBetaSlow, "
+						+ "Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 			count ++;
@@ -312,6 +342,9 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("computeDelta");
+				logger.log(Level.WARNING, "Fonction : computeDelta, "
+						+ "Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -330,6 +363,9 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("computeDelta");
+						logger.log(Level.WARNING, "Fonction : computeDelta, "
+								+ "Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -348,6 +384,9 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("computeDelta");
+						logger.log(Level.WARNING, "Fonction : computeDelta, "
+								+ "Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -366,13 +405,26 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("computeDelta");
+						logger.log(Level.WARNING, "Fonction : computeDelta, "
+								+ "Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
 				if (i.getLowerPriorityFlows().size() != 0) {
-					int val = max - nodePreceedingHinFlowI(i, h).getCapacity().get(i) + net.getLmax() - net.getLmin();
-					if( val > 0) {
-						delta+=val;
+					int val;
+					try {
+						val = max - nodePreceedingHinFlowI(i, h).getCapacity().get(i) + net.getLmax() - net.getLmin();
+						if( val > 0) {
+							delta+=val;
+						}
+					} catch (NodeDoesNotHavePredecessor
+							| NodeDoesNotExistException e) {
+						// TODO Auto-generated catch block
+						logger.log(Level.WARNING, "Fonction : computeDelta, "
+								+ "Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
+						e.printStackTrace();
 					}
 				}
 			}
@@ -405,6 +457,9 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("subfunction_computeW_initialize_sequence");
+				logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
+						+ "Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -415,6 +470,9 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("subfunction_computeW_initialize_sequence");
+				logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
+						+ "Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -435,6 +493,9 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("subfunction_computeW_initialize_sequence");
+						logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
+								+ "Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -449,6 +510,9 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("subfunction_computeW_initialize_sequence");
+						logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
+								+ "Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();					
 						}
 				}
@@ -485,6 +549,9 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("subfunction_computeW_nextof_sequence");
+				logger.log(Level.WARNING, "Fonction : subfunction_computeW_nextof_sequence, "
+						+ "Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -500,6 +567,9 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("subfunction_computeW_nextof_sequence");
+				logger.log(Level.WARNING, "Fonction : subfunction_computeW_nextof_sequence, "
+						+ "Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -525,6 +595,9 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("subfunction_computeW_nextof_sequence");
+						logger.log(Level.WARNING, "Fonction : subfunction_computeW_nextof_sequence, "
+								+ "Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -539,6 +612,9 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("subfunction_computeW_nextof_sequence");
+						logger.log(Level.WARNING, "Fonction : subfunction_computeW_nextof_sequence, "
+								+ "Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
