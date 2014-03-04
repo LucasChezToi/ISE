@@ -175,8 +175,8 @@ public class TestFirstLast {
 			assertEquals(null, algo.firstNodeVisitedByJonI(flows.get(6), flowI));
 			fail("NodeDoesNotExistException doit lancée");
 		}catch(NodeDoesNotExistException e){}
-		}
-	
+	}
+
 	/*
 	 * LastNodeVisitedByJonI
 	 */
@@ -317,5 +317,24 @@ public class TestFirstLast {
 			fail("NodeDoesNotExistException doit lancée");
 		}catch(NodeDoesNotExistException e){}
 	}
+
+	/*
+	 *firstNodeVisitedByJonIRestrictedToH
+	 */
+	/*
+	 * cas h premiere node de 
+	 * 	i mais pas j
+	 *  j mais pas i
+	 *  i et j
+	 *  
+	 * cas h derniere node de 
+	 * 	i mais pas j
+	 *  j mais pas i
+	 *  i et j
+	 *  
+	 *  cas pas de nodes en commun
+	 *  cas pas de node en commun avant h (mais en a après)
+	 * */
+	
 
 }
