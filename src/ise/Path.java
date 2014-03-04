@@ -1,5 +1,6 @@
 package ise;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Path {
@@ -9,6 +10,15 @@ public class Path {
 		super();
 		this.nodes = nodes;
 	} 
+	
+	public Path() {
+		super();
+		this.nodes = new ArrayList<Node>();
+	} 
+	
+	public void setNode(Node node) {
+		nodes.add(node);
+	}
 	
 	public List<Node> getNodes() {
 		return nodes;
