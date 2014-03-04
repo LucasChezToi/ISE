@@ -1,5 +1,6 @@
 package ise;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -124,8 +125,8 @@ public class Algorithm {
 		return 0;
 	}
 	
-	int computeBetaSlow(Flow i) {
-				List<Flow> allS;
+	int computeBetaSlow(Flow my_flow) {
+		List<Flow> allS;
 		List<Flow> allE;
 		int ti[] = new int[10];
 		int ci[] = new int[10];
@@ -159,6 +160,7 @@ public class Algorithm {
 		
 		return beta;
 	}
+
 	public long beta_i_slow(int []ti, int [] ci,long lcm){
 		 long beta=cofficient(ti,ci, lcm);
 		 if (beta<lcm)
@@ -167,7 +169,8 @@ public class Algorithm {
 			 return 0;
 		 
 	 }
-	 public long cofficient(int []ti, int [] ci, long lcm){
+
+	public long cofficient(int []ti, int [] ci, long lcm){
 		 long sum =0 ;
 	    
 	    System.out.println(lcm);
@@ -179,7 +182,7 @@ public class Algorithm {
 		 
 	 }
 	 
-	 public long lCMf4Ti(int []ti){
+	public long lCMf4Ti(int []ti){
 		 long lcm;
 		 lcm = ti[0];
 		 for  (int i =1; i< ti.length; i++){
@@ -189,7 +192,7 @@ public class Algorithm {
 		 
 	 }
 	 
-	 public long lCM(long n, long m){
+	public long lCM(long n, long m){
 		 long lcm = (n == m || n == 1) ? m :(m == 1 ? n : 0);
 	      /* this section increases the value of mm until it is greater  
 	      / than or equal to nn, then does it again when the lesser 
@@ -206,6 +209,7 @@ public class Algorithm {
 	      }
 	      return lcm;
 	 }
+
 	int computeDelta(Flow i, Node hrestriction) {
 		Node firsti = i.getPath().getNodes().get(0);
 		Path p = i.getPath().pathRestrictedToH(hrestriction);
