@@ -362,9 +362,19 @@ public class Algorithm {
 					}
 				}
 				if (i.getLowerPriorityFlows().size() != 0) {
-					int val = max - nodePreceedingHinFlowI(i, h).getCapacity().get(i) + net.getLmax() - net.getLmin();
-					if( val > 0) {
-						delta+=val;
+					try {
+						int val = max - nodePreceedingHinFlowI(i, h).getCapacity().get(i) + net.getLmax() - net.getLmin();
+						if( val > 0) {
+							delta+=val;
+						}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("computeDelta");
+						e.printStackTrace();
+					} catch (NodeDoesNotHavePredecessor e) {
+						// TODO: handle exception
+						System.err.println("computeDelta");
+						e.printStackTrace();
 					}
 				}
 			}
