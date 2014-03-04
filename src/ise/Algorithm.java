@@ -7,33 +7,47 @@ public class Algorithm {
 	private Network net;
 	private List<Integer> worstCasesResponseTime;
 	
-	public Node firstNodeVisitedByJonI(Path j, Path i) {
+	public Algorithm(){}
+	
+	public Algorithm(Network net){
+		this.net = net;
+	}
+	
+	public Network getNet() {
+		return net;
+	}
+
+	public void setNet(Network net) {
+		this.net = net;
+	}
+
+	public Node firstNodeVisitedByJonI(Path j, Path i) throws NodeDoesNotExistException {
 		for(int index = 0 ; index< i.getNodes().size() ; index++){
 			if( ! j.getNodes().contains(i.getNodes().get(index)) ){
 				return i.getNodes().get(index);
 			}
 		}
-		return null;
+		throw new NodeDoesNotExistException();
 	}
 	
-	public Node lastNodeVisitedByJonI(Path j, Path i) {
+	public Node lastNodeVisitedByJonI(Path j, Path i) throws NodeDoesNotExistException {
 		for(int index = i.getNodes().size()-1 ; index >= 0 ; index--){
 			if( ! j.getNodes().contains(i.getNodes().get(index)) ){
 				return i.getNodes().get(index);
 			}
 		}
-		return null;
+		throw new NodeDoesNotExistException();
 	}
 	
-	public Node firstNodeVisitedByJonI(Flow j, Flow i) {
+	public Node firstNodeVisitedByJonI(Flow j, Flow i) throws NodeDoesNotExistException {
 		return this.firstNodeVisitedByJonI(j.getPath(), i.getPath());
 	}
 	
-	public Node lastNodeVisitedByJonI(Flow j, Flow i) {
+	public Node lastNodeVisitedByJonI(Flow j, Flow i) throws NodeDoesNotExistException {
 		return this.lastNodeVisitedByJonI(j.getPath(), i.getPath());
 	}
 	
-	public Node firstNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) {
+	public Node firstNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
 		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
 		List<Node> jNodesList = j.getPath().getNodes();
 				
@@ -42,10 +56,10 @@ public class Algorithm {
 				return iSubNodesList.get(index);
 			}
 		}
-		return null;
+		throw new NodeDoesNotExistException();
 	}
 	
-	public Node lastNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) {
+	public Node lastNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
 		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
 		List<Node> jNodesList = j.getPath().getNodes();
 				
@@ -54,7 +68,7 @@ public class Algorithm {
 				return iSubNodesList.get(index);
 			}
 		}
-		return null;
+		throw new NodeDoesNotExistException();
 	}
 	
 	public int minTimeTakenFromSourceToH(Flow f, Node h) {
@@ -111,7 +125,39 @@ public class Algorithm {
 	}
 	
 	int computeBetaSlow(Flow i) {
-		return 0;
+				List<Flow> allS;
+		List<Flow> allE;
+		int ti[] = new int[10];
+		int ci[] = new int[10];
+		int count = 0;
+		int beta;
+		
+		
+		
+		allS  = new ArrayList<Flow>();
+		allE  = new ArrayList<Flow>();
+		
+		allS = my_flow.getHigherPriorityFlows();
+		allS = my_flow.getSamePriorityFlows();
+		
+		for (Flow flow : allS){
+			ti[count] = flow.getPeriod();
+			ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			count ++;
+		}
+
+		for (Flow flow : allE){
+			ti[count] = flow.getPeriod();
+			ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			count ++;
+		}
+			
+		long lcm = lCMf4Ti(ti);
+		
+		beta = (int)beta_i_slow(ti, ci,lcm);
+		
+		
+		return beta;
 	}
 	public long beta_i_slow(int []ti, int [] ci,long lcm){
 		 long beta=cofficient(ti,ci, lcm);

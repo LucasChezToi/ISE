@@ -4,18 +4,18 @@ import java.util.HashMap;
 
 public class Node {
 	private HashMap<Flow, Integer> capacity;
-	private int id;
+	private String id;
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public Node() {
 		super();
 	}
-	public Node(int id) {
+	public Node(String id) {
 		this.id = id;
 	}
 	public Node(HashMap<Flow, Integer> capacity) {
