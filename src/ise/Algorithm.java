@@ -28,7 +28,8 @@ public class Algorithm {
 				return i.getNodes().get(index);
 			}
 		}
-		throw new NodeDoesNotExistException();
+		throw new NodeDoesNotExistException("Fonction firstNodeVisitedByJonI : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
 	}
 	
 	public Node lastNodeVisitedByJonI(Path j, Path i) throws NodeDoesNotExistException {
@@ -37,7 +38,8 @@ public class Algorithm {
 				return i.getNodes().get(index);
 			}
 		}
-		throw new NodeDoesNotExistException();
+		throw new NodeDoesNotExistException("Fonction lastNodeVisitedByJonI : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
 	}
 	
 	public Node firstNodeVisitedByJonI(Flow j, Flow i) throws NodeDoesNotExistException {
@@ -57,7 +59,8 @@ public class Algorithm {
 				return iSubNodesList.get(index);
 			}
 		}
-		throw new NodeDoesNotExistException();
+		throw new NodeDoesNotExistException("Fonction firstNodeVisitedByJonIRestrictedToH : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
 	}
 	
 	public Node lastNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
@@ -69,7 +72,8 @@ public class Algorithm {
 				return iSubNodesList.get(index);
 			}
 		}
-		throw new NodeDoesNotExistException();
+		throw new NodeDoesNotExistException("Fonction lastNodeVisitedByJonIRestrictedToH : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
 	}
 	
 	public int minTimeTakenFromSourceToH(Flow f, Node h) {
@@ -118,7 +122,8 @@ public class Algorithm {
 		}
 		
 		if(res != null){
-			throw new NodeDoesNotExistException();
+			throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonI : "
+					+ "la node référencée n'est pas contenue dans le path correspondant");
 		}else{
 			return res;
 		}
@@ -154,7 +159,8 @@ public class Algorithm {
 		}
 		
 		if(res != null){
-			throw new NodeDoesNotExistException();
+			throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonIRestrictedToH : "
+					+ "la node référencée n'est pas contenue dans le path correspondant");
 		}else{
 			return res;
 		}
@@ -164,15 +170,17 @@ public class Algorithm {
 		return 0;
 	}
 	
-	Node nodePreceedingHinFlowI(Flow i, Node h) throws NodeDoesNotHavePredecessor, NodeIsNotIncludedInThePath {
+	Node nodePreceedingHinFlowI(Flow i, Node h) throws NodeDoesNotHavePredecessor, NodeDoesNotExistException {
 		for(int n = 0 ; n < i.getPath().getNodes().size(); n++) {
 			if(h == i.getPath().getNodes().get(n)) {
 				if(n == 0)
-					throw new NodeDoesNotHavePredecessor();
+					throw new NodeDoesNotHavePredecessor("Fonction nodePreceedingHinFlowI : "
+									+ "première node visitée dans le path, elle ne possède donc pas de prédécesseurs directs");
 				return i.getPath().getNodes().get(n - 1);
 			}
 		}
-		throw new NodeIsNotIncludedInThePath();
+		throw new NodeDoesNotExistException("Fonction nodePreceedingHinFlowI : "
+								+ "Le noeud courant n'appartient pas au path renseigné");
 	}
 	
 	int computeA(Flow i, Flow j) {
