@@ -125,7 +125,37 @@ public class Algorithm {
 	}
 	
 	int computeBetaSlow(Flow i) {
-		return 0;
+				List<Flow> allS;
+		List<Flow> allE;
+		int ti[] = new int[10];
+		int ci[] = new int[10];
+		int count = 0;
+		int beta;
+		
+		
+		
+		allS  = new ArrayList<Flow>();
+		allE  = new ArrayList<Flow>();
+		
+		allS = my_flow.getHigherPriorityFlows();
+		allS = my_flow.getSamePriorityFlows();
+		
+		for (Flow flow : allS){
+			ti[count] = flow.getPeriod();
+			count ++;
+		}
+
+		for (Flow flow : allE){
+			ti[count] = flow.getPeriod();
+			count ++;
+		}
+			
+		long lcm = lCMf4Ti(ti);
+		
+		beta = (int)beta_i_slow(ti, ci,lcm);
+		
+		
+		return beta;
 	}
 	public long beta_i_slow(int []ti, int [] ci,long lcm){
 		 long beta=cofficient(ti,ci, lcm);
