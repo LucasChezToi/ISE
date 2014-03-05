@@ -631,4 +631,29 @@ public class Algorithm {
 		w2+=(p.getNodes().size() - 1)*net.getLmax();
 		return w2;
 	}
+	
+	List<Integer>  ComputeWorstCaseEndToEndResponse() {
+		List<Flow> flows = net.getFlows();
+
+		int  t;
+		Integer max=0;
+		for (Flow i : flows) {
+			for (t=-(i.getJitter()); t<-(i.getJitter())+computeBetaSlow(i); t++) {
+				Path path = i.getPath();
+				List<Node> nodes = path.getNodes();
+				Node last_i = nodes.get(nodes.size()-1);
+				Integer val_inter = computeW(i, t)+ last_i.getCapacity().get(i)-t;
+				max =Math.max(max, val_inter);
+
+
+			}
+			worstCasesResponseTime.add(max);
+		}
+
+
+		return worstCasesResponseTime;
+
+	}
+}
+
 }
