@@ -125,7 +125,7 @@ public class Algorithm {
 	}
 	
 	int computeBetaSlow(Flow i) {
-				List<Flow> allS;
+		List<Flow> allS;
 		List<Flow> allE;
 		int ti[] = new int[10];
 		int ci[] = new int[10];
