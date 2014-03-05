@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.*;
 
+import exception.NodeDoesNotExistException;
+import exception.NodeDoesNotHavePredecessor;
 import xml.XmlParser;
 
 public class Algorithm {

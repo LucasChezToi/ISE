@@ -1,16 +1,15 @@
 package test;
 
 import static org.junit.Assert.*;
-
 import ise.Algorithm;
 import ise.Flow;
 import ise.Network;
 import ise.Node;
-import ise.NodeDoesNotExistException;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import exception.NodeDoesNotExistException;
 import xml.XmlParser;
 
 /**

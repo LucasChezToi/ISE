@@ -8,6 +8,7 @@ import ise.Path;
 
 import java.io.*;
 
+import org.eclipse.draw2d.Viewport;
 import org.jdom2.*;
 import org.jdom2.input.*;
 import org.jdom2.filter.*;
@@ -71,7 +72,7 @@ public class XmlParser {
 	   Element flows = document.getRootElement().getChild("flows");
 	   Element links = document.getRootElement().getChild("links");
 	   
-	   int flowNumber = 0;
+	   //int flowNumber = 0;
 	   for(Element e : flows.getChildren("flow")) {
 		   Flow tempFlow = new Flow();
 		   tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
@@ -103,7 +104,7 @@ public class XmlParser {
    }
    
   /**
-   * Méthode pour la lancement de l'application
+   * Méthode pour le lancement de l'application
    * @param arg représente les entrées du système
    */
   public static void main (String [] arg) {
