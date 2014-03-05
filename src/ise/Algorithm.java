@@ -1,13 +1,19 @@
 package ise;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.*;
+
+import xml.XmlParser;
 
 public class Algorithm {
 	private Network net;
 	private List<Integer> worstCasesResponseTime;
 	
-	public Algorithm(){}
+	public Algorithm(){
+	}
 	
 	public Algorithm(Network net){
 		this.net = net;
@@ -27,7 +33,8 @@ public class Algorithm {
 				return i.getNodes().get(index);
 			}
 		}
-		throw new NodeDoesNotExistException();
+		throw new NodeDoesNotExistException("Fonction firstNodeVisitedByJonI : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
 	}
 	
 	public Node lastNodeVisitedByJonI(Path j, Path i) throws NodeDoesNotExistException {
@@ -36,7 +43,8 @@ public class Algorithm {
 				return i.getNodes().get(index);
 			}
 		}
-		throw new NodeDoesNotExistException();
+		throw new NodeDoesNotExistException("Fonction lastNodeVisitedByJonI : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
 	}
 	
 	public Node firstNodeVisitedByJonI(Flow j, Flow i) throws NodeDoesNotExistException {
@@ -47,6 +55,7 @@ public class Algorithm {
 		return this.lastNodeVisitedByJonI(j.getPath(), i.getPath());
 	}
 	
+	/* On restreint le chemin du flot i */
 	public Node firstNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
 		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
 		List<Node> jNodesList = j.getPath().getNodes();
@@ -56,7 +65,8 @@ public class Algorithm {
 				return iSubNodesList.get(index);
 			}
 		}
-		throw new NodeDoesNotExistException();
+		throw new NodeDoesNotExistException("Fonction firstNodeVisitedByJonIRestrictedToH : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
 	}
 	
 	public Node lastNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
@@ -68,7 +78,8 @@ public class Algorithm {
 				return iSubNodesList.get(index);
 			}
 		}
-		throw new NodeDoesNotExistException();
+		throw new NodeDoesNotExistException("Fonction lastNodeVisitedByJonIRestrictedToH : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
 	}
 	
 	public int minTimeTakenFromSourceToH(Flow f, Node h) {
@@ -95,44 +106,122 @@ public class Algorithm {
 		return res;
 	}
 	
-	Node slowestNodeVisitedByJonI(Flow i, Flow j) {
-		return null;
+	/*  Dans le papier : slowest node visited by flow i on path j
+	 *  la capacité comparé est celle de j
+	 *  S'il existe plusieurs nodes avec la plus faible capacité
+	 *  on choisit la dernière sur le chemin */
+	Node slowestNodeVisitedByJonI(Flow i, Flow j) throws NodeDoesNotExistException {
+		Node res = null;
+		List<Node> nodesI = i.getPath().getNodes();
+		List<Node> nodesJ = j.getPath().getNodes();
+		
+		for(int index = 0 ; index< nodesI.size() ; index++){
+			if( nodesJ.contains(nodesI.get(index)) ){
+				if(res == null){
+					res = nodesI.get(index);
+				}else{
+					if(nodesI.get(index).getCapacity().get(j) > res.getCapacity().get(j)){
+						res = nodesI.get(index);
+					}
+				}
+			}
+		}
+		
+		if(res != null){
+			throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonI : "
+					+ "la node référencée n'est pas contenue dans le path correspondant");
+		}else{
+			return res;
+		}
 	}
 	
-	Node slowestNodeVisitedByIonHisPathRestrictedToH(Flow I, Node H) {
-		return null;
+	Node slowestNodeVisitedByIonHisPathRestrictedToH(Flow i, Node h) {
+		Node res = i.getPath().getNodes().get(0);
+		for(Node node : i.getPath().getNodes()){
+			if(node.getCapacity().get(i) > res.getCapacity().get(i)){
+				res = node;
+			}
+		}
+		return res;
 	}
 	
-	Node slowestNodeVisitedByJonIRestrictedToH(Flow J, Flow I, Node H) {
-		return null;
+	/**/
+	Node slowestNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
+		Node res = null;
+		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
+		//List<Node> nodesI = i.getPath().getNodes();
+		List<Node> nodesJ = j.getPath().getNodes();
+		
+		for(int index = 0 ; index< iSubNodesList.size() ; index++){
+			if( nodesJ.contains(iSubNodesList.get(index)) ){
+				if(res == null){
+					res = iSubNodesList.get(index);
+				}else{
+					if(iSubNodesList.get(index).getCapacity().get(j) > res.getCapacity().get(j)){
+						res = iSubNodesList.get(index);
+					}
+				}
+			}
+		}
+		
+		if(res != null){
+			throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonIRestrictedToH : "
+					+ "la node référencée n'est pas contenue dans le path correspondant");
+		}else{
+			return res;
+		}
 	}
 	
 	int computeM(Flow i, Node h) {
 		return 0;
 	}
 	
+	Node nodePreceedingHinFlowI(Flow i, Node h) throws NodeDoesNotHavePredecessor, NodeDoesNotExistException {
+		for(int n = 0 ; n < i.getPath().getNodes().size(); n++) {
+			if(h == i.getPath().getNodes().get(n)) {
+				if(n == 0) {
+					throw new NodeDoesNotHavePredecessor("Fonction nodePreceedingHinFlowI : "
+									+ "première node visitée dans le path, elle ne possède donc pas de prédécesseurs directs");
+				}
+				return i.getPath().getNodes().get(n - 1);
+			}
+		}
+		throw new NodeDoesNotExistException("Fonction nodePreceedingHinFlowI : "
+								+ "Le noeud courant n'appartient pas au path renseigné");
+	}
+	
 	int computeA(Flow i, Flow j) {
 		int jitter = j.getJitter();
-		Node first = firstNodeVisitedByJonI(i, j);
-		int m = computeM(i, first);
-		int smax = maxTimeTakenFromSourceToH(j, first);
-		int result = smax - m + jitter;
-		return result;
+		try {
+			Node first = firstNodeVisitedByJonI(i, j);
+			int m = computeM(i, first);
+			int smax = maxTimeTakenFromSourceToH(j, first);
+			int result = smax - m + jitter;
+			return result;
+		} catch (NodeDoesNotExistException e) {
+			// TODO: handle exception
+			System.err.println("computeA");
+			XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+					+ ", Fonction : computeA, "
+					+ ", Erreur : " + e.getClass().getName()
+					+ ", Message : " + e.getMessage());
+			e.printStackTrace();
+			return 0;
+		}
 	}
 	
 	int computeARestrictedToH(Flow i, Flow j, Node H) {
 		return 0;
 	}
 	
-	int computeBetaSlow(Flow i) {
+
+	int computeBetaSlow(Flow my_flow) {
 		List<Flow> allS;
 		List<Flow> allE;
 		int ti[] = new int[10];
 		int ci[] = new int[10];
 		int count = 0;
 		int beta;
-		
-		
 		
 		allS  = new ArrayList<Flow>();
 		allE  = new ArrayList<Flow>();
@@ -142,13 +231,35 @@ public class Algorithm {
 		
 		for (Flow flow : allS){
 			ti[count] = flow.getPeriod();
-			ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			try {
+				ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				ci[count] = 0;
+				System.err.println("computeBetaSlow");
+				XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+						+ ", Fonction : computeBetaSlow, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
+				e.printStackTrace();
+			}
 			count ++;
 		}
 
 		for (Flow flow : allE){
 			ti[count] = flow.getPeriod();
-			ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			try {
+				ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				ci[count] = 0;
+				System.err.println("computeBetaSlow");
+				XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+						+ ", Fonction : computeBetaSlow, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
+				e.printStackTrace();
+			}
 			count ++;
 		}
 			
@@ -159,6 +270,7 @@ public class Algorithm {
 		
 		return beta;
 	}
+
 	public long beta_i_slow(int []ti, int [] ci,long lcm){
 		 long beta=cofficient(ti,ci, lcm);
 		 if (beta<lcm)
@@ -167,19 +279,18 @@ public class Algorithm {
 			 return 0;
 		 
 	 }
-	 public long cofficient(int []ti, int [] ci, long lcm){
+
+	public long cofficient(int []ti, int [] ci, long lcm){
 		 long sum =0 ;
 	    
 	    System.out.println(lcm);
 	    for  (int i =1; i< ti.length; i++){
 	    	sum+=lcm*ci[i]/ti[i];
 	    }
-		 
-		 return sum;
-		 
+		return sum;
 	 }
 	 
-	 public long lCMf4Ti(int []ti){
+	public long lCMf4Ti(int []ti){
 		 long lcm;
 		 lcm = ti[0];
 		 for  (int i =1; i< ti.length; i++){
@@ -189,7 +300,7 @@ public class Algorithm {
 		 
 	 }
 	 
-	 public long lCM(long n, long m){
+	public long lCM(long n, long m){
 		 long lcm = (n == m || n == 1) ? m :(m == 1 ? n : 0);
 	      /* this section increases the value of mm until it is greater  
 	      / than or equal to nn, then does it again when the lesser 
@@ -206,8 +317,114 @@ public class Algorithm {
 	      }
 	      return lcm;
 	 }
-	int computeDelta(Flow i, Node h) {
-		return 0;
+
+	int computeDelta(Flow i, Node hrestriction) {
+		Node firsti = i.getPath().getNodes().get(0);
+		Path p = i.getPath().pathRestrictedToH(hrestriction);
+		int delta = 0;
+		int max = 0;
+		for (Flow j : i.getLowerPriorityFlows()) {
+			try {
+				if (firstNodeVisitedByJonI(j, i) == firsti) {
+					int cap = firsti.getCapacity().get(j);
+					max = Math.max(max, cap);
+				}
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				System.err.println("computeDelta");
+				XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+						+ ", Fonction : computeDelta, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		if(max - 1 > 0){
+			delta+=max-1;
+		}
+		for(Node h : p.getNodes()) {
+			if (h != firsti) {
+				max = 0;
+				for (Flow j : i.getLowerPriorityFlows()) {
+					try {
+						if (firstNodeVisitedByJonI(j, i) == h) {
+							int cap = h.getCapacity().get(j);
+							max = Math.max(max, cap);
+						}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("computeDelta");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : computeDelta, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
+						e.printStackTrace();
+					}
+				}
+				if(max - 1 > 0) {
+					delta+=max-1;
+				}
+				max = 0;
+				for (Flow j : i.getLowerPriorityFlows()) {
+					try {
+						if (firstNodeVisitedByJonI(j, i)!= h) { 
+							if (firstNodeVisitedByJonI(j, i) != firstNodeVisitedByJonI(i, j)) {
+								int cap = h.getCapacity().get(j);
+								max = Math.max(max, cap);
+							}
+						}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("computeDelta");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : computeDelta, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
+						e.printStackTrace();
+					}
+				}
+				if(max - 1 > 0) {
+					delta+=max-1;
+				}
+				max = 0;
+				for (Flow j : i.getLowerPriorityFlows()) {
+					try {
+						if (firstNodeVisitedByJonI(j, i)!= h) { 
+							if (firstNodeVisitedByJonI(j, i) == firstNodeVisitedByJonI(i, j)) {
+								int cap = h.getCapacity().get(j);
+								max = Math.max(max, cap);
+							}
+						}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("computeDelta");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : computeDelta, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
+						e.printStackTrace();
+					}
+				}
+				if (i.getLowerPriorityFlows().size() != 0) {
+					int val;
+					try {
+						val = max - nodePreceedingHinFlowI(i, h).getCapacity().get(i) + net.getLmax() - net.getLmin();
+						if( val > 0) {
+							delta+=val;
+						}
+					} catch (NodeDoesNotHavePredecessor
+							| NodeDoesNotExistException e) {
+						// TODO Auto-generated catch block
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : computeDelta, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		return delta;
 	}
 	
 	int computeW(Flow i, int t) {
@@ -229,12 +446,31 @@ public class Algorithm {
 	int subfunction_computeW_initialize_sequence(Flow i, int t, Node h){
 		int w0 = 0;
 		for(Flow j : i.getHigherPriorityFlows()) {
-			Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
-			w0+=slow.getCapacity().get(j);
+			try {
+			 Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
+			 w0+=slow.getCapacity().get(j);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				System.err.println("subfunction_computeW_initialize_sequence");
+				XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+						+ ", Fonction : subfunction_computeW_initialize_sequence, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
+				e.printStackTrace();
+			}
 		}
 		for(Flow j : i.getSamePriorityFlows()) {
-			Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
-			w0+=slow.getCapacity().get(j);
+			try {
+				Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
+				w0+=slow.getCapacity().get(j);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				System.err.println("subfunction_computeW_initialize_sequence");
+				XmlParser.logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
+				e.printStackTrace();
+			}
 		}
 		Node slow = slowestNodeVisitedByIonHisPathRestrictedToH(i, h);
 		w0+=(1+(int)Math.floor(((double)(t+i.getJitter()))/(double)(i.getPeriod()))) * slow.getCapacity().get(i); 
@@ -243,20 +479,40 @@ public class Algorithm {
 			if (k!=slow) {
 				int max = 0;
 				for(Flow j : i.getHigherPriorityFlows()) {
-					if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
-						int cap = k.getCapacity().get(j);
-						if(cap>max) {
-							max = cap;
+					try {
+						if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
+							int cap = k.getCapacity().get(j);
+							if(cap>max) {
+								max = cap;
+							}
 						}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("subfunction_computeW_initialize_sequence");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : subfunction_computeW_initialize_sequence, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
+						e.printStackTrace();
 					}
 				}
 				for(Flow j : i.getSamePriorityFlows()) {
-					if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
-						int cap = k.getCapacity().get(j);
-						if(cap>max) {
-							max = cap;
+					try {
+						if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
+							int cap = k.getCapacity().get(j);
+							if(cap>max) {
+								max = cap;
+							}
 						}
-					}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("subfunction_computeW_initialize_sequence");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : subfunction_computeW_initialize_sequence, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
+						e.printStackTrace();					
+						}
 				}
 				int cap = k.getCapacity().get(i);
 				if(cap>max) {
@@ -274,28 +530,48 @@ public class Algorithm {
 	int subfunction_computeW_nextof_sequence(Flow i, int t, Node h, int w1, HashMap<Node, Integer> w){
 		int w2 = 0;
 		for(Flow j : i.getHigherPriorityFlows()) {
-			Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
-			/* Please note that this is lastijh and not last"jih" */
-			Node lastijh = lastNodeVisitedByJonIRestrictedToH(i, j, h);
-			int val = 0;
-			if (lastijh == h) {
-				val = 1 + (int) Math.floor((double)(w1-minTimeTakenFromSourceToH(j, h)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
-			} else {
-				val = 1 + (int) Math.floor((double)(w.get(lastijh)-minTimeTakenFromSourceToH(j, lastijh)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+			try {
+				Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
+				/* Please note that this is lastijh and not last"jih" */
+				Node lastijh = lastNodeVisitedByJonIRestrictedToH(i, j, h);
+				int val = 0;
+				if (lastijh == h) {
+					val = 1 + (int) Math.floor((double)(w1-minTimeTakenFromSourceToH(j, h)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+				} else {
+					val = 1 + (int) Math.floor((double)(w.get(lastijh)-minTimeTakenFromSourceToH(j, lastijh)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+				}
+				if(val<0){
+					val = 0;
+				}
+				w2 += val * slow.getCapacity().get(j);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				System.err.println("subfunction_computeW_nextof_sequence");
+				XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+						+ ", Fonction : subfunction_computeW_nextof_sequence, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
+				e.printStackTrace();
 			}
-			if(val<0){
-				val = 0;
-			}
-			w2 += val * slow.getCapacity().get(j);
 		}
 		for(Flow j : i.getSamePriorityFlows()) {
-			Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
-			Node firstjih = firstNodeVisitedByJonIRestrictedToH(j, i, h);
-			int val = 1 + (int) Math.floor((double)(t+maxTimeTakenFromSourceToH(i, firstjih)-minTimeTakenFromSourceToH(j, firstjih)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
-			if(val<0){
-				val = 0;
+			try {
+				Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
+				Node firstjih = firstNodeVisitedByJonIRestrictedToH(j, i, h);
+				int val = 1 + (int) Math.floor((double)(t+maxTimeTakenFromSourceToH(i, firstjih)-minTimeTakenFromSourceToH(j, firstjih)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+				if(val<0){
+					val = 0;
+				}
+				w2 += val * slow.getCapacity().get(j);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				System.err.println("subfunction_computeW_nextof_sequence");
+				XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+						+ ", Fonction : subfunction_computeW_nextof_sequence, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
+				e.printStackTrace();
 			}
-			w2 += val * slow.getCapacity().get(j);
 		}
 		Node slow = slowestNodeVisitedByIonHisPathRestrictedToH(i, h);
 		Node firsti = i.getPath().getNodes().get(0);
@@ -309,19 +585,39 @@ public class Algorithm {
 			if(k != slow){
 				int max = 0;
 				for(Flow j : i.getHigherPriorityFlows()) {
-					if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
-						int cap = k.getCapacity().get(j);
-						if(cap>max) {
-							max = cap;
+					try {
+						if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
+							int cap = k.getCapacity().get(j);
+							if(cap>max) {
+								max = cap;
+							}
 						}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("subfunction_computeW_nextof_sequence");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : subfunction_computeW_nextof_sequence, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
+						e.printStackTrace();
 					}
 				}
 				for(Flow j : i.getSamePriorityFlows()) {
-					if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
-						int cap = k.getCapacity().get(j);
-						if(cap>max) {
-							max = cap;
+					try {
+						if(firstNodeVisitedByJonIRestrictedToH(j, i, h) == firstNodeVisitedByJonIRestrictedToH(i, j, h)){
+							int cap = k.getCapacity().get(j);
+							if(cap>max) {
+								max = cap;
+							}
 						}
+					} catch (NodeDoesNotExistException e) {
+						// TODO: handle exception
+						System.err.println("subfunction_computeW_nextof_sequence");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : subfunction_computeW_nextof_sequence, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
+						e.printStackTrace();
 					}
 				}
 				int cap = k.getCapacity().get(i);
