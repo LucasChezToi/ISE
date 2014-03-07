@@ -8,14 +8,9 @@ import ise.Path;
 
 import java.io.*;
 
-import org.eclipse.draw2d.Viewport;
 import org.jdom2.*;
-import org.jdom2.input.*;
-import org.jdom2.filter.*;
 import org.jdom2.input.SAXBuilder;
 
-import java.util.List;
-import java.util.Iterator;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -93,11 +88,10 @@ public class XmlParser {
 			tempFlow.setPeriod(Integer.parseInt(e.getChildText("period")));
 			tempFlow.setPriority(Integer.parseInt(e.getChildText("priority")));
 			network.addFlow(tempFlow);
-			/*System.out.println("Flow instance : " + flowNumber++);
 			System.out.println("Deadline : " + tempFlow.getDeadline());
 			System.out.println("Jitter : " + tempFlow.getJitter());
 			System.out.println("Period : " + tempFlow.getPeriod());
-			System.out.println("Priority : " + tempFlow.getPriority() + "\n");*/
+			System.out.println("Priority : " + tempFlow.getPriority() + "\n");
 	   }
 	   network.setLmax(Integer.parseInt(links.getChildText("maxTime")));
 	   network.setLmin(Integer.parseInt(links.getChildText("minTime")));
