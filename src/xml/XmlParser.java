@@ -11,6 +11,7 @@ import java.io.*;
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 
+import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -67,7 +68,6 @@ public class XmlParser {
 	   Element flows = document.getRootElement().getChild("flows");
 	   Element links = document.getRootElement().getChild("links");
 	   
-	   //int flowNumber = 0;
 	   for(Element e : flows.getChildren("flow")) {
 		   Flow tempFlow = new Flow();
 		   tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
@@ -80,6 +80,9 @@ public class XmlParser {
 			for(Element e1 : e.getChild("path").getChildren()) {
 				Node node = new Node();
 				node.setId(e1.getText());
+				HashMap<Flow, Integer> capacity = new HashMap<Flow, Integer>();
+				capacity.put(tempFlow, 0);
+				node.setCapacity(capacity);
 				tempPath.setNode(node);
 			}
 			tempFlow.setPath(tempPath);

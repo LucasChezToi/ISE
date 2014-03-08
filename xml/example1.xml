@@ -47,6 +47,7 @@
     <flow id="f1">
       <priority>10</priority>
       <deadline>36</deadline>
+      <capacity></capacity>
       <!-- La pérode est optionnelle, si elle n'est pas spécifié
            elle est égale à la deadline -->
       <period>36</period>
@@ -63,6 +64,7 @@
       <priority>10</priority>
       <deadline>36</deadline>
       <period>36</period>
+      <capacity></capacity>
       <path>
         <nodeId>n9</nodeId>
         <nodeId>n10</nodeId>
@@ -74,6 +76,7 @@
       <priority>11</priority>
       <deadline>54</deadline>
       <period>36</period>
+      <capacity></capacity>
       <path>
         <nodeId>n2</nodeId>
         <nodeId>n3</nodeId>
@@ -87,6 +90,7 @@
       <priority>11</priority>
       <deadline>54</deadline>
       <period>36</period>
+      <capacity></capacity>
       <path>
         <nodeId>n2</nodeId>
         <nodeId>n3</nodeId>
@@ -100,6 +104,7 @@
       <priority>12</priority>
       <deadline>45</deadline>
       <period>36</period>
+      <capacity></capacity>
       <path>
         <nodeId>n2</nodeId>
         <nodeId>n3</nodeId>
