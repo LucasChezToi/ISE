@@ -269,7 +269,7 @@ public class Algorithm {
 		
 		for (Flow flow : allS){
 			ti[count] = flow.getPeriod();
-			ci[count]=4;
+			
 			try {
 				ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
 			} catch (NodeDoesNotExistException e) {
@@ -287,7 +287,7 @@ public class Algorithm {
 
 		for (Flow flow : allE){
 			ti[count] = flow.getPeriod();
-			ci[count]=4;
+
 			try {
 				ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
 			} catch (NodeDoesNotExistException e) {
@@ -318,8 +318,7 @@ public class Algorithm {
 	 }
 
 	public long cofficient(int []ti, int [] ci, int lcm){
-		 int sum =0 ;
-
+		int sum =0 ;
 	    for  (int i =0; i< ti.length; i++){
 	    	sum+=lcm*ci[i]/ti[i];
 	    }
