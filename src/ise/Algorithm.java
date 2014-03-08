@@ -28,9 +28,9 @@ public class Algorithm {
 	}
 
 	public Node firstNodeVisitedByJonI(Path j, Path i) throws NodeDoesNotExistException {
-		for(int index = 0 ; index< i.getNodes().size() ; index++){
-			if( ! j.getNodes().contains(i.getNodes().get(index)) ){
-				return i.getNodes().get(index);
+		for(int index = 0 ; index< j.getNodes().size() ; index++){
+			if( i.getNodes().contains(j.getNodes().get(index)) ){
+				return j.getNodes().get(index);
 			}
 		}
 		throw new NodeDoesNotExistException("Fonction firstNodeVisitedByJonI : "
@@ -38,9 +38,9 @@ public class Algorithm {
 	}
 	
 	public Node lastNodeVisitedByJonI(Path j, Path i) throws NodeDoesNotExistException {
-		for(int index = i.getNodes().size()-1 ; index >= 0 ; index--){
-			if( ! j.getNodes().contains(i.getNodes().get(index)) ){
-				return i.getNodes().get(index);
+		for(int index = j.getNodes().size()-1 ; index >= 0 ; index--){
+			if( i.getNodes().contains(j.getNodes().get(index)) ){
+				return j.getNodes().get(index);
 			}
 		}
 		throw new NodeDoesNotExistException("Fonction lastNodeVisitedByJonI : "
@@ -57,12 +57,12 @@ public class Algorithm {
 	
 	/* On restreint le chemin du flot i */
 	public Node firstNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
-		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
+		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h) + 1);
 		List<Node> jNodesList = j.getPath().getNodes();
-				
-		for(int index = 0 ; index< iSubNodesList.size() ; index++){
-			if( ! jNodesList.contains(iSubNodesList.get(index)) ){
-				return iSubNodesList.get(index);
+		
+		for(int index = 0 ; index< jNodesList.size() ; index++){
+			if( iSubNodesList.contains(jNodesList.get(index)) ){
+				return jNodesList.get(index);
 			}
 		}
 		throw new NodeDoesNotExistException("Fonction firstNodeVisitedByJonIRestrictedToH : "
@@ -70,12 +70,12 @@ public class Algorithm {
 	}
 	
 	public Node lastNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
-		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
-		List<Node> jNodesList = j.getPath().getNodes();
-				
-		for(int index = iSubNodesList.size()-1 ; index >=0 ; index--){
-			if( ! jNodesList.contains(iSubNodesList.get(index)) ){
-				return iSubNodesList.get(index);
+		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h) + 1);
+		List<Node> jNodesList = j.getPath().getNodes();	
+
+		for(int index = jNodesList.size()-1 ; index >=0 ; index--){	
+			if( iSubNodesList.contains(jNodesList.get(index)) ){
+				return jNodesList.get(index);
 			}
 		}
 		throw new NodeDoesNotExistException("Fonction lastNodeVisitedByJonIRestrictedToH : "

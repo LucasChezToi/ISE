@@ -33,6 +33,7 @@ public class TestParser2 {
 	Node node9;
 	Node node10;
 	Node node11;
+	Node node12;
 
 
 	@Before
@@ -61,6 +62,7 @@ public class TestParser2 {
 			node9 = net.findNodeById("n9");
 			node10 = net.findNodeById("n10");
 			node11 = net.findNodeById("n11");
+			node12 = net.findNodeById("n12");
 			
 	}
 
@@ -71,7 +73,7 @@ public class TestParser2 {
 		assertEquals(1, net.getLmin());
 		assertNotNull(net.getNodes());
 		assertNotNull(net.getFlows());
-		assertEquals(11, net.getNodes().size());
+		assertEquals(12, net.getNodes().size());
 		assertEquals(7, net.getFlows().size());
 	}
 	
@@ -149,7 +151,7 @@ public class TestParser2 {
 		assertNotNull(path);
 		assertEquals(node8, path.getNodes().get(0));
 		assertEquals(node6, path.getNodes().get(1));
-		assertEquals(node10, path.getNodes().get(2));
+		assertEquals(node12, path.getNodes().get(2));
 		
 	}
 
@@ -175,7 +177,7 @@ public class TestParser2 {
 	
 	@Test
 	public void testNodes() {
-		assertEquals(11, net.getNodes().size());
+		assertEquals(12, net.getNodes().size());
 		assertNotNull(node1);
 		assertNotNull(node2);
 		assertNotNull(node3);
@@ -187,5 +189,6 @@ public class TestParser2 {
 		assertNotNull(node9);
 		assertNotNull(node10);
 		assertNotNull(node11);
+		assertNotNull(node12);
 	}
 }

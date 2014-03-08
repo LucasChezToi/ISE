@@ -41,10 +41,11 @@ public class TestFirstLast {
 	Node node9;
 	Node node10;
 	Node node11;
+	Node node12;
 	
 	@Before
 	public void setUp() throws Exception {
-		XmlParser parser = new XmlParser("xml/example1.xml");
+		XmlParser parser = new XmlParser("xml/example2.xml");
 		parser.parse();
 		net = parser.getNetwork();
 		algo = new Algorithm(net);
@@ -68,6 +69,7 @@ public class TestFirstLast {
 		node9 = net.findNodeById("n9");
 		node10 = net.findNodeById("n10");
 		node11 = net.findNodeById("n11");
+		node12 = net.findNodeById("n12");
 		
 	}
 	
@@ -76,13 +78,14 @@ public class TestFirstLast {
 	 */
 	@Test
 	public void testFirstNodeVisitedByJonIForFlow1() throws NodeDoesNotExistException {
+		
 		Flow flowI = flow1;
 		assertEquals(node1, algo.firstNodeVisitedByJonI(flow1, flowI));
 		try{
 			algo.firstNodeVisitedByJonI(flow2, flowI);
 			fail("NodeDoesNotExistException doit lancée");
 		}catch(NodeDoesNotExistException e){}
-		assertEquals(node2, algo.firstNodeVisitedByJonI(flow3, flowI));
+		assertEquals(algo.firstNodeVisitedByJonI(flow3, flowI).getId(), node2, algo.firstNodeVisitedByJonI(flow3, flowI));
 		assertEquals(node2, algo.firstNodeVisitedByJonI(flow4, flowI));
 		try{
 			algo.firstNodeVisitedByJonI(flow5, flowI);
@@ -98,7 +101,7 @@ public class TestFirstLast {
 		try{
 			algo.firstNodeVisitedByJonI(flow1, flowI);
 			fail("NodeDoesNotExistException doit lancée");
-		}catch(NodeDoesNotExistException e){System.out.println("passé");}
+		}catch(NodeDoesNotExistException e){}
 		assertEquals(node9, algo.firstNodeVisitedByJonI(flow2, flowI));
 		assertEquals(node4, algo.firstNodeVisitedByJonI(flow3, flowI));
 		assertEquals(node4, algo.firstNodeVisitedByJonI(flow4, flowI));
@@ -162,10 +165,7 @@ public class TestFirstLast {
 			algo.firstNodeVisitedByJonI(flow4, flowI);
 			fail("NodeDoesNotExistException doit lancée");
 		}catch(NodeDoesNotExistException e){}
-		try{
-			algo.firstNodeVisitedByJonI(flow5, flowI);
-			fail("NodeDoesNotExistException doit lancée");
-		}catch(NodeDoesNotExistException e){}
+		assertEquals(node8 ,algo.firstNodeVisitedByJonI(flow5, flowI));
 		assertEquals(node6, algo.firstNodeVisitedByJonI(flow6, flowI));
 		try{
 			algo.firstNodeVisitedByJonI(flow7, flowI);
@@ -206,15 +206,12 @@ public class TestFirstLast {
 			algo.firstNodeVisitedByJonI(flow6, flowI);
 			fail("NodeDoesNotExistException doit lancée");
 		}catch(NodeDoesNotExistException e){}
-		try{
-			algo.firstNodeVisitedByJonI(flow7, flowI);
-			fail("NodeDoesNotExistException doit lancée");
-		}catch(NodeDoesNotExistException e){}
+		assertEquals(node2, algo.firstNodeVisitedByJonI(flow7, flowI));
 	}
 
 	/*
 	 * LastNodeVisitedByJonI
-	 //
+	 */
 	@Test
 	public void testLastNodeVisitedByJonIForFlow1() throws NodeDoesNotExistException {
 		Flow flowI = flow1;
@@ -303,10 +300,7 @@ public class TestFirstLast {
 			algo.lastNodeVisitedByJonI(flow4, flowI);
 			fail("NodeDoesNotExistException doit lancée");
 		}catch(NodeDoesNotExistException e){}
-		try{
-			algo.lastNodeVisitedByJonI(flow5, flowI);
-			fail("NodeDoesNotExistException doit lancée");
-		}catch(NodeDoesNotExistException e){}
+		assertEquals(node12 ,algo.lastNodeVisitedByJonI(flow5, flowI));
 		assertEquals(node6, algo.lastNodeVisitedByJonI(flow6, flowI));
 		try{
 			algo.lastNodeVisitedByJonI(flow7, flowI);
@@ -347,10 +341,7 @@ public class TestFirstLast {
 			algo.lastNodeVisitedByJonI(flow6, flowI);
 			fail("NodeDoesNotExistException doit lancée");
 		}catch(NodeDoesNotExistException e){}
-		try{
-			algo.lastNodeVisitedByJonI(flow7, flowI);
-			fail("NodeDoesNotExistException doit lancée");
-		}catch(NodeDoesNotExistException e){}
+		assertEquals(node11, algo.lastNodeVisitedByJonI(flow7, flowI));
 	}
 
 	/*
@@ -399,8 +390,8 @@ public class TestFirstLast {
 		
 		// Cas h derniere node de j mais pas i
 		assertEquals(node5, algo.firstNodeVisitedByJonIRestrictedToH(flow2, flow6, node5));
-		assertEquals(node5, algo.firstNodeVisitedByJonIRestrictedToH(flow3, flow2, node10));
-		assertEquals(node6, algo.firstNodeVisitedByJonIRestrictedToH(flow6, flow5, node10));
+		assertEquals(node10, algo.firstNodeVisitedByJonIRestrictedToH(flow3, flow2, node10));
+		assertEquals(node6, algo.firstNodeVisitedByJonIRestrictedToH(flow6, flow5, node12));
 		
 
 	}
