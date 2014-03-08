@@ -121,7 +121,9 @@ public class XmlParser {
 	  XmlParser parser = new XmlParser(arg[0]);
 	  parser.parse();
 	  
-	  Algorithm algo = new Algorithm(parser.getNetwork());
+	  Network net = parser.getNetwork();
+	  net.init();
+	  Algorithm algo = new Algorithm(net);
 	  algo.computeWorstCaseEndToEndResponse();
   }
 }
