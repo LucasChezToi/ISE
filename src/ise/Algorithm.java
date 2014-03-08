@@ -211,10 +211,8 @@ public class Algorithm {
 	}
 	
 	int _computeBetaSlow(Flow my_flow) {
-		List<Flow> allS;
-		List<Flow> allE;
-		int ti[] ;
-		int ci[] ;
+		List<Flow> allS,  allE;
+		int ti[] , ci[] ;
 		int count = 0;
 		int beta;
 				
@@ -225,8 +223,14 @@ public class Algorithm {
 		allS = my_flow.getHigherPriorityFlows();
 		allE = my_flow.getSamePriorityFlows();
 		// create period table and computation table
-		ti = new int[allS.size()+allE.size()];
-		ci = new int[allS.size()+allE.size()];
+		ti = new int[allS.size()+allE.size()+1];
+		ci = new int[allS.size()+allE.size()+1];
+		
+		// add my_flow period and calculation into the table
+		ti[0] = my_flow.getPeriod();
+		// i don't know how i get it
+		//ci[0] =
+		count ++;
 		
 		for (Flow flow : allS){
 			ti[count] = flow.getPeriod();
@@ -261,11 +265,11 @@ public class Algorithm {
 			}
 			count ++;
 		}
-					
+		// tested			
 		long lcm = lCMf4Ti(ti);
-		
+		// tested 
 		beta = (int)beta_i_slow(ti, ci,lcm);
-				
+		
 		return beta;
 	}
 
