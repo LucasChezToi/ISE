@@ -70,6 +70,7 @@ public class XmlParser {
 	   
 	   for(Element e : flows.getChildren("flow")) {
 		   Flow tempFlow = new Flow();
+			network.addFlow(tempFlow);
 		   tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
 			if(e.getChild("jitter") == null)
 				tempFlow.setJitter(0);
@@ -79,6 +80,7 @@ public class XmlParser {
 			Path tempPath = new Path();
 			for(Element e1 : e.getChild("path").getChildren()) {
 				Node node = new Node();
+				network.addNode(node);
 				node.setId(e1.getText());
 				HashMap<Flow, Integer> capacity = new HashMap<Flow, Integer>();
 				capacity.put(tempFlow, 0);
@@ -90,7 +92,6 @@ public class XmlParser {
 			tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
 			tempFlow.setPeriod(Integer.parseInt(e.getChildText("period")));
 			tempFlow.setPriority(Integer.parseInt(e.getChildText("priority")));
-			network.addFlow(tempFlow);
 			System.out.println("Deadline : " + tempFlow.getDeadline());
 			System.out.println("Jitter : " + tempFlow.getJitter());
 			System.out.println("Period : " + tempFlow.getPeriod());
@@ -98,6 +99,16 @@ public class XmlParser {
 	   }
 	   network.setLmax(Integer.parseInt(links.getChildText("maxTime")));
 	   network.setLmin(Integer.parseInt(links.getChildText("minTime")));
+	   /*ERROR CAPACITY NEVER SET*/
+		/*THIS IS A TEMP PATCH*/
+		HashMap<Flow, Integer>capacity = new HashMap<>();
+		for(Flow f : network.getFlows()) {
+			capacity.put(f, 4);
+		}
+		for(Node n : network.getNodes()) {
+			n.setCapacity(capacity);
+		}
+		/*END PATCH*/
    }
    
   /**
@@ -120,7 +131,17 @@ public class XmlParser {
 					+ ", Message : Fichier en entrée non reconnu (format xml attendu)");
 	  	  System.exit(1);
 	  }
+	  
 	  XmlParser parser = new XmlParser(arg[0]);
 	  parser.parse();
+	  
+	  Network net = parser.getNetwork();
+	  net.init();
+	  Algorithm algo = new Algorithm(net);
+	  algo.computeWorstCaseEndToEndResponse();
+	  System.out.println("Done");
+	  for(int r : algo.worstCasesResponseTime) {
+		  System.out.println(r + " ");
+	  }
   }
 }

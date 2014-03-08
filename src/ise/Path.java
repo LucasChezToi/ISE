@@ -28,7 +28,18 @@ public class Path {
 		this.nodes = nodes;
 	}
 	
-	public Path pathRestrictedToH(Node H) {
-		return null;
+	public Path pathRestrictedToH(Node H) throws NodeDoesNotExistException{
+		if(!this.getNodes().contains(H)) {
+			throw new NodeDoesNotExistException("");
+		}
+		Path p = new Path();
+		for(Node n : this.getNodes()){
+			if(n!=H){
+				p.getNodes().add(n);
+			} else {
+				break;
+			}
+		}
+		return p;
 	}
 }
