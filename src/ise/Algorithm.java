@@ -1,6 +1,5 @@
 package ise;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -406,14 +405,21 @@ public class Algorithm {
 					}
 				}
 				if (i.getLowerPriorityFlows().size() != 0) {
+
 					int val;
 					try {
 						val = max - nodePreceedingHinFlowI(i, h).getCapacity().get(i) + net.getLmax() - net.getLmin();
 						if( val > 0) {
 							delta+=val;
 						}
-					} catch (NodeDoesNotHavePredecessor
-							| NodeDoesNotExistException e) {
+					} catch (NodeDoesNotHavePredecessor e) {
+						// TODO Auto-generated catch block
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : computeDelta, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
+						e.printStackTrace();
+					} catch (NodeDoesNotExistException e) {
 						// TODO Auto-generated catch block
 						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
 								+ ", Fonction : computeDelta, "
@@ -631,5 +637,28 @@ public class Algorithm {
 		w2+=computeDelta(i, h);
 		w2+=(p.getNodes().size() - 1)*net.getLmax();
 		return w2;
+	}
+	
+	public List<Integer>  computeWorstCaseEndToEndResponse() {
+		List<Flow> flows = net.getFlows();
+
+		int  t;
+		Integer max=0;
+		for (Flow i : flows) {
+			for (t=-(i.getJitter()); t<-(i.getJitter())+computeBetaSlow(i); t++) {
+				Path path = i.getPath();
+				List<Node> nodes = path.getNodes();
+				Node last_i = nodes.get(nodes.size()-1);
+				Integer val_inter = computeW(i, t)+ last_i.getCapacity().get(i)-t;
+				max =Math.max(max, val_inter);
+
+
+			}
+			worstCasesResponseTime.add(max);
+		}
+
+
+		return worstCasesResponseTime;
+
 	}
 }

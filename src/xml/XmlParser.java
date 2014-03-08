@@ -9,12 +9,9 @@ import ise.Path;
 import java.io.*;
 
 import org.jdom2.*;
-import org.jdom2.input.*;
-import org.jdom2.filter.*;
 import org.jdom2.input.SAXBuilder;
 
-import java.util.List;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -71,9 +68,10 @@ public class XmlParser {
 	   Element flows = document.getRootElement().getChild("flows");
 	   Element links = document.getRootElement().getChild("links");
 	   
-	   int flowNumber = 0;
+	   //int flowNumber = 0;
 	   for(Element e : flows.getChildren("flow")) {
 		   Flow tempFlow = new Flow();
+			network.addFlow(tempFlow);
 		   tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
 			if(e.getChild("jitter") == null)
 				tempFlow.setJitter(0);
@@ -83,6 +81,7 @@ public class XmlParser {
 			Path tempPath = new Path();
 			for(Element e1 : e.getChild("path").getChildren()) {
 				Node node = new Node();
+				network.addNode(node);
 				node.setId(e1.getText());
 				tempPath.setNode(node);
 			}
@@ -91,19 +90,27 @@ public class XmlParser {
 			tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
 			tempFlow.setPeriod(Integer.parseInt(e.getChildText("period")));
 			tempFlow.setPriority(Integer.parseInt(e.getChildText("priority")));
-			network.addFlow(tempFlow);
-			/*System.out.println("Flow instance : " + flowNumber++);
 			System.out.println("Deadline : " + tempFlow.getDeadline());
 			System.out.println("Jitter : " + tempFlow.getJitter());
 			System.out.println("Period : " + tempFlow.getPeriod());
-			System.out.println("Priority : " + tempFlow.getPriority() + "\n");*/
+			System.out.println("Priority : " + tempFlow.getPriority() + "\n");
 	   }
 	   network.setLmax(Integer.parseInt(links.getChildText("maxTime")));
 	   network.setLmin(Integer.parseInt(links.getChildText("minTime")));
+	   /*ERROR CAPACITY NEVER SET*/
+		/*THIS IS A TEMP PATCH*/
+		HashMap<Flow, Integer>capacity = new HashMap<>();
+		for(Flow f : network.getFlows()) {
+			capacity.put(f, 4);
+		}
+		for(Node n : network.getNodes()) {
+			n.setCapacity(capacity);
+		}
+		/*END PATCH*/
    }
    
   /**
-   * Méthode pour la lancement de l'application
+   * Méthode pour le lancement de l'application
    * @param arg représente les entrées du système
    */
   public static void main (String [] arg) {
@@ -122,7 +129,13 @@ public class XmlParser {
 					+ ", Message : Fichier en entrée non reconnu (format xml attendu)");
 	  	  System.exit(1);
 	  }
+	  
 	  XmlParser parser = new XmlParser(arg[0]);
 	  parser.parse();
+	  
+	  Network net = parser.getNetwork();
+	  net.init();
+	  Algorithm algo = new Algorithm(net);
+	  algo.computeWorstCaseEndToEndResponse();
   }
 }
