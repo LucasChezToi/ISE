@@ -240,7 +240,7 @@ public class Algorithm {
 
 	int computeBetaSlow(Flow my_flow) {
 		XmlParser.logger.log(Level.SEVERE, "utilisation d'un bouchon pour computeBetaSlow");
-		return 10;
+		return 1;
 	}
 	
 	int _computeBetaSlow(Flow my_flow) {
@@ -709,24 +709,20 @@ public class Algorithm {
 	
 	public List<Integer>  computeWorstCaseEndToEndResponse() {
 		List<Flow> flows = net.getFlows();
-
 		int  t;
-		Integer max=0;
+		Integer max;
 		for (Flow i : flows) {
+			max = 0;
 			for (t=-(i.getJitter()); t<-(i.getJitter())+computeBetaSlow(i); t++) {
 				Path path = i.getPath();
 				List<Node> nodes = path.getNodes();
 				Node last_i = nodes.get(nodes.size()-1);
 				Integer val_inter = computeW(i, t)+ last_i.getCapacity().get(i)-t;
-				max =Math.max(max, val_inter);
-
-
+				max = Math.max(max, val_inter);
 			}
 			worstCasesResponseTime.add(max);
 		}
-
-
+		
 		return worstCasesResponseTime;
-
 	}
 }
