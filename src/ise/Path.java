@@ -3,6 +3,8 @@ package ise;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.NodeDoesNotExistException;
+
 public class Path {
 	private List<Node> nodes;
 

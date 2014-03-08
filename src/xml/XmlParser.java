@@ -81,33 +81,29 @@ public class XmlParser {
 			for(Element e1 : e.getChild("path").getChildren()) {
 				Node node = new Node();
 				network.addNode(node);
-				node.setId(e1.getText());
+				node.setId(e1.getAttributeValue("id"));
 				HashMap<Flow, Integer> capacity = new HashMap<Flow, Integer>();
-				capacity.put(tempFlow, 0);
+				capacity.put(tempFlow, Integer.parseInt(e1.getChildText("capacity")));
 				node.setCapacity(capacity);
 				tempPath.setNode(node);
 			}
 			tempFlow.setPath(tempPath);
-			tempFlow.setId(e.getText());
+			tempFlow.setId(e.getAttributeValue("id"));
 			tempFlow.setDeadline(Integer.parseInt(e.getChildText("deadline")));
 			tempFlow.setPeriod(Integer.parseInt(e.getChildText("period")));
 			tempFlow.setPriority(Integer.parseInt(e.getChildText("priority")));
-			System.out.println("Deadline : " + tempFlow.getDeadline());
-			System.out.println("Jitter : " + tempFlow.getJitter());
-			System.out.println("Period : " + tempFlow.getPeriod());
-			System.out.println("Priority : " + tempFlow.getPriority() + "\n");
 	   }
 	   network.setLmax(Integer.parseInt(links.getChildText("maxTime")));
 	   network.setLmin(Integer.parseInt(links.getChildText("minTime")));
 	   /*ERROR CAPACITY NEVER SET*/
 		/*THIS IS A TEMP PATCH*/
-		HashMap<Flow, Integer>capacity = new HashMap<>();
+		/*HashMap<Flow, Integer>capacity = new HashMap<>();
 		for(Flow f : network.getFlows()) {
 			capacity.put(f, 4);
 		}
 		for(Node n : network.getNodes()) {
 			n.setCapacity(capacity);
-		}
+		}*/
 		/*END PATCH*/
    }
    

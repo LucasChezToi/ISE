@@ -5,112 +5,122 @@
     <maxTime>1</maxTime>
     <minTime>1</minTime>
   </links>
-  <nodes>
-    <!-- Note : les attributs ne peuvent pas commencer par des chiffre -->
-    <node id="n1">
-      <!-- Si l'attribut forFlow n'est pas defini, on a un compute time par default-->
-      <computeTime forFlow="f1">4</computeTime>
-      <computeTime>4</computeTime>
-    </node>
-    <node id="n2">
-      <computeTime>4</computeTime>
-    </node>
-    <node id="n3">
-      <computeTime>4</computeTime>
-    </node>
-    <node id="n4">
-      <computeTime>4</computeTime>
-    </node>
-    <node id="n5">
-      <computeTime>4</computeTime>
-    </node>
-    <node id="n6">
-      <computeTime>4</computeTime>
-    </node>
-    <node id="n7">
-      <computeTime>4</computeTime>
-    </node>
-    <node id="n8">
-      <computeTime>4</computeTime>
-    </node>
-    <node id="n9">
-      <computeTime>4</computeTime>
-    </node>
-    <node id="n10">
-      <computeTime>4</computeTime>
-    </node>
-    <node id="n11">
-      <computeTime>4</computeTime>
-    </node>
-  </nodes>
   <flows>
     <flow id="f1">
       <priority>10</priority>
       <deadline>36</deadline>
-      <capacity></capacity>
       <!-- La pérode est optionnelle, si elle n'est pas spécifié
            elle est égale à la deadline -->
       <period>36</period>
       <!-- Si le jitter n'est pas déclaré, il est égal à 0-->
       <jitter>0</jitter>
       <path>
-        <nodeId>n1</nodeId>
-        <nodeId>n3</nodeId>
-        <nodeId>n4</nodeId>
-        <nodeId>n5</nodeId>
+        <nodeId id="n1">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n2">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n4">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n5">
+        	<capacity>4</capacity>
+        </nodeId>
       </path>
     </flow>
     <flow id="f2">
       <priority>10</priority>
       <deadline>36</deadline>
       <period>36</period>
-      <capacity></capacity>
       <path>
-        <nodeId>n9</nodeId>
-        <nodeId>n10</nodeId>
-        <nodeId>n7</nodeId>
-        <nodeId>n6</nodeId>
+        <nodeId id="n9">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n10">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n7">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n6">
+        	<capacity>4</capacity>
+        </nodeId>
       </path>
     </flow>
     <flow id="f3">
       <priority>11</priority>
       <deadline>54</deadline>
       <period>36</period>
-      <capacity></capacity>
       <path>
-        <nodeId>n2</nodeId>
-        <nodeId>n3</nodeId>
-        <nodeId>n4</nodeId>
-        <nodeId>n7</nodeId>
-        <nodeId>n10</nodeId>
-        <nodeId>n11</nodeId>
+        <nodeId id="n2">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n3">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n4">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n7">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n10">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n11">
+	        <capacity>4</capacity>
+        </nodeId>
       </path>
     </flow>
     <flow id="f4">
       <priority>11</priority>
       <deadline>54</deadline>
       <period>36</period>
-      <capacity></capacity>
       <path>
-        <nodeId>n2</nodeId>
-        <nodeId>n3</nodeId>
-        <nodeId>n4</nodeId>
-        <nodeId>n7</nodeId>
-        <nodeId>n10</nodeId>
-        <nodeId>n11</nodeId>
+      	<nodeId id="n2">
+      		<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n3">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n4">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n7">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n10">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n11">
+        	<capacity>4</capacity>
+        </nodeId>
       </path>
     </flow>
     <flow id="f5">
       <priority>12</priority>
       <deadline>45</deadline>
       <period>36</period>
-      <capacity></capacity>
       <path>
-        <nodeId>n2</nodeId>
-        <nodeId>n3</nodeId>
-        <nodeId>n4</nodeId>
-        <nodeId>n7</nodeId>
-        <nodeId>n8</nodeId>
+    	<nodeId id="n2">
+    		<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n3">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n4">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n7">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n8">
+        	<capacity>4</capacity>
+        </nodeId>
+        <nodeId id="n11">
+        	<capacity>4</capacity>
+        </nodeId>
       </path>
     </flow>
   </flows>
