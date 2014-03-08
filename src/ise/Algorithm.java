@@ -3,12 +3,16 @@ package ise;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.*;
+
+import xml.XmlParser;
 
 public class Algorithm {
 	private Network net;
 	private List<Integer> worstCasesResponseTime;
 	
-	public Algorithm(){}
+	public Algorithm(){
+	}
 	
 	public Algorithm(Network net){
 		this.net = net;
@@ -50,6 +54,7 @@ public class Algorithm {
 		return this.lastNodeVisitedByJonI(j.getPath(), i.getPath());
 	}
 	
+	/* On restreint le chemin du flot i */
 	public Node firstNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
 		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
 		List<Node> jNodesList = j.getPath().getNodes();
@@ -173,9 +178,10 @@ public class Algorithm {
 	Node nodePreceedingHinFlowI(Flow i, Node h) throws NodeDoesNotHavePredecessor, NodeDoesNotExistException {
 		for(int n = 0 ; n < i.getPath().getNodes().size(); n++) {
 			if(h == i.getPath().getNodes().get(n)) {
-				if(n == 0)
+				if(n == 0) {
 					throw new NodeDoesNotHavePredecessor("Fonction nodePreceedingHinFlowI : "
 									+ "première node visitée dans le path, elle ne possède donc pas de prédécesseurs directs");
+				}
 				return i.getPath().getNodes().get(n - 1);
 			}
 		}
@@ -194,6 +200,10 @@ public class Algorithm {
 		} catch (NodeDoesNotExistException e) {
 			// TODO: handle exception
 			System.err.println("computeA");
+			XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+					+ ", Fonction : computeA, "
+					+ ", Erreur : " + e.getClass().getName()
+					+ ", Message : " + e.getMessage());
 			e.printStackTrace();
 			return 0;
 		}
@@ -225,6 +235,10 @@ public class Algorithm {
 				// TODO: handle exception
 				ci[count] = 0;
 				System.err.println("computeBetaSlow");
+				XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+						+ ", Fonction : computeBetaSlow, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 			count ++;
@@ -238,6 +252,10 @@ public class Algorithm {
 				// TODO: handle exception
 				ci[count] = 0;
 				System.err.println("computeBetaSlow");
+				XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+						+ ", Fonction : computeBetaSlow, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 			count ++;
@@ -312,6 +330,10 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("computeDelta");
+				XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+						+ ", Fonction : computeDelta, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -330,6 +352,10 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("computeDelta");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : computeDelta, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -348,6 +374,10 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("computeDelta");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : computeDelta, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -366,22 +396,34 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("computeDelta");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : computeDelta, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
 				if (i.getLowerPriorityFlows().size() != 0) {
+
+					int val;
 					try {
-						int val = max - nodePreceedingHinFlowI(i, h).getCapacity().get(i) + net.getLmax() - net.getLmin();
+						val = max - nodePreceedingHinFlowI(i, h).getCapacity().get(i) + net.getLmax() - net.getLmin();
 						if( val > 0) {
 							delta+=val;
 						}
-					} catch (NodeDoesNotExistException e) {
-						// TODO: handle exception
-						System.err.println("computeDelta");
-						e.printStackTrace();
 					} catch (NodeDoesNotHavePredecessor e) {
-						// TODO: handle exception
-						System.err.println("computeDelta");
+						// TODO Auto-generated catch block
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : computeDelta, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
+						e.printStackTrace();
+					} catch (NodeDoesNotExistException e) {
+						// TODO Auto-generated catch block
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : computeDelta, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -415,6 +457,10 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("subfunction_computeW_initialize_sequence");
+				XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+						+ ", Fonction : subfunction_computeW_initialize_sequence, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -425,6 +471,9 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("subfunction_computeW_initialize_sequence");
+				XmlParser.logger.log(Level.WARNING, "Fonction : subfunction_computeW_initialize_sequence, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -445,6 +494,10 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("subfunction_computeW_initialize_sequence");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : subfunction_computeW_initialize_sequence, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -459,6 +512,10 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("subfunction_computeW_initialize_sequence");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : subfunction_computeW_initialize_sequence, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();					
 						}
 				}
@@ -495,6 +552,10 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("subfunction_computeW_nextof_sequence");
+				XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+						+ ", Fonction : subfunction_computeW_nextof_sequence, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -510,6 +571,10 @@ public class Algorithm {
 			} catch (NodeDoesNotExistException e) {
 				// TODO: handle exception
 				System.err.println("subfunction_computeW_nextof_sequence");
+				XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+						+ ", Fonction : subfunction_computeW_nextof_sequence, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -535,6 +600,10 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("subfunction_computeW_nextof_sequence");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : subfunction_computeW_nextof_sequence, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -549,6 +618,10 @@ public class Algorithm {
 					} catch (NodeDoesNotExistException e) {
 						// TODO: handle exception
 						System.err.println("subfunction_computeW_nextof_sequence");
+						XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+								+ ", Fonction : subfunction_computeW_nextof_sequence, "
+								+ ", Erreur : " + e.getClass().getName()
+								+ ", Message : " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -563,5 +636,28 @@ public class Algorithm {
 		w2+=computeDelta(i, h);
 		w2+=(p.getNodes().size() - 1)*net.getLmax();
 		return w2;
+	}
+	
+	public List<Integer>  computeWorstCaseEndToEndResponse() {
+		List<Flow> flows = net.getFlows();
+
+		int  t;
+		Integer max=0;
+		for (Flow i : flows) {
+			for (t=-(i.getJitter()); t<-(i.getJitter())+computeBetaSlow(i); t++) {
+				Path path = i.getPath();
+				List<Node> nodes = path.getNodes();
+				Node last_i = nodes.get(nodes.size()-1);
+				Integer val_inter = computeW(i, t)+ last_i.getCapacity().get(i)-t;
+				max =Math.max(max, val_inter);
+
+
+			}
+			worstCasesResponseTime.add(max);
+		}
+
+
+		return worstCasesResponseTime;
+
 	}
 }

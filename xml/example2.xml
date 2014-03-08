@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE netconf SYSTEM "netconf.dtd">
 
-<!-- Exemple servant à tester quelques fonctions -->
-
-<!--
-	Cas à tester
-		// Cas premiere node de i et j
-		// Cas premiere node de i 
-		// Cas premiere node de j
-		
-		// Cas derniere node de i et j
-		// Cas derniere node de i 
-		// Cas derniere node de j 
-		
-		// Cas general
+<!-- Exemple servant à tester les méthodes :
+	firstNodeVisitedXXX
+	lastNodeVisitedXXX
 -->
 
 <netconf>

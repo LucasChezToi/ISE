@@ -47,7 +47,7 @@ public class TestParser2 {
 	
 	@Test
 	public void testFlowsIds() {
-		assertEquals(7, network.getFlows());
+		assertEquals(7, network.getFlows().size());
 		for(int i=0 ; i<network.getFlows().size() ; i++){
 			assertEquals("f" + (i+1), network.getFlows().get(i));
 		}
