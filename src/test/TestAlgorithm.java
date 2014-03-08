@@ -15,6 +15,7 @@ public class TestAlgorithm {
 	Path j1;
 	Path i1;
 	Node firstj1i1;
+	Node lastj1i1;
 	
 	@Before
 	public void init() {
@@ -22,6 +23,7 @@ public class TestAlgorithm {
 		j1 = new Path();
 		i1 = new Path();
 		firstj1i1 = new Node();
+		lastj1i1 = new Node();
 		
 		for(int i=0; i<10; i++) {
 			i1.getNodes().add(new Node());
@@ -37,6 +39,9 @@ public class TestAlgorithm {
 			j1.getNodes().add(n);
 		}
 	
+		i1.getNodes().add(lastj1i1);
+		j1.getNodes().add(lastj1i1);
+		
 		for(int i=0; i<10; i++) {
 			i1.getNodes().add(new Node());
 			j1.getNodes().add(new Node());
@@ -48,7 +53,15 @@ public class TestAlgorithm {
 		try {
 			assertEquals(firstj1i1, algo.firstNodeVisitedByJonI(j1, i1));
 		} catch (Exception e) {
-			// TODO: handle exception
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void test_lastNodeVisitedByJonI() {
+		try {
+			assertEquals(lastj1i1, algo.lastNodeVisitedByJonI(j1, i1));
+		} catch (Exception e) {
 			assertTrue(false);
 		}
 	}
