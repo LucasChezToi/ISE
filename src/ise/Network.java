@@ -87,4 +87,22 @@ public class Network {
 	public void setLmin(int lmin) {
 		this.lmin = lmin;
 	}
+	
+	public Node findNodeById(String id){
+		for(Node node : nodes){
+			if(node.getId().equals(id)){
+				return node;
+			}
+		}
+		return null;
+	}
+	
+	public Flow findFlowById(String id){
+		for(Flow flow : flows){
+			if(flow.getId().equals(id)){
+				return flow;
+			}
+		}
+		return null;
+	}
 }
