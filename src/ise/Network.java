@@ -52,6 +52,10 @@ public class Network {
 		flows.add(flow);
 	}
 	
+	public void addNode(Node node) {
+		nodes.add(node);
+	}
+	
 	public List<Flow> getFlows() {
 		return flows;
 	}

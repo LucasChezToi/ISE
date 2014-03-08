@@ -125,13 +125,8 @@ public class Algorithm {
 				}
 			}
 		}
-		
-		if(res != null){
-			throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonI : "
-					+ "la node référencée n'est pas contenue dans le path correspondant");
-		}else{
-			return res;
-		}
+		throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonI : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
 	}
 	
 	Node slowestNodeVisitedByIonHisPathRestrictedToH(Flow i, Node h) {
@@ -220,7 +215,7 @@ public class Algorithm {
 		int ci[] = new int[10];
 		int count = 0;
 		int beta;
-		
+				
 		allS  = new ArrayList<Flow>();
 		allE  = new ArrayList<Flow>();
 		
@@ -260,11 +255,10 @@ public class Algorithm {
 			}
 			count ++;
 		}
-			
+					
 		long lcm = lCMf4Ti(ti);
 		
 		beta = (int)beta_i_slow(ti, ci,lcm);
-		
 		
 		return beta;
 	}
