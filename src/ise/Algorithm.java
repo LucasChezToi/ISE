@@ -221,7 +221,7 @@ public class Algorithm {
 		allE  = new ArrayList<Flow>();
 		
 		allS = my_flow.getHigherPriorityFlows();
-		allS = my_flow.getSamePriorityFlows();
+		allE = my_flow.getSamePriorityFlows();
 		
 		for (Flow flow : allS){
 			ti[count] = flow.getPeriod();
