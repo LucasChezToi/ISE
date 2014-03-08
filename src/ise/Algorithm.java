@@ -197,6 +197,8 @@ public class Algorithm {
 	}
 	
 	int computeM(Flow i, Node h) {
+		//TODO
+		XmlParser.logger.log(Level.SEVERE, "utilisation d'un bouchon pour computeM");
 		return 0;
 	}
 	
@@ -235,16 +237,18 @@ public class Algorithm {
 	}
 	
 	int computeARestrictedToH(Flow i, Flow j, Node H) {
+		//TODO
+		XmlParser.logger.log(Level.SEVERE, "utilisation d'un bouchon pour computeARestrictedToH");
 		return 0;
 	}
 	
 
-	int computeBetaSlow(Flow my_flow) {
+	int _computeBetaSlow(Flow my_flow) {
 		XmlParser.logger.log(Level.SEVERE, "utilisation d'un bouchon pour computeBetaSlow");
 		return 1;
 	}
 	
-	int _computeBetaSlow(Flow my_flow) {
+	int computeBetaSlow(Flow my_flow) {
 		List<Flow> allS,  allE;
 		int ti[] , ci[] ;
 		int count = 0;
