@@ -221,6 +221,7 @@ public class Algorithm {
 		allS  = new ArrayList<Flow>();
 		allE  = new ArrayList<Flow>();
 		
+		// get all priority Superior or Equal
 		allS = my_flow.getHigherPriorityFlows();
 		allE = my_flow.getSamePriorityFlows();
 		
