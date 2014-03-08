@@ -141,9 +141,10 @@ public class XmlParser {
 	  net.init();
 	  Algorithm algo = new Algorithm(net);
 	  algo.computeWorstCaseEndToEndResponse();
-	  System.out.println("Done");
+	  System.out.print("Done: ");
 	  for(int r : algo.worstCasesResponseTime) {
-		  System.out.println(r + " ");
+		  System.out.print(r + " ");
 	  }
+	  System.out.println("");
   }
 }

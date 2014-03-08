@@ -14,10 +14,12 @@ public class Algorithm {
 	public List<Integer> worstCasesResponseTime;
 	
 	public Algorithm(){
+		this.worstCasesResponseTime = new ArrayList<>();
 	}
 	
 	public Algorithm(Network net){
 		this.net = net;
+		this.worstCasesResponseTime = new ArrayList<>();
 	}
 	
 	public Network getNet() {
@@ -58,6 +60,10 @@ public class Algorithm {
 	
 	/* On restreint le chemin du flot i */
 	public Node firstNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
+		if(!j.getPath().getNodes().contains(h) || ! i.getPath().getNodes().contains(h)){
+			throw new NodeDoesNotExistException("Fonction firstNodeVisitedByJonIRestrictedToH : "
+					+ "la node référencée n'est pas contenue dans le path correspondant");
+		}
 		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
 		List<Node> jNodesList = j.getPath().getNodes();
 				
@@ -71,6 +77,10 @@ public class Algorithm {
 	}
 	
 	public Node lastNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
+		if(!j.getPath().getNodes().contains(h) || ! i.getPath().getNodes().contains(h)){
+			throw new NodeDoesNotExistException("Fonction firstNodeVisitedByJonIRestrictedToH : "
+					+ "la node référencée n'est pas contenue dans le path correspondant");
+		}
 		List<Node> iSubNodesList = i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
 		List<Node> jNodesList = j.getPath().getNodes();
 				
@@ -231,7 +241,7 @@ public class Algorithm {
 
 	int computeBetaSlow(Flow my_flow) {
 		XmlParser.logger.log(Level.SEVERE, "utilisation d'un bouchon pour computeBetaSlow");
-		return 10;
+		return 1;
 	}
 	
 	int _computeBetaSlow(Flow my_flow) {
@@ -462,7 +472,6 @@ public class Algorithm {
 			w1 = subfunction_computeW_initialize_sequence(i, t, h);
 			w2 = subfunction_computeW_nextof_sequence(i, t, h, w1, w);
 			while(w1 != w2) {
-				System.out.println("Covergence "+ (w1-w2));
 				w1 = w2;
 				w2 = subfunction_computeW_nextof_sequence(i, t, h, w1, w);
 			}
@@ -687,24 +696,20 @@ public class Algorithm {
 	
 	public List<Integer>  computeWorstCaseEndToEndResponse() {
 		List<Flow> flows = net.getFlows();
-
 		int  t;
-		Integer max=0;
+		Integer max;
 		for (Flow i : flows) {
+			max = 0;
 			for (t=-(i.getJitter()); t<-(i.getJitter())+computeBetaSlow(i); t++) {
 				Path path = i.getPath();
 				List<Node> nodes = path.getNodes();
 				Node last_i = nodes.get(nodes.size()-1);
 				Integer val_inter = computeW(i, t)+ last_i.getCapacity().get(i)-t;
-				max =Math.max(max, val_inter);
-
-
+				max = Math.max(max, val_inter);
 			}
 			worstCasesResponseTime.add(max);
 		}
-
-
+		
 		return worstCasesResponseTime;
-
 	}
 }
