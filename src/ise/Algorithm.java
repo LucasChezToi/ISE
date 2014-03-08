@@ -157,13 +157,9 @@ public class Algorithm {
 				}
 			}
 		}
-		
-		if(res != null){
-			throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonIRestrictedToH : "
-					+ "la node référencée n'est pas contenue dans le path correspondant");
-		}else{
-			return res;
-		}
+		throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonIRestrictedToH : "
+				+ "la node référencée n'est pas contenue dans le path correspondant");
+
 	}
 	
 	int computeM(Flow i, Node h) {
@@ -209,6 +205,10 @@ public class Algorithm {
 	}
 	
 	int computeBetaSlow(Flow my_flow) {
+		return 10;
+	}
+	
+	int _computeBetaSlow(Flow my_flow) {
 		List<Flow> allS;
 		List<Flow> allE;
 		int ti[] = new int[10];
@@ -259,7 +259,7 @@ public class Algorithm {
 		long lcm = lCMf4Ti(ti);
 		
 		beta = (int)beta_i_slow(ti, ci,lcm);
-		
+				
 		return beta;
 	}
 
