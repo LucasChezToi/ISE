@@ -84,24 +84,46 @@ public class Algorithm {
 	
 	public int minTimeTakenFromSourceToH(Flow f, Node h) {
 		int res = 0;
+		Path p = null;
+		try {
+			p = f.getPath().pathRestrictedToH(h);
+		} catch (NodeDoesNotExistException e) {
+			// TODO: handle exception
+			System.err.println("minTimeTakenFromSourceToH");
+			XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+					+ ", Fonction : minTimeTakenFromSourceToH, "
+					+ ", Erreur : " + e.getClass().getName()
+					+ ", Message : " + e.getMessage());
+			e.printStackTrace();
+			return 0;
+		}
+		res = net.getLmin() * (p.getNodes().size() - 1);
 		
-		res = net.getLmin() * (f.getPath().getNodes().size() - 1);
-		
-		for(int i=1; i < f.getPath().getNodes().size() 
-				&& (f.getPath().getNodes().get(i+1) != h); i++ ){
-			res += f.getPath().getNodes().get(i).getCapacity().get(f);
+		for(int i=1; i < p.getNodes().size() - 1; i++ ) {			
+			res += p.getNodes().get(i).getCapacity().get(f);
 		}
 		return res;
 	}
 	
 	public int maxTimeTakenFromSourceToH(Flow f, Node h) {
 		int res = 0;
-		res = net.getLmax() * (f.getPath().getNodes().size() - 1);
-		Node currNode;
-		for(int i=1; i < f.getPath().getNodes().size() 
-				&& (f.getPath().getNodes().get(i+1) != h); i++ ){
-			currNode = f.getPath().getNodes().get(i);
-			res += currNode.getCapacity().get(f);
+		Path p = null;
+		try {
+			p = f.getPath().pathRestrictedToH(h);
+		} catch (NodeDoesNotExistException e) {
+			// TODO: handle exception
+			System.err.println("maxTimeTakenFromSourceToH");
+			XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+					+ ", Fonction : maxTimeTakenFromSourceToH, "
+					+ ", Erreur : " + e.getClass().getName()
+					+ ", Message : " + e.getMessage());
+			e.printStackTrace();
+			return 0;
+		}
+		res = net.getLmax() * (p.getNodes().size() - 1);
+		
+		for(int i=1; i < p.getNodes().size() - 1; i++ ) {			
+			res += p.getNodes().get(i).getCapacity().get(f);
 		}
 		return res;
 	}
@@ -613,7 +635,7 @@ public class Algorithm {
 		w2 += val * slow.getCapacity().get(i);
 		Path p = null;
 		try { 
-			i.getPath().pathRestrictedToH(h);
+			p = i.getPath().pathRestrictedToH(h);
 
 			for(Node k : p.getNodes()) {
 				if(k != slow){

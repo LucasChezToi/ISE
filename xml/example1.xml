@@ -15,18 +15,18 @@
       <!-- Si le jitter n'est pas déclaré, il est égal à 0-->
       <jitter>0</jitter>
       <path>
-        <nodeId id="n1">
+        <node id="n1">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n2">
+        </node>
+        <node id="n3">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n4">
+        </node>
+        <node id="n4">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n5">
+        </node>
+        <node id="n5">
         	<capacity>4</capacity>
-        </nodeId>
+        </node>
       </path>
     </flow>
     <flow id="f2">
@@ -34,18 +34,18 @@
       <deadline>36</deadline>
       <period>36</period>
       <path>
-        <nodeId id="n9">
+        <node id="n9">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n10">
+        </node>
+        <node id="n10">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n7">
+        </node>
+        <node id="n7">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n6">
+        </node>
+        <node id="n6">
         	<capacity>4</capacity>
-        </nodeId>
+        </node>
       </path>
     </flow>
     <flow id="f3">
@@ -53,24 +53,24 @@
       <deadline>54</deadline>
       <period>36</period>
       <path>
-        <nodeId id="n2">
+        <node id="n2">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n3">
+        </node>
+        <node id="n3">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n4">
+        </node>
+        <node id="n4">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n7">
+        </node>
+        <node id="n7">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n10">
+        </node>
+        <node id="n10">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n11">
+        </node>
+        <node id="n11">
 	        <capacity>4</capacity>
-        </nodeId>
+        </node>
       </path>
     </flow>
     <flow id="f4">
@@ -78,24 +78,24 @@
       <deadline>54</deadline>
       <period>36</period>
       <path>
-      	<nodeId id="n2">
+      	<node id="n2">
       		<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n3">
+        </node>
+        <node id="n3">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n4">
+        </node>
+        <node id="n4">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n7">
+        </node>
+        <node id="n7">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n10">
+        </node>
+        <node id="n10">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n11">
+        </node>
+        <node id="n11">
         	<capacity>4</capacity>
-        </nodeId>
+        </node>
       </path>
     </flow>
     <flow id="f5">
@@ -103,24 +103,21 @@
       <deadline>45</deadline>
       <period>36</period>
       <path>
-    	<nodeId id="n2">
+    	<node id="n2">
     		<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n3">
+        </node>
+        <node id="n3">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n4">
+        </node>
+        <node id="n4">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n7">
+        </node>
+        <node id="n7">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n8">
+        </node>
+        <node id="n8">
         	<capacity>4</capacity>
-        </nodeId>
-        <nodeId id="n11">
-        	<capacity>4</capacity>
-        </nodeId>
+        </node>
       </path>
     </flow>
   </flows>
