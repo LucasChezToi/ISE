@@ -31,7 +31,7 @@ public class Algorithm {
 
 	public Node firstNodeVisitedByJonI(Path j, Path i) throws NodeDoesNotExistException {
 		for(int index = 0 ; index< i.getNodes().size() ; index++){
-			if( ! j.getNodes().contains(i.getNodes().get(index)) ){
+			if( j.getNodes().contains(i.getNodes().get(index)) ){
 				return i.getNodes().get(index);
 			}
 		}
@@ -41,7 +41,7 @@ public class Algorithm {
 	
 	public Node lastNodeVisitedByJonI(Path j, Path i) throws NodeDoesNotExistException {
 		for(int index = i.getNodes().size()-1 ; index >= 0 ; index--){
-			if( ! j.getNodes().contains(i.getNodes().get(index)) ){
+			if( j.getNodes().contains(i.getNodes().get(index)) ){
 				return i.getNodes().get(index);
 			}
 		}
@@ -709,7 +709,7 @@ public class Algorithm {
 	
 	public List<Integer>  computeWorstCaseEndToEndResponse() {
 		List<Flow> flows = net.getFlows();
-		int  t;
+		int t;
 		Integer max;
 		for (Flow i : flows) {
 			max = 0;
