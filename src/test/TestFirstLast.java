@@ -9,7 +9,7 @@ import ise.Node;
 import org.junit.Before;
 import org.junit.Test;
 
-import ise.NodeDoesNotExistException;
+import exception.NodeDoesNotExistException;
 import xml.XmlParser;
 
 /**

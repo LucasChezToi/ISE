@@ -1,5 +1,6 @@
 package ise;
 
+import org.apache.commons.math.util.MathUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,9 +31,11 @@ public class Algorithm {
 	}
 
 	public Node firstNodeVisitedByJonI(Path j, Path i) throws NodeDoesNotExistException {
+
 		for(int index = 0 ; index< j.getNodes().size() ; index++){
 			if( i.getNodes().contains(j.getNodes().get(index)) ){
 				return j.getNodes().get(index);
+
 			}
 		}
 		throw new NodeDoesNotExistException("Fonction firstNodeVisitedByJonI : "
@@ -198,6 +201,8 @@ public class Algorithm {
 	}
 	
 	int computeM(Flow i, Node h) {
+		//TODO
+		XmlParser.logger.log(Level.SEVERE, "utilisation d'un bouchon pour computeM");
 		return 0;
 	}
 	
@@ -236,16 +241,18 @@ public class Algorithm {
 	}
 	
 	int computeARestrictedToH(Flow i, Flow j, Node H) {
+		//TODO
+		XmlParser.logger.log(Level.SEVERE, "utilisation d'un bouchon pour computeARestrictedToH");
 		return 0;
 	}
 	
 
-	int computeBetaSlow(Flow my_flow) {
+	int _computeBetaSlow(Flow my_flow) {
 		XmlParser.logger.log(Level.SEVERE, "utilisation d'un bouchon pour computeBetaSlow");
 		return 1;
 	}
 	
-	int _computeBetaSlow(Flow my_flow) {
+	int computeBetaSlow(Flow my_flow) {
 		List<Flow> allS,  allE;
 		int ti[] , ci[] ;
 		int count = 0;
@@ -257,6 +264,7 @@ public class Algorithm {
 		// get all priority Superior or Equal
 		allS = my_flow.getHigherPriorityFlows();
 		allE = my_flow.getSamePriorityFlows();
+		
 		// create period table and computation table
 		ti = new int[allS.size()+allE.size()+1];
 		ci = new int[allS.size()+allE.size()+1];
@@ -264,11 +272,12 @@ public class Algorithm {
 		// add my_flow period and calculation into the table
 		ti[0] = my_flow.getPeriod();
 		// i don't know how i get it
-		//ci[0] =
+		ci[0] = 4;
 		count ++;
 		
 		for (Flow flow : allS){
 			ti[count] = flow.getPeriod();
+			
 			try {
 				ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
 			} catch (NodeDoesNotExistException e) {
@@ -286,6 +295,7 @@ public class Algorithm {
 
 		for (Flow flow : allE){
 			ti[count] = flow.getPeriod();
+
 			try {
 				ci[count] = slowestNodeVisitedByJonI(my_flow, flow).getCapacity().get(my_flow);
 			} catch (NodeDoesNotExistException e) {
@@ -300,15 +310,13 @@ public class Algorithm {
 			}
 			count ++;
 		}
-		// tested			
-		long lcm = lCMf4Ti(ti);
-		// tested 
-		beta = (int)beta_i_slow(ti, ci,lcm);
-		
+		int lcm = lCMf4Ti(ti);
+		beta = (int)beta_i_slow(ti, ci, lcm);
+
 		return beta;
 	}
 
-	public long beta_i_slow(int []ti, int [] ci,long lcm){
+	public long beta_i_slow(int []ti, int [] ci,int lcm){
 		 long beta=cofficient(ti,ci, lcm);
 		 if (beta<lcm)
 			 return beta;
@@ -317,43 +325,27 @@ public class Algorithm {
 		 
 	 }
 
-	public long cofficient(int []ti, int [] ci, long lcm){
-		 long sum =0 ;
-	    
-	    System.out.println(lcm);
-	    for  (int i =1; i< ti.length; i++){
+	public long cofficient(int []ti, int [] ci, int lcm){
+		int sum =0 ;
+	    for  (int i =0; i< ti.length; i++){
 	    	sum+=lcm*ci[i]/ti[i];
 	    }
+
 		return sum;
 	 }
 	 
-	public long lCMf4Ti(int []ti){
-		 long lcm;
+	public int lCMf4Ti(int []ti){
+		 int lcm;
 		 lcm = ti[0];
-		 for  (int i =1; i< ti.length; i++){
-			 lcm = lCM(lcm, ti[i]);
+		 for  (int i =1; i< ti.length-1; i++){
+			 if (lcm != ti[i])
+				 lcm = MathUtils.lcm(lcm, ti[i]);
 		 }
 		 return lcm;
 		 
 	 }
 	 
-	public long lCM(long n, long m){
-		 long lcm = (n == m || n == 1) ? m :(m == 1 ? n : 0);
-	      /* this section increases the value of mm until it is greater  
-	      / than or equal to nn, then does it again when the lesser 
-	      / becomes the greater--if they aren't equal. If either value is 1,
-	      / no need to calculate*/
-	      if (lcm == 0) {
-	         long mm = m, nn = n;
-	         while (mm != nn) {
-	             while (mm < nn) { mm += m; }
-	             while (nn < mm) { nn += n; }
-	         } 
-	         
-	         lcm = mm;
-	      }
-	      return lcm;
-	 }
+	
 
 	int computeDelta(Flow i, Node hrestriction) {
 		Node firsti = i.getPath().getNodes().get(0);
@@ -711,7 +703,7 @@ public class Algorithm {
 	
 	public List<Integer>  computeWorstCaseEndToEndResponse() {
 		List<Flow> flows = net.getFlows();
-		int  t;
+		int t;
 		Integer max;
 		for (Flow i : flows) {
 			max = 0;
