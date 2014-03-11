@@ -7,7 +7,6 @@ import ise.Network;
 import ise.Node;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import exception.NodeDoesNotExistException;
@@ -102,7 +101,6 @@ public class TestSlowest {
 	}
 	
 	
-	@Ignore
 	@Test
 	public void testSlowestNodeVisitedByJonIRestrictedToH(){
 		for(Flow flowJ : net.getFlows() ){
