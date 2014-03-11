@@ -163,8 +163,11 @@ public class Algorithm {
 				}
 			}
 		}
-		throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonI : "
-				+ "la node référencée n'est pas contenue dans le path correspondant");
+		if(res == null) {
+			throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonI : "
+					+ "la node référencée n'est pas contenue dans le path correspondant");
+		}
+		return res;
 	}
 	
 	Node slowestNodeVisitedByIonHisPathRestrictedToH(Flow i, Node h) {
@@ -195,9 +198,11 @@ public class Algorithm {
 				}
 			}
 		}
-		throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonIRestrictedToH : "
-				+ "la node référencée n'est pas contenue dans le path correspondant");
-
+		if(res == null) {
+			throw new NodeDoesNotExistException("Fonction slowestNodeVisitedByJonIRestrictedToH : "
+					+ "la node référencée n'est pas contenue dans le path correspondant");
+		}
+		return res;
 	}
 	
 	int computeM(Flow i, Node h) {
@@ -293,7 +298,6 @@ public class Algorithm {
 		}
 	}
 	
-
 	int _computeBetaSlow(Flow my_flow) {
 		XmlParser.logger.log(Level.SEVERE, "utilisation d'un bouchon pour computeBetaSlow");
 		return 1;
@@ -392,8 +396,6 @@ public class Algorithm {
 		 
 	 }
 	 
-	
-
 	int computeDelta(Flow i, Node hrestriction) {
 		Node firsti = i.getPath().getNodes().get(0);
 		Path p = null;
