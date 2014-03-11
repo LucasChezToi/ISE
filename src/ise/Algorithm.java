@@ -135,6 +135,9 @@ public class Algorithm {
 	 *  la capacité comparé est celle de j
 	 *  S'il existe plusieurs nodes avec la plus faible capacité
 	 *  on choisit la dernière sur le chemin */
+	
+	//XXX:return capacity of j or i?
+	
 	Node slowestNodeVisitedByJonI(Flow i, Flow j) throws NodeDoesNotExistException {
 		Node res = null;
 		List<Node> nodesI = i.getPath().getNodes();
@@ -180,7 +183,7 @@ public class Algorithm {
 			if( nodesJ.contains(iSubNodesList.get(index)) ){
 				if(res == null){
 					res = iSubNodesList.get(index);
-				}else{
+				} else {
 					if(iSubNodesList.get(index).getCapacity().get(j) > res.getCapacity().get(j)){
 						res = iSubNodesList.get(index);
 					}
