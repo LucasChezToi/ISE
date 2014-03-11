@@ -36,10 +36,9 @@ public class Path {
 		}
 		Path p = new Path();
 		for(Node n : this.getNodes()){
-			if(n!=H){
-				p.getNodes().add(n);
-			} else {
-				break;
+			p.getNodes().add(n);
+			if(n==H){
+				break;	
 			}
 		}
 		return p;
