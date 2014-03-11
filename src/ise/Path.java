@@ -30,17 +30,12 @@ public class Path {
 		this.nodes = nodes;
 	}
 	
-	public Path pathRestrictedToH(Node H) throws NodeDoesNotExistException{
-		if(!this.getNodes().contains(H)) {
+	public Path pathRestrictedToH(Node h) throws NodeDoesNotExistException{
+		if(!this.getNodes().contains(h)) {
 			throw new NodeDoesNotExistException("");
 		}
 		Path p = new Path();
-		for(Node n : this.getNodes()){
-			p.getNodes().add(n);
-			if(n==H){
-				break;	
-			}
-		}
+		p.setNodes(this.nodes.subList(0, nodes.indexOf(h)+1));
 		return p;
 	}
 }
