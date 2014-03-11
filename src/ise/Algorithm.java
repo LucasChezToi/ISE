@@ -203,6 +203,7 @@ public class Algorithm {
 	int computeM(Flow i, Node h) {
 		//TODO
 		XmlParser.logger.log(Level.SEVERE, "utilisation d'un bouchon pour computeM");
+		
 		return 0;
 	}
 	
@@ -241,9 +242,23 @@ public class Algorithm {
 	}
 	
 	int computeARestrictedToH(Flow i, Flow j, Node H) {
-		//TODO
-		XmlParser.logger.log(Level.SEVERE, "utilisation d'un bouchon pour computeARestrictedToH");
-		return 0;
+		int jitter = j.getJitter();
+		try {
+			Node first = firstNodeVisitedByJonIRestrictedToH(i, j, H);
+			int m = computeM(i, first);
+			int smax = maxTimeTakenFromSourceToH(j, first);
+			int result = smax - m + jitter;
+			return result;
+		} catch (NodeDoesNotExistException e) {
+			// TODO: handle exception
+			System.err.println("computeA");
+			XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+					+ ", Fonction : computeA, "
+					+ ", Erreur : " + e.getClass().getName()
+					+ ", Message : " + e.getMessage());
+			e.printStackTrace();
+			return 0;
+		}
 	}
 	
 
