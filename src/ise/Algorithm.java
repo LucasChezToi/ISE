@@ -639,9 +639,9 @@ public class Algorithm {
 				Node lastijh = lastNodeVisitedByJonIRestrictedToH(i, j, h);
 				int val = 0;
 				if (lastijh == h) {
-					val = 1 + (int) Math.floor((double)(w1-minTimeTakenFromSourceToH(j, h)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+					val = 1 + (int) Math.floor((double)(w1-minTimeTakenFromSourceToH(j, h)+computeARestrictedToH(i, j, h))/(double)(j.getPeriod()));
 				} else {
-					val = 1 + (int) Math.floor((double)(w.get(lastijh)-minTimeTakenFromSourceToH(j, lastijh)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+					val = 1 + (int) Math.floor((double)(w.get(lastijh)-minTimeTakenFromSourceToH(j, lastijh)+computeARestrictedToH(i, j, h))/(double)(j.getPeriod()));
 				}
 				if(val<0){
 					val = 0;
@@ -661,7 +661,7 @@ public class Algorithm {
 			try {
 				Node slow = slowestNodeVisitedByJonIRestrictedToH(j, i, h);
 				Node firstjih = firstNodeVisitedByJonIRestrictedToH(j, i, h);
-				int val = 1 + (int) Math.floor((double)(t+maxTimeTakenFromSourceToH(i, firstjih)-minTimeTakenFromSourceToH(j, firstjih)+computeARestrictedToH(i, j, h))/(double)(j.getJitter()));
+				int val = 1 + (int) Math.floor((double)(t+maxTimeTakenFromSourceToH(i, firstjih)-minTimeTakenFromSourceToH(j, firstjih)+computeARestrictedToH(i, j, h))/(double)(j.getPeriod()));
 				if(val<0){
 					val = 0;
 				}
@@ -678,7 +678,7 @@ public class Algorithm {
 		}
 		Node slow = slowestNodeVisitedByIonHisPathRestrictedToH(i, h);
 		Node firsti = i.getPath().getNodes().get(0);
-		int val = 1 + (int) Math.floor((double)(t+maxTimeTakenFromSourceToH(i, firsti)-minTimeTakenFromSourceToH(i, firsti)+computeARestrictedToH(i, i, h))/(double)(i.getJitter()));
+		int val = 1 + (int) Math.floor((double)(t+maxTimeTakenFromSourceToH(i, firsti)-minTimeTakenFromSourceToH(i, firsti)+computeARestrictedToH(i, i, h))/(double)(i.getPeriod()));
 		if(val<0){
 			val = 0;
 		}
