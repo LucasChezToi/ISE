@@ -312,7 +312,18 @@ public class Algorithm {
 		// add my_flow period and calculation into the table
 		ti[0] = my_flow.getPeriod();
 		// i don't know how i get it
-		ci[0] = 4;
+		try {
+				ci[0] = slowestNodeVisitedByJonI(my_flow, my_flow).getCapacity().get(my_flow);
+			} catch (NodeDoesNotExistException e) {
+				// TODO: handle exception
+				ci[0] = 0;
+				System.err.println("computeBetaSlow");
+				XmlParser.logger.log(Level.WARNING, "Classe : " + this.getClass().getName()
+						+ ", Fonction : computeBetaSlow, "
+						+ ", Erreur : " + e.getClass().getName()
+						+ ", Message : " + e.getMessage());
+				e.printStackTrace();
+			}
 		count ++;
 		
 		for (Flow flow : allS){

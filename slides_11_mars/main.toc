@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.24pt}
+\select@language {french}
+\beamer@sectionintoc {1}{Pr\IeC {\'e}sentation du projet}{2}{0}{1}
+\beamer@sectionintoc {2}{Algorithme}{4}{0}{2}
+\beamer@sectionintoc {3}{Impl\IeC {\'e}mentation}{6}{0}{3}
+\beamer@sectionintoc {4}{Tests}{9}{0}{4}
+\beamer@sectionintoc {5}{Conclusion}{11}{0}{5}
