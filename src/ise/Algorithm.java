@@ -201,10 +201,42 @@ public class Algorithm {
 	}
 	
 	int computeM(Flow i, Node h) {
-		//TODO
-		XmlParser.logger.log(Level.SEVERE, "utilisation d'un bouchon pour computeM");
-		
-		return 0;
+		int m = 0;
+		Node last = null;
+		try {
+			last = nodePreceedingHinFlowI(i, h);
+		} catch (NodeDoesNotHavePredecessor e) {
+			return 0;
+		} catch (NodeDoesNotExistException e) {
+			// TODO: handle exception
+			return 0;
+		}
+		for (Node hprime : i.getPath().getNodes()) {
+			if(hprime == last) {
+				break;
+			}
+			int min = hprime.getCapacity().get(i);
+			for(Flow j : i.getHigherPriorityFlows()) {
+				try {
+					if(firstNodeVisitedByJonI(j, i) == firstNodeVisitedByJonI(i, j)) {
+						min = Math.min(min, hprime.getCapacity().get(j));
+					}
+				} catch (NodeDoesNotExistException e) {
+					// TODO: handle exception
+				}
+			}
+			for(Flow j : i.getSamePriorityFlows()) {
+				try {
+					if(firstNodeVisitedByJonI(j, i) == firstNodeVisitedByJonI(i, j)) {
+						min = Math.min(min, hprime.getCapacity().get(j));
+					}
+				} catch (NodeDoesNotExistException e) {
+					// TODO: handle exception
+				}
+			}
+			m+= min + net.getLmin();
+		}
+		return m;
 	}
 	
 	Node nodePreceedingHinFlowI(Flow i, Node h) throws NodeDoesNotHavePredecessor, NodeDoesNotExistException {
