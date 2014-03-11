@@ -1,0 +1,36 @@
+\ProvidesPackageRCS $Header: /cvsroot/latex-beamer/latex-beamer/themes/color/beamercolorthemerose.sty,v 1.3 2007/01/28 20:48:24 tantau Exp $
+
+
+\usepackage{color}
+\definecolor{UPMCEngagementBlueA}   {RGB}{140,184,198}
+\definecolor{UPMCEngagementBlueB}   {RGB}{92,127,146}
+\definecolor{UPMCEngagementBlueC}   {RGB}{75,146,219}
+\definecolor{UPMCEngagementBlueD}   {RGB}{33,49,77}
+\definecolor{UPMCEngagementYellowA} {RGB}{254,209,0}
+\definecolor{UPMCEngagementYellowB} {RGB}{198,172,0}
+\definecolor{UPMCEngagementGreen}   {RGB}{64,74,41}
+\definecolor{UPMCCorporateGreen}    {RGB}{182,191,0}
+\definecolor{UPMCExcellenceOrangeA} {RGB}{224,82,6}
+\definecolor{UPMCExcellenceOrangeB} {RGB}{225,160,47}
+\definecolor{UPMCCorporateMarron}   {RGB}{145,120,91}
+\definecolor{UPMCInnovationCoolGray}{RGB}{97,99,101}
+
+
+\mode<presentation>
+
+\setbeamercolor{item}{fg=UPMCInnovationCoolGray}
+\setbeamertemplate{subitem}{UPMCInnovationCoolGray}
+
+\setbeamercolor{block title}{use=structure,fg=white,bg=UPMCEngagementBlueB}
+\setbeamercolor{block title alerted}{use=alerted
+  text,fg=black,bg=UPMCEngagementBlueD} \setbeamercolor{block title
+  example}{use=example text,fg=UPMCCorporateMarron,bg=UPMCCorporateGreen}
+
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block
+  title.bg!50!bg} \setbeamercolor{block body alerted}{parent=normal
+  text,use=block title alerted,bg=block title alerted.bg!50!bg}
+\setbeamercolor{block body example}{parent=normal text,use=block title
+  example,bg=block title example.bg!50!bg}
+
+\mode
+<all>
