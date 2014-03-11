@@ -135,7 +135,7 @@ public class Algorithm {
 	 *  la capacité comparé est celle de j
 	 *  S'il existe plusieurs nodes avec la plus faible capacité
 	 *  on choisit la dernière sur le chemin */
-	Node slowestNodeVisitedByJonI(Flow i, Flow j) throws NodeDoesNotExistException {
+	public Node slowestNodeVisitedByJonI(Flow j, Flow i) throws NodeDoesNotExistException {
 		Node res = null;
 		List<Node> nodesI = i.getPath().getNodes();
 		List<Node> nodesJ = j.getPath().getNodes();
@@ -145,7 +145,7 @@ public class Algorithm {
 				if(res == null){
 					res = nodesJ.get(index);
 				}else{
-					if(nodesJ.get(index).getCapacity().get(j) > res.getCapacity().get(j)){
+					if(nodesJ.get(index).getCapacity().get(j) >= res.getCapacity().get(j)){
 						res = nodesJ.get(index);
 					}
 				}
@@ -158,11 +158,11 @@ public class Algorithm {
 		return res;
 	}
 	
-	Node slowestNodeVisitedByIonHisPathRestrictedToH(Flow i, Node h) throws NodeDoesNotExistException {
+	public Node slowestNodeVisitedByIonHisPathRestrictedToH(Flow i, Node h) throws NodeDoesNotExistException {
 		Path p = i.getPath().pathRestrictedToH(h);
 		Node res = p.getNodes().get(0);
 		for(Node node : p.getNodes()){
-			if(node.getCapacity().get(i) > res.getCapacity().get(i)){
+			if(node.getCapacity().get(i) >= res.getCapacity().get(i)){
 				res = node;
 			}
 		}
@@ -170,7 +170,7 @@ public class Algorithm {
 	}
 	
 	/**/
-	Node slowestNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
+	public Node slowestNodeVisitedByJonIRestrictedToH(Flow j, Flow i, Node h) throws NodeDoesNotExistException {
 		Node res = null;
 		List<Node> iSubNodesList = i.getPath().pathRestrictedToH(h).getNodes();//i.getPath().getNodes().subList(0, i.getPath().getNodes().indexOf(h));
 		//List<Node> nodesI = i.getPath().getNodes();
@@ -181,7 +181,7 @@ public class Algorithm {
 				if(res == null){
 					res = iSubNodesList.get(index);
 				}else{
-					if(iSubNodesList.get(index).getCapacity().get(j) > res.getCapacity().get(j)){
+					if(iSubNodesList.get(index).getCapacity().get(j) >= res.getCapacity().get(j)){
 						res = iSubNodesList.get(index);
 					}
 				}
