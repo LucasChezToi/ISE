@@ -176,13 +176,13 @@ public class Algorithm {
 		//List<Node> nodesI = i.getPath().getNodes();
 		List<Node> nodesJ = j.getPath().getNodes();
 		
-		for(int index = 0 ; index< iSubNodesList.size() ; index++){
-			if( nodesJ.contains(iSubNodesList.get(index)) ){
+		for(int index = 0 ; index< nodesJ.size() ; index++){
+			if( iSubNodesList.contains(nodesJ.get(index)) ){
 				if(res == null){
-					res = iSubNodesList.get(index);
+					res = nodesJ.get(index);
 				}else{
-					if(iSubNodesList.get(index).getCapacity().get(j) >= res.getCapacity().get(j)){
-						res = iSubNodesList.get(index);
+					if(nodesJ.get(index).getCapacity().get(j) >= res.getCapacity().get(j)){
+						res = nodesJ.get(index);
 					}
 				}
 			}
