@@ -7,6 +7,7 @@ import ise.Network;
 import ise.Node;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import exception.NodeDoesNotExistException;
@@ -350,14 +351,8 @@ public class TestFirstLast {
 	@Test
 	public void testFirstNodeVisitedByJonIRestrictedToH() throws NodeDoesNotExistException {
 		/*
-		 * On test en essayant de mettre h sur les nodes aux extrémitées des 
+		 * On test en essayant de mettre h sur les nodes aux extrémités des 
 		 * chemins 
-		 * 
-		 * TODO 
-		 *  Cas pas de nodes en commun  
-		 *  cas pas de node en commun avant h (mais en a après)
-		 *  => test avec exceptions
-		 *  
 		 *  Template
 		 *  assertEquals(node, algo.firstNodeVisitedByJonIRestrictedToH(flow, flow, node));
 		 *  															  j      i
@@ -393,13 +388,43 @@ public class TestFirstLast {
 		assertEquals(node10, algo.firstNodeVisitedByJonIRestrictedToH(flow3, flow2, node10));
 		assertEquals(node6, algo.firstNodeVisitedByJonIRestrictedToH(flow6, flow5, node12));
 		
-
+		// Cas pas du tout de node en commun
+		try{
+			algo.firstNodeVisitedByJonIRestrictedToH(flow5, flow2, node5);
+			fail("NodeDoesNotExistException non catché");
+		}catch(NodeDoesNotExistException e){}
+		try{
+			algo.firstNodeVisitedByJonIRestrictedToH(flow2, flow5, node12);
+			fail("NodeDoesNotExistException non catché");
+		}catch(NodeDoesNotExistException e){}
+		try{
+			algo.firstNodeVisitedByJonIRestrictedToH(flow6, flow7, node2);
+			fail("NodeDoesNotExistException non catché");
+		}catch(NodeDoesNotExistException e){}
+		
+		// Cas pas de node en commun avant h (mais en a après)
+		try{
+			algo.firstNodeVisitedByJonIRestrictedToH(flow7, flow1, node3);
+			fail("NodeDoesNotExistException non catché");
+		}catch(NodeDoesNotExistException e){}
+		try{
+			algo.firstNodeVisitedByJonIRestrictedToH(flow2, flow6, node9);
+			fail("NodeDoesNotExistException non catché");
+		}catch(NodeDoesNotExistException e){}
+		try{
+			algo.firstNodeVisitedByJonIRestrictedToH(flow2, flow3, node3);
+			fail("NodeDoesNotExistException non catché");
+		}catch(NodeDoesNotExistException e){}
+		try{
+			algo.firstNodeVisitedByJonIRestrictedToH(flow6, flow5, node8);
+			fail("NodeDoesNotExistException non catché");
+		}catch(NodeDoesNotExistException e){}
 	}
 	
-	/*
-	 * TODO
-	 * lastNodeVisitedByJonIRestrictedToH
-	 */
-	
+	@Ignore
+	@Test
+	public void testLastNodeVisitedByJonIRestrictedToH() throws NodeDoesNotExistException {
+		// TODO
+	}
 
 }
